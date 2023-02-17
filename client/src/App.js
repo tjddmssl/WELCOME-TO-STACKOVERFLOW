@@ -1,16 +1,16 @@
-import './App.css';
-import React from 'react'
+import "./App.css";
+import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Home from './pages/Home';
-import Search from './pages/Search'
-import Login from './pages/Login'
-import SignUp from './pages/SignUp'
-import Questions from './pages/Questions'
-import View from './pages/View'
-import Tags from './pages/Tags'
-import Users from './pages/Users'
-import QButton from './components/QButton';
-import Ask from './pages/Ask';
+import Home from "./pages/Home";
+import Search from "./pages/Search";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Questions from "./pages/Questions";
+import View from "./pages/View";
+import Tags from "./pages/Tags";
+import Users from "./pages/Users";
+import QButton from "./components/QButton";
+import Ask from "./pages/Ask";
 
 function App() {
   return (
@@ -25,7 +25,8 @@ function App() {
         <Link to="/tags">Tags</Link>
         <Link to="/users">Users</Link>
         <Link to="/ask">{<QButton />}</Link>
-    </div><Routes>
+      </div>
+      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/login" element={<Login />} />
@@ -34,7 +35,7 @@ function App() {
         <Route path="/view" element={<View />} />
         <Route path="/tags" element={<Tags />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/ask" element={<Ask />}/>
+        <Route path="/ask" element={<Ask />} />
       </Routes>
     </div>
   );

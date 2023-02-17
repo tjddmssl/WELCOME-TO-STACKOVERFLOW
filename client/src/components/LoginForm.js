@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 function LoginForm() {
   return (
@@ -7,7 +7,7 @@ function LoginForm() {
       login button <br />
       Don't have an account? sign up (link to signup page)
     </div>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;

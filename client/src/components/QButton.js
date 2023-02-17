@@ -1,10 +1,8 @@
-import React from 'react'
+import React from "react";
 
-
+//* 질문하기 버튼 -> Ask 페이지로 이동
 function QButton() {
-  return (
-    <button>ask question</button>
-  ) 
+  return <button>ask question</button>;
 }
 
-export default QButton
+export default QButton;
