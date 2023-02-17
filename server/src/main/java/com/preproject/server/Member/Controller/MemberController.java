@@ -22,7 +22,6 @@ public class MemberController {
     private final MemberMapper mapper;
 
     @PostMapping
-//    @CrossOrigin("*")
     public ResponseEntity createMember(@RequestBody MemberPostDto post) {
 
         Member member = mapper.postDtoToMember(post);
@@ -33,7 +32,6 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-//    @CrossOrigin("*")
     public ResponseEntity getMember(@PathVariable Long id ) {
         Member member = memberService.getMember(id);
 
@@ -41,14 +39,12 @@ public class MemberController {
     }
 
     @DeleteMapping("/{id}")
-//    @CrossOrigin("*")
     public ResponseEntity deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
-//    @CrossOrigin("*")
     public ResponseEntity getMemberList() {
         List<Member> memberList = memberService.getMemberList();
         return new ResponseEntity(new ResponseDto(memberList), HttpStatus.OK);
