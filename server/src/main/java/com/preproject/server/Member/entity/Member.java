@@ -3,12 +3,18 @@ package com.preproject.server.Member.entity;
 
 import com.preproject.server.Member.data.MemberStatus;
 import com.preproject.server.Member.data.MemberType;
+import lombok.*;
 
 import javax.persistence.*;
 
 import static javax.persistence.EnumType.*;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@ToString
 public class Member {
     @Id
     @GeneratedValue
