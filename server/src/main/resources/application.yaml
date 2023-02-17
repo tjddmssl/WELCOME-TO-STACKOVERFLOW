@@ -1,1 +1,22 @@
+spring:
+  datasource:
+    password:
+    username: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+#    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+#      open-in-view: false
 
+logging:
+  level:
+    org.hibernate.sql: info
+#    org.hibernate.type: trace
+#server:
+#  port: 4040
