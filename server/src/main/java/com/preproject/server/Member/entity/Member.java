@@ -3,25 +3,27 @@ package com.preproject.server.Member.entity;
 
 import com.preproject.server.Member.data.MemberStatus;
 import com.preproject.server.Member.data.MemberType;
+import com.preproject.server.baseEntity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
 import static javax.persistence.EnumType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @Getter
 @ToString
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
     private String email;
-    private String nickName;
+    private String displayName;
     private String password;
     private String profile;
     private String location;
