@@ -1,5 +1,8 @@
-package com.preproject.server.Member.Entity;
+package com.preproject.server.Member.entity;
 
+
+import com.preproject.server.Member.data.MemberStatus;
+import com.preproject.server.Member.data.MemberType;
 
 import javax.persistence.*;
 
