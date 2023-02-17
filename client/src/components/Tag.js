@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 function Tag() {
   return (
@@ -6,7 +6,7 @@ function Tag() {
       <button>tagname</button>
       <p>contents</p>
     </div>
-  )
+  );
 }
 
-export default Tag
+export default Tag;

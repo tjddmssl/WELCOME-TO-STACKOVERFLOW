@@ -1,14 +1,8 @@
-import React from 'react'
+import React from "react";
 
+//* 오른쪽 사이드바
 function Sidebar() {
-  return (
-    <div>
-      Home <br />
-      Questions <br />
-      Tags <br />
-      Users <br />
-    </div>
-  )
+  return <div>오른쪽사이드바</div>;
 }
 
-export default Sidebar
+export default Sidebar;

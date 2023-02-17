@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 function UserCard() {
   return (
@@ -6,7 +6,7 @@ function UserCard() {
       avatar, Name, country etc <br />
       link to User page
     </div>
-  )
+  );
 }
 
-export default UserCard
+export default UserCard;
