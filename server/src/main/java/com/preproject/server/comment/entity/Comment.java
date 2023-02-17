@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class Comment {
   @Id
   @GeneratedValue
+  @Column(name = "COMMENT_ID")
   private Long id;
   @Column(nullable = false)
   @Lob
@@ -36,6 +37,6 @@ public class Comment {
 //   @JoinColumn(name = "ID")
 //   private Question question;
   @ManyToOne
-  @JoinColumn(name = "ID")
+  @JoinColumn(name = "ANSWER_ID")
   private Answer answer;
 }

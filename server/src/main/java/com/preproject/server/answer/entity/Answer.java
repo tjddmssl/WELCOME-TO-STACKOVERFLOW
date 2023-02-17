@@ -22,6 +22,7 @@ public class Answer {
 
   @Id
   @GeneratedValue
+  @Column(name = "ANSWER_ID")
   private Long id;
   @Column(nullable = false)
   @Lob
