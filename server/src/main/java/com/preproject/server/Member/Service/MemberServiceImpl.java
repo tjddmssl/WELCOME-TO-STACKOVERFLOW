@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberServiceImpl {
     private final MemberRepository memberRepository;
 
     public Member createMember(Member member) {
