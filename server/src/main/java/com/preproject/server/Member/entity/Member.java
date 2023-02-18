@@ -5,6 +5,7 @@ import com.preproject.server.Member.data.MemberStatus;
 import com.preproject.server.Member.data.MemberType;
 import com.preproject.server.baseEntity.BaseEntity;
 import lombok.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 
@@ -17,9 +18,10 @@ import static lombok.AccessLevel.*;
 @AllArgsConstructor(access = PROTECTED)
 @Getter
 @ToString
+@CrossOrigin()
 public class Member extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
     private String email;
