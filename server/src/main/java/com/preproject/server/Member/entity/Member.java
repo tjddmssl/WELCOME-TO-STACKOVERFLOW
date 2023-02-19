@@ -23,7 +23,6 @@ import static lombok.AccessLevel.*;
 @AllArgsConstructor(access = PROTECTED)
 @Getter
 @ToString
-@CrossOrigin()
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
