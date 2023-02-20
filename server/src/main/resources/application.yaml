@@ -1,8 +1,7 @@
 spring:
   datasource:
-#    url: jdbc:mysql://pre-project-deploy.cgk4ssfsfibv.ap-northeast-2.rds.amazonaws.com:13306/PreProject
-#    password: wkaqh12Q!
-    url: jdpc:mysql://
+    url: jdbc:mysql://pre-project-deploy.cgk4ssfsfibv.ap-northeast-2.rds.amazonaws.com:13306/PreProject
+    password: wkaqh12Q!
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
