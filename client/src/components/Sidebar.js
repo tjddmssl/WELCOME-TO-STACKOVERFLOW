@@ -5,12 +5,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import { BsStackOverflow } from 'react-icons/bs';
 
 //* 오른쪽 사이드바
+
+//? 노란 박스
 const Memo = styled.ul`
   display: flex;
   flex-direction: column;
   width: 300px;
   float: right;
   outline: 2px solid beige;
+  box-shadow: 2px 1px 1px 1px lightgrey;
   margin: 10px;
 
   li {
@@ -34,51 +37,104 @@ const Memo = styled.ul`
   }
 `;
 
-const Tags = styled.ul`
-  display: block;
-  width: 230px;
+//? 노란 박스 아래
+const CustomF = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 310px;
   float: right;
-  outline: 1px solid black;
+  border: darkgrey;
+  border-radius: 1.5px;
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  margin-bottom: 20px;
+
+  li {
+    padding: 14px;
+    background-color: #f8f9f9;
+  }
+  a {
+    padding: 14px;
+  }
 `;
-// const Blog = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
 
-// const Featured = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+const WatchedT = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 310px;
+  float: right;
+  border: darkgrey;
+  border-radius: 1.5px;
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  margin-bottom: 20px;
 
-// const CustomF = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+  li {
+    padding: 14px;
+    background-color: #f8f9f9;
+  }
+  div {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+  img {
+    width: 140px;
+  }
 
-// const WatchedT = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+  button {
+    width: 160px;
+    margin: 20px;
+    background-color: #e1ecf4;
+    color: #39739d;
+  }
 
-// const IgnoredT = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+  button:hover {
+    background-color: #b4d3ea;
+  }
+`;
 
-// const Collectives = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+const IgnoredT = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 310px;
+  float: right;
+  border: darkgrey;
+  border-radius: 1.5px;
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  margin-bottom: 20px;
 
-// const Related = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+  li {
+    padding: 14px;
+    background-color: #f8f9f9;
+  }
+  div {
+    margin: 0 auto;
+  }
+  button {
+    background-color: #e1ecf4;
+    color: #39739d;
+    margin: 30px;
+  }
+  button:hover {
+    background-color: #b4d3ea;
+  }
+`;
 
-// const HNQ = styled.div`
-//   width: 140px;
-//   float: right;
-// `;
+const Collectives = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 310px;
+  float: right;
+  border: darkgrey;
+  border-radius: 1.5px;
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  margin-bottom: 20px;
+
+  li {
+    padding: 14px;
+  }
+  .title {
+    background-color: #f8f9f9;
+  }
+`;
 
 function Sidebar() {
   return (
@@ -115,33 +171,40 @@ function Sidebar() {
           </>
         }
       </Memo>
-      <Tags>
-        {
-          <>
-            <li>Custom Filters</li>
-            <a href="http://localhost:3000/">Create a custom filter</a>
-            <li>Watched Tags</li>
-            <Button variant="contained" startIcon={<VisibilityIcon />}>
-              Watch a tag
-            </Button>
-            <li>Ignored Tags</li>
-            <Button variant="contained">Add an ignored tag</Button>
-            <li>Collectives</li>
-            <li>Google Cloud</li>
-            <li>Twilio</li>
-            <li>AWS</li>
-          </>
-        }
-      </Tags>
-      {/* <Blog>blog</Blog>
-      <Featured>featured</Featured>
-      <CustomF>custom filters</CustomF>
-      <WatchedT>watched tags</WatchedT>
-      <IgnoredT>ignored tags</IgnoredT>
-      <Collectives>collecties</Collectives>
 
-      <Related>related</Related>
-      <HNQ>Hot network questions</HNQ> */}
+      <CustomF>
+        <li>Custom Filters</li>
+        <a href="http://localhost:3000/">Create a custom filter</a>
+      </CustomF>
+
+      <WatchedT>
+        <li>Watched Tags</li>
+        <div>
+          <center>
+            <img alt="search_icon" src="/img/sidebar-watched tags.png" />
+          </center>
+          <p>Watch tags to curate your list of questions</p>
+        </div>
+        <div>
+          <Button variant="contained" startIcon={<VisibilityIcon />}>
+            Watch a tag
+          </Button>
+        </div>
+      </WatchedT>
+
+      <IgnoredT>
+        <li>Ignored Tags</li>
+        <div>
+          <Button variant="contained">Add an ignored tag</Button>
+        </div>
+      </IgnoredT>
+
+      <Collectives>
+        <li className="title">Collectives</li>
+        <li>Google Cloud</li>
+        <li>Twilio</li>
+        <li>AWS</li>
+      </Collectives>
     </>
   );
 }
