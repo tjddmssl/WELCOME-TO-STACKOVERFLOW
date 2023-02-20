@@ -1,8 +1,5 @@
 package com.preproject.server;
 
-import com.preproject.server.Member.Service.DBMemberService;
-import com.preproject.server.Member.Service.MemberService;
-import com.preproject.server.Member.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,17 +7,15 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
-import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfiguration implements WebMvcConfigurer {
 
 //    @Override
 //    public void addCorsMappings(CorsRegistry registry) {
-//
 //        registry.addMapping("/*")
 //                .allowedOrigins("")
 //                .allowedMethods("*");
@@ -31,9 +26,9 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .formLogin()
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())//기본 핸들러
-                .and()
+                .cors(withDefaults())
+                .formLogin().disable()
+//                .httpBasic().disable()
                 .exceptionHandling().accessDeniedHandler(new AccessDeniedHandlerImpl())//핸들러 추 후 변경 가능
 //                .authenticationEntryPoint(new DelegatingAuthenticationEntryPoint())
                 .and()
@@ -44,7 +39,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .authorizeHttpRequests(authorize -> authorize
 //                        .antMatchers("/question/**").hasRole("ADMIN")
 //                        .antMatchers("/members/**").hasRole("USER")
-                        .antMatchers("/**").permitAll()
+                                .antMatchers("/**").permitAll()
                 );
         return http.build();
     }
@@ -52,10 +47,5 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    @Bean
-    public MemberService MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
-        return new DBMemberService(memberRepository,passwordEncoder);
     }
 }
