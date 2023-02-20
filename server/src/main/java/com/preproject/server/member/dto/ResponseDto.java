@@ -1,10 +1,6 @@
-package com.preproject.server.Member.dto;
+package com.preproject.server.member.dto;
 
-import com.preproject.server.Member.entity.Member;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class ResponseDto<T> {
