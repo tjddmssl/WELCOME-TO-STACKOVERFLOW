@@ -1,8 +1,8 @@
-package com.preproject.server.Member.entity;
+package com.preproject.server.member.entity;
 
 
-import com.preproject.server.Member.data.MemberStatus;
-import com.preproject.server.Member.data.MemberType;
+import com.preproject.server.member.data.MemberStatus;
+import com.preproject.server.member.data.MemberType;
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.comment.entity.Comment;
@@ -12,7 +12,6 @@ import com.preproject.server.vote.entity.Vote;
 import lombok.*;
 import lombok.Builder.Default;
 import lombok.ToString.Exclude;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 
@@ -37,6 +36,7 @@ public class Member extends BaseEntity {
     private String displayName;
     private String password;
     private String profile;
+    @Setter
     private String location;
     private String aboutMe;
     @Enumerated(STRING)
