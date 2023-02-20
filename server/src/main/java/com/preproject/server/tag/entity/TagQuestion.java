@@ -5,10 +5,7 @@ import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.question.entity.Question;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -18,13 +15,16 @@ import javax.persistence.Id;
 public class TagQuestion {
     @Id
     @GeneratedValue
-    @Column(name = "TAG_QUESTION_ID")
+    @Column(name = "Tag_Question_Id")
     private Long id;
 
-    //
-    private Question question;
-    //
-    private Tag tag;
+    // 연관관계
+    @ManyToOne
+    @JoinColumn(name = "Member_Id")
+    private Member member;
 
+    @ManyToOne
+    @JoinColumn(name = "Tag_Id")
+    private Tag tag;
 
 }

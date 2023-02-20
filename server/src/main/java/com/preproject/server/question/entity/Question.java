@@ -1,13 +1,17 @@
 package com.preproject.server.question.entity;
 
+import com.preproject.server.Member.entity.Member;
+import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.baseEntity.BaseEntityWithBy;
+import com.preproject.server.comment.entity.Comment;
+import com.preproject.server.vote.entity.Vote;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -17,7 +21,7 @@ import javax.persistence.GeneratedValue;
 public class Question extends BaseEntityWithBy {
     @Id
     @GeneratedValue
-    @Column(name = "QUESTION_ID")
+    @Column(name = "Question_Id")
     private Long id;
     @Column(nullable = false)
     private String title;
@@ -26,7 +30,19 @@ public class Question extends BaseEntityWithBy {
     private Integer viewCount;
     private Integer voteCount;
 
-    //
-    //private Member member;
+    // 연관관계
+
+    @ManyToOne
+    @JoinColumn(name = "Member_Id")
+    private Member member;
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question")
+    private List<Vote> votes = new ArrayList<>();
+
 
 }

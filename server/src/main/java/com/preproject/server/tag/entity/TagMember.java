@@ -4,10 +4,7 @@ import com.preproject.server.Member.entity.Member;
 import com.preproject.server.question.entity.Question;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -17,11 +14,17 @@ import javax.persistence.Id;
 public class TagMember {
     @Id
     @GeneratedValue
-    @Column(name = "TAG_MEMBER_ID")
+    @Column(name = "Tag_Member_Id")
     private Long id;
 
-    //
+    // 연관관계
+    @ManyToOne
+    @JoinColumn(name = "Member_Id")
     private Member member;
-    //
+
+    @ManyToOne
+    @JoinColumn(name = "Tag_Id")
     private Tag tag;
+
+
 }

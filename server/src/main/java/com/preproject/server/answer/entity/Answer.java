@@ -1,17 +1,19 @@
 package com.preproject.server.answer.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
+import com.preproject.server.Member.entity.Member;
+import com.preproject.server.comment.entity.Comment;
+import com.preproject.server.question.entity.Question;
+import com.preproject.server.vote.entity.Vote;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -22,7 +24,7 @@ public class Answer {
 
   @Id
   @GeneratedValue
-  @Column(name = "ANSWER_ID")
+  @Column(name = "Answer_Id")
   private Long id;
   @Column(nullable = false)
   @Lob
@@ -31,11 +33,18 @@ public class Answer {
   @Column(nullable = false)
   private Integer voteCount;
 
-  // TODO Question, Member 구현 후
-//   @ManyToOne
-//   @JoinColumn(name = "ID")
-//   private Member member;
-//   @ManyToOne
-//   @JoinColumn(name = "ID")
-//   private Question question;
+
+  //연관관계
+  @ManyToOne
+  @JoinColumn(name = "Member_Id")
+  private Member member;
+  @ManyToOne
+  @JoinColumn(name = "Question_Id")
+  private Question question;
+
+  @OneToMany(mappedBy = "answer")
+  private List<Comment> comments = new ArrayList<>();
+
+  @OneToMany(mappedBy = "answer")
+  private List<Vote> votes = new ArrayList<>();
 }
