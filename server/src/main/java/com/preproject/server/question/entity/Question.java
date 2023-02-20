@@ -1,6 +1,6 @@
 package com.preproject.server.question.entity;
 
-import com.preproject.server.Member.entity.Member;
+import com.preproject.server.member.entity.Member;
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.baseEntity.BaseEntityWithBy;
 import com.preproject.server.comment.entity.Comment;

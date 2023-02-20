@@ -1,7 +1,6 @@
 package com.preproject.server.tag.entity;
 
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.question.entity.Question;
+import com.preproject.server.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;

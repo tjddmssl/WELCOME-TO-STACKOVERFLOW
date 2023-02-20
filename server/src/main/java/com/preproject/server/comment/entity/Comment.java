@@ -1,6 +1,6 @@
 package com.preproject.server.comment.entity;
 
-import com.preproject.server.Member.entity.Member;
+import com.preproject.server.member.entity.Member;
 import com.preproject.server.answer.entity.Answer;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,10 +1,9 @@
 package com.preproject.server.vote.entity;
 
-import com.preproject.server.Member.entity.Member;
+import com.preproject.server.member.entity.Member;
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.question.entity.Question;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
