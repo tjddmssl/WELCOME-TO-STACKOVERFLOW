@@ -18,7 +18,7 @@ import static javax.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
-@SuperBuilder
+@Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
 @Getter
@@ -38,6 +38,7 @@ public class Member extends BaseEntity {
     @Enumerated(STRING)
     private MemberStatus memberStatus;
     @ElementCollection(fetch = EAGER)
-    private List<MemberType> roles = new ArrayList<>();
+    @Setter
+    private List<String> roles = new ArrayList<>();
 
 }
