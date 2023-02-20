@@ -46,6 +46,4 @@ public class Question extends BaseEntityWithBy {
     @OneToMany(mappedBy = "question")
     @Builder.Default
     private List<Vote> votes = new ArrayList<>();
-
-
 }
