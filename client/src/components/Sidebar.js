@@ -2,19 +2,23 @@ import { Button } from '@mui/material';
 import styled from 'styled-components';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { BsStackOverflow } from 'react-icons/bs';
 
 //* 오른쪽 사이드바
 
+const Container = styled.div`
+  float: right;
+`;
 //? 노란 박스
 const Memo = styled.ul`
   display: flex;
   flex-direction: column;
-  width: 300px;
-  float: right;
+  width: 310px;
+  /* float: right; */
   outline: 2px solid beige;
   box-shadow: 2px 1px 1px 1px lightgrey;
-  margin: 10px;
+  margin-bottom: 20px;
 
   li {
     height: auto;
@@ -42,7 +46,7 @@ const CustomF = styled.ul`
   display: flex;
   flex-direction: column;
   width: 310px;
-  float: right;
+  /* float: right; */
   border: darkgrey;
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
@@ -61,7 +65,7 @@ const WatchedT = styled.ul`
   display: flex;
   flex-direction: column;
   width: 310px;
-  float: right;
+  /* float: right; */
   border: darkgrey;
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
@@ -76,7 +80,8 @@ const WatchedT = styled.ul`
     margin: 0 auto;
   }
   img {
-    width: 140px;
+    margin-top: 15px;
+    width: 120px;
   }
 
   button {
@@ -95,7 +100,7 @@ const IgnoredT = styled.ul`
   display: flex;
   flex-direction: column;
   width: 310px;
-  float: right;
+  /* float: right; */
   border: darkgrey;
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
@@ -122,7 +127,7 @@ const Collectives = styled.ul`
   display: flex;
   flex-direction: column;
   width: 310px;
-  float: right;
+  /* float: right; */
   border: darkgrey;
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
@@ -138,7 +143,7 @@ const Collectives = styled.ul`
 
 function Sidebar() {
   return (
-    <>
+    <Container>
       <Memo>
         {
           <>
@@ -153,6 +158,14 @@ function Sidebar() {
               maintaining them...`}
             </li>
             <li className="title">Featured on Meta</li>
+            <li>
+              <ChatBubbleOutlineIcon fontSize="small" color="primary" />
+              {` Ticket smash for [status-review] tag: Part Deux`}
+            </li>
+            <li>
+              <ChatBubbleOutlineIcon fontSize="small" color="primary" />
+              {` We've added a "Necessary cookies only" option to the cookie consent popup`}
+            </li>
             <li>
               <BsStackOverflow /> Microsoft Azure Collective launch and proposed
               tag changes.
@@ -205,7 +218,7 @@ function Sidebar() {
         <li>Twilio</li>
         <li>AWS</li>
       </Collectives>
-    </>
+    </Container>
   );
 }
 
