@@ -1,7 +1,6 @@
 package com.preproject.server.answer.entity;
 
 import com.preproject.server.baseEntity.BaseEntity;
-import com.preproject.server.baseEntity.BaseEntityWithBy;
 import javax.persistence.*;
 
 import com.preproject.server.Member.entity.Member;

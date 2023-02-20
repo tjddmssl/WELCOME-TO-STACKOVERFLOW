@@ -19,7 +19,7 @@ public class AnswerEntityTest {
 
   @Test
   public void saveAnswerTest() {
-    Answer answer = Answer.builder().content("contentetnetne").voteCount(3).build();
+    Answer answer = Answer.builder().content("contentetnetne").voteCount(3L).build();
     Answer savedAnswer = answerRepository.save(answer);
     assertThat(savedAnswer, is(notNullValue()));
     assertThat(savedAnswer.getContent(), is(answer.getContent()));

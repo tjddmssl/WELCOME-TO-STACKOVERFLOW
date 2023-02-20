@@ -20,7 +20,7 @@ public class CommentEntityTest {
 
   @Test
   public void saveCommentTest() {
-    Answer answer = Answer.builder().content("contentetnetne").voteCount(3).build();
+    Answer answer = Answer.builder().content("contentetnetne").voteCount(3L).build();
     Comment comment = Comment.builder().content("comment").answer(answer).build();
     Comment savedComment = commentRepository.save(comment);
     assertThat(savedComment, is(notNullValue()));
