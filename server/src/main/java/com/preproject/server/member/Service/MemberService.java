@@ -3,6 +3,7 @@ package com.preproject.server.member.Service;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +36,15 @@ public class MemberService {
     }
 
     //TODO 기본적인 update 구도 설정
-    public Member updateMember(Member member, List<String> tagMember) {
+    public Member updatedMember(Member member, List<String> tagMember) {
 
         return member;
+    }
+
+
+    public Page<Member> getPageMember() {
+
+        return null;
+
     }
 }

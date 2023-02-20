@@ -1,5 +1,7 @@
 package com.preproject.server.member.controller;
 
+import com.preproject.server.dto.PageInfo;
+import com.preproject.server.dto.PageResponseDto;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.dto.*;
 import com.preproject.server.member.dtotmp.VoteDto;
@@ -7,6 +9,9 @@ import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +59,7 @@ public class MemberController {
 
         return new ResponseEntity(new ResponseDto(), HttpStatus.OK);
     }
+//잔달해야되는 인자 체크 -> 한번에 만들어 주지 않는 것 고려
 
     /*
     * 회원 삭제 기능 but 비밀 번호 암호화 시 추가 변경 필요
@@ -86,9 +92,19 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity getMemberList() {
-        List<Member> memberList = memberService.getMemberList();
-        return new ResponseEntity(new ResponseDto(memberList), HttpStatus.OK);
+    public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdAt") Pageable pageable) {
+        Page<Member> memberPage = memberService.getPageMember();
+
+        Page<MemberGetListDto> pageDto = memberPage.map(member -> {
+            MemberGetListDto responseDto = memberMapper.memberToMemberGetListDto(member);
+            List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
+            responseDto.setTags(collect);
+            return responseDto;
+        });
+
+        PageInfo pageInfo = new PageInfo(pageable.getPageSize(), pageable.getPageNumber(), pageDto.getTotalElements(), pageDto.getTotalPages(), pageDto.isFirst(), pageDto.isLast());
+
+        return new ResponseEntity(new PageResponseDto<>(pageDto.getContent(),pageInfo),HttpStatus.OK);
     }
 
 
