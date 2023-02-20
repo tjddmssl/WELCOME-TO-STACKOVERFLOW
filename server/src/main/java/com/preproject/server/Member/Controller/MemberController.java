@@ -1,6 +1,6 @@
 package com.preproject.server.Member.Controller;
 
-import com.preproject.server.Member.Service.MemberService;
+import com.preproject.server.Member.Service.MemberServiceImpl;
 import com.preproject.server.Member.dto.MemberPostDto;
 import com.preproject.server.Member.dto.ResponseDto;
 import com.preproject.server.Member.entity.Member;
@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @Slf4j
 
 public class MemberController {
-    private final MemberService memberService;
+    private final MemberServiceImpl memberService;
     private final MemberMapper mapper;
 
     @PostMapping
