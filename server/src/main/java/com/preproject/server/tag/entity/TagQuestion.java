@@ -14,16 +14,16 @@ import javax.persistence.*;
 @Getter
 public class TagQuestion {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Tag_Question_Id")
     private Long id;
 
     // 연관관계
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Member_Id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Tag_Id")
     private Tag tag;
 

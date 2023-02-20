@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder.Default;
 
 @Entity
 @Builder
@@ -16,7 +17,7 @@ import java.util.List;
 public class Tag extends BaseEntity {
     //오디터블 써야하는지?
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Tag_Id")
     private Long id;
     @NotNull
@@ -28,9 +29,11 @@ public class Tag extends BaseEntity {
 
     // 연관관계
     @OneToMany(mappedBy = "tag")
+    @Default
     private List<TagMember> tagMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "tag")
+    @Default
     private List<TagQuestion> tagQuestions = new ArrayList<>();
 
 }

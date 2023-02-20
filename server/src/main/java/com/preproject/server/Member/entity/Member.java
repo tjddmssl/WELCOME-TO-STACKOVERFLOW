@@ -10,6 +10,8 @@ import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.tag.entity.TagQuestion;
 import com.preproject.server.vote.entity.Vote;
 import lombok.*;
+import lombok.Builder.Default;
+import lombok.ToString.Exclude;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
@@ -26,7 +28,6 @@ import static lombok.AccessLevel.*;
 @AllArgsConstructor(access = PROTECTED)
 @Getter
 @ToString
-@CrossOrigin()
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,17 +46,25 @@ public class Member extends BaseEntity {
 
     //연관관계
     @OneToMany(mappedBy = "member")
+    @Default
+    @Exclude
     private List<Answer> answers = new ArrayList<>();
-
     @OneToMany(mappedBy = "member")
+    @Default
+    @Exclude
     private List<Comment> comments = new ArrayList<>();
-
     @OneToMany(mappedBy = "member")
+    @Default
+    @Exclude
     private List<Vote> votes = new ArrayList<>();
-
     @OneToMany(mappedBy = "member")
+    @Default
+    @Exclude
     private List<TagMember> tagMembers = new ArrayList<>();
     @OneToMany(mappedBy = "member")
+    @Default
+    @Exclude
     private List<TagQuestion> tagQuestions = new ArrayList<>();
+
 
 }

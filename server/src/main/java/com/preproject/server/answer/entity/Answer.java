@@ -1,5 +1,7 @@
 package com.preproject.server.answer.entity;
 
+import com.preproject.server.baseEntity.BaseEntity;
+import com.preproject.server.baseEntity.BaseEntityWithBy;
 import javax.persistence.*;
 
 import com.preproject.server.Member.entity.Member;
@@ -20,10 +22,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Answer {
-
+public class Answer extends BaseEntity {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "Answer_Id")
   private Long id;
   @Column(nullable = false)
@@ -31,20 +32,22 @@ public class Answer {
   private String content;
 
   @Column(nullable = false)
-  private Integer voteCount;
-
+  @Builder.Default
+  private Long voteCount = 0L;
 
   //연관관계
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Member_Id")
   private Member member;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Question_Id")
   private Question question;
 
   @OneToMany(mappedBy = "answer")
+  @Builder.Default
   private List<Comment> comments = new ArrayList<>();
 
   @OneToMany(mappedBy = "answer")
+  @Builder.Default
   private List<Vote> votes = new ArrayList<>();
 }

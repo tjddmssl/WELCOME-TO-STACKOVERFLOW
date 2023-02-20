@@ -15,22 +15,35 @@ import javax.persistence.*;
 @Getter
 public class Vote {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Vote_Id")
     private Long id;
 
-    private Integer voteCount;
+    @Enumerated(EnumType.STRING)
+    private status status;  // 좋아요 +1 / 싫어요 -1
 
     //연관관계
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Member_Id")
     private Member member;
 
     //Nullable 해줘야하는지?
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Question_Id")
     private Question question;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Answer_Id")
     private Answer answer;
+
+    public enum status {
+        VOTE_PLUS(1),
+        VOTE_MINUS(-1);
+
+        @Getter
+        private final int num;
+
+        status(int num) {
+            this.num = num;
+        }
+    }
 }
