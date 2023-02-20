@@ -33,4 +33,10 @@ public class MemberService {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
     }
+
+    //TODO 기본적인 update 구도 설정
+    public Member updateMember(Member member, List<String> tagMember) {
+
+        return member;
+    }
 }
