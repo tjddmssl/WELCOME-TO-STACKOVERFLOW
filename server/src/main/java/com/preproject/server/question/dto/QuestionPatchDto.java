@@ -1,17 +1,14 @@
 package com.preproject.server.question.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import java.util.List;
+import lombok.Data;
 
-@Getter
-@Builder
-@AllArgsConstructor
+@Data
 public class QuestionPatchDto {
+  private Long id;
   private String title;
   private String content;
-  private String tag;
-
+  private List<String> tag;
 
 }

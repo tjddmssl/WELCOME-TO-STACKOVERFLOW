@@ -1,27 +1,41 @@
 package com.preproject.server.question.service;
 
 import com.preproject.server.member.Service.MemberService;
+import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.mapper.QuestionMapper;
 import com.preproject.server.question.repository.QuestionRepository;
+import com.preproject.server.tag.service.TagService;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class QuestionTransService {
 
   private final QuestionMapper questionMapper;
-  private final QuestionRepository questionRepository;
-  private final QuestionService questionService;
   private final MemberService memberService;
+  private final TagService tagService;
+
 
   public Question QuestionPostDtoToQuestion(QuestionPostDto questionPostDto) {
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
     question.setMember(memberService.getMember(questionPostDto.getMemberId()));
+    question.setTagQuestions(questionPostDto.getTags().stream().map(name ->
+        tagService.findTagQuestion(question, name)
+    ).collect(Collectors.toList()));
+    question.getTagQuestions().forEach(tagQuestion -> log.info("## question tags: {}",tagQuestion.getTag().getName()));
     return question;
   }
 
+  public Question QuestionPatchDtoToQuestion(Long id, QuestionPatchDto questionPatchDto) {
+    questionPatchDto.setId(id);
+    return questionMapper.questionPatchDtoToQuestion(questionPatchDto);
+  }
 
 }

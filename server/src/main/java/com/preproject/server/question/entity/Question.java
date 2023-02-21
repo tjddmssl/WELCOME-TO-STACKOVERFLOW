@@ -25,12 +25,16 @@ public class Question extends BaseEntity {
     @Column(name = "Question_Id")
     private Long id;
     @Column()
+    @Setter
     private String title;
     @Lob
+    @Setter
     private String content;
     @Builder.Default
+    @Setter
     private Long viewCount = 0L;
     @Builder.Default
+    @Setter
     private Long voteCount = 0L;
 
     // 연관관계
@@ -52,5 +56,6 @@ public class Question extends BaseEntity {
 
     @OneToMany(mappedBy = "question")
     @Builder.Default
+    @Setter
     private List<TagQuestion> tagQuestions = new ArrayList<>();
 }

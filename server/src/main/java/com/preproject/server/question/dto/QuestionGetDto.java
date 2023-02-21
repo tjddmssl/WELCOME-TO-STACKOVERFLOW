@@ -3,18 +3,16 @@ package com.preproject.server.question.dto;
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.comment.entity.Comment;
 import com.preproject.server.member.entity.Member;
+import com.preproject.server.tag.dto.TagQuestionDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Data
 public class QuestionGetDto {
-  @Getter
-  @Builder
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public static class Response {
     private String title;
     private String content;
     private Long viewCount;
@@ -23,10 +21,8 @@ public class QuestionGetDto {
     private List<Answer> answers;
     private Member member;
     private List<Comment> comments;
-
+    private List<String> tags;
     // TODO tag
-  }
-
   public enum IS_VOTED{
 
     NOT_SIGNED_IN("not signed in"),

@@ -20,6 +20,7 @@ public class TagQuestion {
     // 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Question_Id")
+    @Setter
     private Question question;
 
     @ManyToOne(fetch = FetchType.LAZY)

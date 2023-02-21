@@ -1,5 +1,6 @@
 package com.preproject.server.question.mapper;
 
+import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.dto.QuestionResponseDto;
 import com.preproject.server.question.entity.Question;
@@ -10,7 +11,9 @@ import org.mapstruct.ReportingPolicy;
 public interface QuestionMapper {
 
   Question questionPostDtoToQuestion(QuestionPostDto questionPost);
-// TODO tag enum 상의
+  Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto);
   QuestionResponseDto questionToQuestionPostResponseDto(Question question);
+
+
 
 }

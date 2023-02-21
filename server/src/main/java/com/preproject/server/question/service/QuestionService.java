@@ -24,15 +24,21 @@ public class QuestionService {
   public Question createQuestion(Question question){
     // TODO verify if member is present
     // TODO verify if tag is available
-    Question savedQuestion = questionRepository.save(question);
-    return savedQuestion;
+    return questionRepository.save(question);
   }
 
-  public Question findQuestion(Long questionId) {
+  public Question updateQuestion(Question question) {
+    Question findQuestion = findQuestion(question.getId());
+    Optional.ofNullable(question.getTitle()).ifPresent(findQuestion::setTitle);
+    Optional.ofNullable(question.getContent()).ifPresent(findQuestion::setContent);
+    return questionRepository.save(findQuestion);
+  }
+
+  private Question findQuestion(Long questionId) {
     Optional<Question> questionOptional = questionRepository.findById(questionId);
     return questionOptional.orElseThrow(() -> new BusinessLogicException(QuestionExceptionCode.QUESTION_NOT_FOUND));
   }
 
-
+  // NOTE tag
 
 }
