@@ -6,15 +6,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class MemberPatchResponseDto {
+public class MemberResponseDto {
     private Long id;
     private String password;
     private String displayName;
     private String profile;
     private String aboutMe;
     private List<String> tag;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private String location;
+
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
 }
 

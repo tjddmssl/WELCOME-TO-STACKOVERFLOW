@@ -21,9 +21,6 @@ public class MemberService {
         return memberRepository.findById(memberId).get();
     }
 
-    public List<Member> getMemberList() {
-        return memberRepository.findAll();
-    }
 
     public void deleteMember(Long memberId,String password) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원이 존재하지 않습닌다."));

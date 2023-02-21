@@ -1,12 +1,13 @@
 package com.preproject.server.member.controller;
 
+import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.dto.PageInfo;
 import com.preproject.server.dto.PageResponseDto;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.dto.*;
-import com.preproject.server.member.dtotmp.VoteDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
+import com.preproject.server.question.entity.Question;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,23 +44,25 @@ public class MemberController {
         Member findMember = memberService.createMember(member);
 
         //dto 변환 로직
-        MemberDto memberDto = memberMapper.memberToMemberDto(findMember);
+        MemberPostResponseDto memberPostResponseDto = memberMapper.memberToMemberDto(findMember);
 
-        return new ResponseEntity(new ResponseDto(memberDto), HttpStatus.CREATED);
+        return new ResponseEntity(new ResponseDto(memberPostResponseDto), HttpStatus.CREATED);
     }
 
     /*
-     * 유저 상세 조회
+     * 유저 상세 조회 - user 정보만 따로 빼준다.
      * */
     @GetMapping("/{id}")
     public ResponseEntity getMember(@PathVariable Long id) {
         Member member = memberService.getMember(id);
 
+        MemberResponseDto memberResponseDto = memberMapper.MemberResponseDtoToMember(member);
+        List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
+        memberResponseDto.setTag(collect);
 
-
-        return new ResponseEntity(new ResponseDto(), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDto(memberResponseDto), HttpStatus.OK);
     }
-//잔달해야되는 인자 체크 -> 한번에 만들어 주지 않는 것 고려
+
 
     /*
     * 회원 삭제 기능 but 비밀 번호 암호화 시 추가 변경 필요
@@ -81,30 +84,36 @@ public class MemberController {
         Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
 
 
-        MemberPatchResponseDto responseDto = memberMapper.patchResponseDtoToMember(updatedMember);
+        MemberResponseDto responseDto = memberMapper.MemberResponseDtoToMember(updatedMember);
 
         //TODO 리펙토링
         List<String> collect = updatedMember.getTagMembers().stream()
                 .map(tag -> tag.getTag().getName()).collect(Collectors.toList());
         responseDto.setTag(collect);
 
-        return new ResponseEntity(new ResponseDto<MemberPatchResponseDto>(responseDto),HttpStatus.OK);
+        return new ResponseEntity(new ResponseDto<MemberResponseDto>(responseDto),HttpStatus.OK);
     }
 
+    /*
+    * 회원들 정보 조회 수정 필요
+    * */
     @GetMapping
     public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdAt") Pageable pageable) {
         Page<Member> memberPage = memberService.getPageMember();
 
-        Page<MemberGetListDto> pageDto = memberPage.map(member -> {
-            MemberGetListDto responseDto = memberMapper.memberToMemberGetListDto(member);
+        Page<MemberListDto> pageDto = memberPage.map(member -> {
+            MemberListDto responseDto = memberMapper.memberToMemberListDto(member);
             List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
             responseDto.setTags(collect);
+
+            long sum = member.getQuestions().stream().mapToLong(Question::getVoteCount).sum();
+            sum += member.getAnswers().stream().mapToLong(Answer::getVoteCount).sum();
+
+            responseDto.setVoteCount(sum);
             return responseDto;
         });
 
-        PageInfo pageInfo = new PageInfo(pageable.getPageSize(), pageable.getPageNumber(), pageDto.getTotalElements(), pageDto.getTotalPages(), pageDto.isFirst(), pageDto.isLast());
-
-        return new ResponseEntity(new PageResponseDto<>(pageDto.getContent(),pageInfo),HttpStatus.OK);
+        return new ResponseEntity(pageDto,HttpStatus.OK);
     }
 
 

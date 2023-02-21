@@ -9,7 +9,7 @@ public class MemberListDto {
     private Long id;
     private String displayName;
     private String location;
-    private List<String> tag;
+    private List<String> tags;
     private long voteCount;
     //자신이 받은 총 voteCount 수를 나타낸다.
 }
