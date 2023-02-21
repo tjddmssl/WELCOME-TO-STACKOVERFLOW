@@ -1,4 +1,4 @@
-package com.preproject.server.member.dto;
+package com.preproject.server.dto;
 
 import lombok.Data;
 

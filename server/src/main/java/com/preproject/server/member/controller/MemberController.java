@@ -1,8 +1,12 @@
 package com.preproject.server.member.controller;
 
 import com.preproject.server.answer.entity.Answer;
+import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.Service.MemberService;
-import com.preproject.server.member.dto.*;
+import com.preproject.server.member.dto.MemberListDto;
+import com.preproject.server.member.dto.MemberPatchDto;
+import com.preproject.server.member.dto.MemberPostDto;
+import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
 import com.preproject.server.question.entity.Question;
@@ -36,6 +40,7 @@ public class MemberController {
     public ResponseEntity createMember(@RequestBody MemberPostDto post, HttpServletRequest request) {
         Locale locale = request.getLocale();
         log.info("locale = {} ", locale);
+
         Member member = memberMapper.postDtoToMember(post);
         member.setLocation(locale.getCountry());
         log.info("member = {}", member.getId());
