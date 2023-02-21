@@ -19,12 +19,10 @@ public class TagService {
   private final TagRepository tagRepository;
   private final TagMapper tagMapper;
 
-  public TagQuestion findTagQuestion (Question question, String name) {
+  public Tag findTag (String name) {
     Optional<Tag> optionalTag = tagRepository.findTagByName(name);
     Tag tag = optionalTag.orElseThrow(
         () -> new BusinessLogicException(TagExceptionCode.TAG_NOT_FOUND));
-    TagQuestion tagQuestion = tagMapper.tagToTagQuestion(tag);
-    tagQuestion.setQuestion(question);
-    return tagQuestion;
+    return tag;
   }
 }

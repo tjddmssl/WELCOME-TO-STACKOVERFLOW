@@ -1,5 +1,6 @@
 package com.preproject.server.question.controller;
 
+import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.repository.MemberRepository;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
@@ -41,6 +42,7 @@ public class QuestionController {
   private final String DEFAULT_URI = "/questions";
   private final QuestionService questionService;
   private final QuestionTransService questionTransService;
+  private final QuestionMapper questionMapper;
 
   @PostMapping("/questions")
   public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto requestBody) {
@@ -48,7 +50,8 @@ public class QuestionController {
     Question question = questionService.createQuestion(
         questionTransService.QuestionPostDtoToQuestion(requestBody));
     URI uri = UriCreator.createUri(DEFAULT_URI, question.getId());
-    return ResponseEntity.created(uri).build();
+    QuestionResponseDto responseDto = questionMapper.questionToQuestionPostResponseDto(question);
+    return ResponseEntity.created(uri).body(new ResponseDto(responseDto));
   }
 
   @PatchMapping("/questions/{id}")

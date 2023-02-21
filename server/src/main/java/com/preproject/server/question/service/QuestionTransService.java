@@ -6,7 +6,10 @@ import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.mapper.QuestionMapper;
 import com.preproject.server.question.repository.QuestionRepository;
+import com.preproject.server.tag.entity.Tag;
+import com.preproject.server.tag.entity.TagQuestion;
 import com.preproject.server.tag.service.TagService;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,10 +29,16 @@ public class QuestionTransService {
   public Question QuestionPostDtoToQuestion(QuestionPostDto questionPostDto) {
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
     question.setMember(memberService.getMember(questionPostDto.getMemberId()));
-    question.setTagQuestions(questionPostDto.getTags().stream().map(name ->
-        tagService.findTagQuestion(question, name)
-    ).collect(Collectors.toList()));
-    question.getTagQuestions().forEach(tagQuestion -> log.info("## question tags: {}",tagQuestion.getTag().getName()));
+    List<TagQuestion> tagQuestionList = questionPostDto.getTags().stream().map(name -> {
+      Tag tag = tagService.findTag(name);
+      TagQuestion tagQuestion = TagQuestion.builder().build();
+      tagQuestion.addQuestion(question);
+      tagQuestion.addTag(tag);
+      return tagQuestion;
+    }).collect(Collectors.toList());
+    question.setTagQuestions(tagQuestionList);
+    question.getTagQuestions()
+        .forEach(tagQuestion -> log.info("## question tags: {}", tagQuestion.getTag().getName()));
     return question;
   }
 

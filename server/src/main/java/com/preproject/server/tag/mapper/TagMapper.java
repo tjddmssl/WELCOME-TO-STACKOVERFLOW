@@ -12,9 +12,6 @@ import org.mapstruct.ReportingPolicy;
 public interface TagMapper {
 
   TagQuestionDto tagToTagQuestionDto(Tag tag);
-  default TagQuestion tagToTagQuestion(Tag tag){
-    return TagQuestion.builder().tag(tag).build();
-  }
   List<TagQuestionDto> tagListToTagQuestionDtoList(List<Tag> tagList);
 
 //  Tag tagQuestionDtoToTag(TagQuestionDto tagQuestionDto);

@@ -24,7 +24,11 @@ public class QuestionService {
   public Question createQuestion(Question question){
     // TODO verify if member is present
     // TODO verify if tag is available
-    return questionRepository.save(question);
+    log.info("## POST ##");
+    log.info("## requested question: {}", question.toString());
+    Question savedQuestion = questionRepository.save(question);
+    savedQuestion.getTagQuestions().forEach(tagQuestion -> log.info("## tag questions: {}", tagQuestion.getId()));
+    return savedQuestion;
   }
 
   public Question updateQuestion(Question question) {

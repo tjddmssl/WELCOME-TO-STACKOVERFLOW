@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum TagExceptionCode implements ExceptionCode {
 
   TAG_NOT_FOUND(HttpStatus.NOT_FOUND, "Tag Not Found"),
+  TAG_ALREADY_ADDED(HttpStatus.BAD_REQUEST, "Tag is already added")
   // TODO 추가
   ;
 
