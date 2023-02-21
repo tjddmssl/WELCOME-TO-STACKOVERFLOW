@@ -1,14 +1,10 @@
 package com.preproject.server.member.mapper;
 
 import com.preproject.server.member.dto.*;
-import com.preproject.server.member.dtotmp.VoteDto;
 import com.preproject.server.member.entity.Member;
-import com.preproject.server.vote.entity.Vote;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberMapper {
@@ -30,6 +26,7 @@ public interface MemberMapper {
 
     @Mapping(source = "id", target = "id")
     MemberListDto memberToMemberListDto(Member member);
+
     //tag 미구현
     MemberResponseDto MemberResponseDtoToMember(Member member);
 
