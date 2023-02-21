@@ -20,8 +20,8 @@ public class TagQuestion {
 
     // 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Member_Id")
-    private Member member;
+    @JoinColumn(name = "Question_Id")
+    private Question question;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Tag_Id")
