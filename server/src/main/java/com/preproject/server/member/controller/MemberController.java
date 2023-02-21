@@ -10,6 +10,7 @@ import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
 import com.preproject.server.question.entity.Question;
+import com.preproject.server.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @CrossOrigin("*")
 public class MemberController {
+    private final static String MEMBER_DEFAULT_URL = "/users";
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
@@ -44,14 +47,12 @@ public class MemberController {
         Member member = memberMapper.postDtoToMember(post);
         member.setLocation(locale.getCountry());
         log.info("member = {}", member.getId());
-        Member findMember = memberService.createMember(member);
+        Member ceatedMember = memberService.createMember(member);
 
         //dto 변환 로직
-        MemberResponseDto memberResponseDto = memberMapper.memberResponseDtoToMember(findMember);
-        List<String> collect = findMember.getTagMembers().stream().map(tagMember -> tagMember.getTag().getName()).collect(Collectors.toList());
-        memberResponseDto.setTags(collect);
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL,ceatedMember.getId());
 
-        return new ResponseEntity(new ResponseDto(memberResponseDto), HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
 
     /*
