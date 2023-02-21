@@ -1,4 +1,4 @@
-package com.preproject.server.Member.data;
+package com.preproject.server.member.data;
 
 import lombok.Getter;
 

@@ -67,22 +67,6 @@ public class QuestionController {
     return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 
-  @PostConstruct
-  public void init() {
-    for(int i=1;i<=10;i++) {
-      Member member = Member.builder()
-          .displayName("name")
-          .build();
-      Member savedMember = memberRepository.save(member);
-      Question question = Question.builder()
-          .title("title"+i)
-          .content("content"+i)
-          .member(savedMember)
-          .build();
-      repository.save(question);
-    }
-  }
-
 
 
 }
