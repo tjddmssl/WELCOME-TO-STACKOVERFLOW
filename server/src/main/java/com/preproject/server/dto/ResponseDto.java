@@ -1,6 +1,5 @@
-package com.preproject.server.Member.dto;
+package com.preproject.server.dto;
 
-import com.preproject.server.Member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

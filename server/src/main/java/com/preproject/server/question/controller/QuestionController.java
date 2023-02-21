@@ -1,7 +1,6 @@
 package com.preproject.server.question.controller;
 
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.Member.repository.MemberRepository;
+import com.preproject.server.member.repository.MemberRepository;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.dto.QuestionResponseDto;

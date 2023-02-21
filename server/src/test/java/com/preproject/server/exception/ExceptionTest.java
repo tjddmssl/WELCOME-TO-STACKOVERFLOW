@@ -1,8 +1,5 @@
 package com.preproject.server.exception;
 
-
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.repository.QuestionRepository;
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,17 +23,5 @@ public class ExceptionTest {
 
   @Autowired
   private QuestionRepository repository;
-  @Test
-  public void test() {
-    for(int i=1;i<=10;i++) {
-      Question question = Question.builder()
-          .title("title"+i)
-          .content("content"+i)
-          .member(Member.builder().id((long) i).build())
-          .build();
-      repository.save(question);
-    }
-    PageRequest pageRequest = PageRequest.of(0, 5);
-    log.warn("!!!!!!!!!!!!page: {}", repository.findAll(pageRequest));
-  }
+
 }

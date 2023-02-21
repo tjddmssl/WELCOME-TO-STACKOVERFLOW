@@ -1,6 +1,6 @@
 package com.preproject.server.question.service;
 
-import com.preproject.server.Member.Service.MemberService;
+import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.mapper.QuestionMapper;

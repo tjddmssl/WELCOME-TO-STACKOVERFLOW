@@ -1,7 +1,7 @@
 package com.preproject.server.question.service;
 
-import com.preproject.server.Member.Service.MemberService;
 import com.preproject.server.exception.BusinessLogicException;
+import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.repository.QuestionRepository;

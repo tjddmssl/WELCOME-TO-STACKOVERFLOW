@@ -8,7 +8,7 @@ import com.preproject.server.member.dto.MemberPatchDto;
 import com.preproject.server.member.dto.MemberPostDto;
 import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
-import com.preproject.server.member.mapper.
+import com.preproject.server.member.mapper.MemberMapper;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.utils.UriCreator;
 import lombok.RequiredArgsConstructor;

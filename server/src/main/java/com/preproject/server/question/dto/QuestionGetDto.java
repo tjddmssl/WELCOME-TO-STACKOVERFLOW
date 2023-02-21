@@ -1,8 +1,8 @@
 package com.preproject.server.question.dto;
 
-import com.preproject.server.Member.entity.Member;
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.comment.entity.Comment;
+import com.preproject.server.member.entity.Member;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
