@@ -57,7 +57,7 @@ public class Question extends BaseEntity {
     @Builder.Default
     private List<Vote> votes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Builder.Default
     @Setter
     private List<TagQuestion> tagQuestions = new ArrayList<>();

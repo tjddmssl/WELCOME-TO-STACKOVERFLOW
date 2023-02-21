@@ -5,6 +5,9 @@ import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.repository.QuestionRepository;
+import com.preproject.server.tag.entity.TagQuestion;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,26 +24,30 @@ public class QuestionService {
     this.questionRepository = questionRepository;
   }
 
-  public Question createQuestion(Question question){
+  public Question createQuestion(Question question) {
     // TODO verify if member is present
-    // TODO verify if tag is available
     log.info("## POST ##");
     log.info("## requested question: {}", question.toString());
-    Question savedQuestion = questionRepository.save(question);
-    savedQuestion.getTagQuestions().forEach(tagQuestion -> log.info("## tag questions: {}", tagQuestion.getId()));
-    return savedQuestion;
+    return questionRepository.save(question);
   }
 
   public Question updateQuestion(Question question) {
+    log.info("## PATCH ##");
+    log.info("## requested question: {}", question.getTagQuestions().get(0).getTag().getName());
     Question findQuestion = findQuestion(question.getId());
     Optional.ofNullable(question.getTitle()).ifPresent(findQuestion::setTitle);
     Optional.ofNullable(question.getContent()).ifPresent(findQuestion::setContent);
+    // TODO: tag 변경 시 연관 테이블 어떻게 업데이트하는지ㅠㅠㅠ
+    if (!question.getTagQuestions().isEmpty()) {
+      findQuestion.setTagQuestions(question.getTagQuestions());
+    }
     return questionRepository.save(findQuestion);
   }
 
   private Question findQuestion(Long questionId) {
     Optional<Question> questionOptional = questionRepository.findById(questionId);
-    return questionOptional.orElseThrow(() -> new BusinessLogicException(QuestionExceptionCode.QUESTION_NOT_FOUND));
+    return questionOptional.orElseThrow(
+        () -> new BusinessLogicException(QuestionExceptionCode.QUESTION_NOT_FOUND));
   }
 
   // NOTE tag

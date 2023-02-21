@@ -32,7 +32,7 @@ public class Tag extends BaseEntity {
     @Default
     private List<TagMember> tagMembers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "tag")
     @Default
     private List<TagQuestion> tagQuestions = new ArrayList<>();
 

@@ -16,7 +16,7 @@ public interface QuestionMapper {
 
   Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto);
 
-  default QuestionResponseDto questionToQuestionPostResponseDto(Question question) {
+  default QuestionResponseDto questionToQuestionResponseDto(Question question) {
     List<String> names = question.getTagQuestions().stream()
         .map(tagQuestion -> tagQuestion.getTag().getName()).collect(Collectors.toList());
     return QuestionResponseDto.builder()

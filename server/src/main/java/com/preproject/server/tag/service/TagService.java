@@ -19,10 +19,9 @@ public class TagService {
   private final TagRepository tagRepository;
   private final TagMapper tagMapper;
 
-  public Tag findTag (String name) {
+  public Tag findTag(String name) {
     Optional<Tag> optionalTag = tagRepository.findTagByName(name);
-    Tag tag = optionalTag.orElseThrow(
+    return optionalTag.orElseThrow(
         () -> new BusinessLogicException(TagExceptionCode.TAG_NOT_FOUND));
-    return tag;
   }
 }
