@@ -49,8 +49,7 @@ public class MemberController {
         log.info("member = {}", member.getId());
         Member ceatedMember = memberService.createMember(member);
 
-        //dto 변환 로직
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL,ceatedMember.getId());
+            URI location = UriCreator.createUri(MEMBER_DEFAULT_URL,ceatedMember.getId());
 
         return ResponseEntity.created(location).build();
     }
