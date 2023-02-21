@@ -6,6 +6,7 @@ import com.preproject.server.member.data.MemberType;
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.comment.entity.Comment;
+import com.preproject.server.question.entity.Question;
 import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.tag.entity.TagQuestion;
 import com.preproject.server.vote.entity.Vote;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.EnumType.*;
+import static javax.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
@@ -66,5 +68,8 @@ public class Member extends BaseEntity {
     @Exclude
     private List<TagQuestion> tagQuestions = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "member")
+    @Default
+    @Exclude
+    private List<Question> questions = new ArrayList<>();
 }
