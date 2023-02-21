@@ -36,6 +36,7 @@ public class Question extends BaseEntity {
     // 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Member_Id")
+    @Setter
     private Member member;
     @OneToMany(mappedBy = "question")
     @Builder.Default

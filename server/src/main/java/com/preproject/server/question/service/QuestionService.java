@@ -24,7 +24,6 @@ public class QuestionService {
   public Question createQuestion(Question question){
     // TODO verify if member is present
     // TODO verify if tag is available
-
     Question savedQuestion = questionRepository.save(question);
     return savedQuestion;
   }

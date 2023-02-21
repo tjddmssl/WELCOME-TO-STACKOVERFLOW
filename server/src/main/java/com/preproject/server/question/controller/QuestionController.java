@@ -9,10 +9,12 @@ import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.mapper.QuestionMapper;
 import com.preproject.server.question.repository.QuestionRepository;
 import com.preproject.server.question.service.QuestionService;
+import com.preproject.server.question.service.QuestionTransService;
 import java.net.URI;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -31,30 +33,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/")
+@RequiredArgsConstructor
 @Validated
 public class QuestionController {
 
   private final QuestionService questionService;
-  private final QuestionMapper mapper;
+  private final QuestionTransService questionTransService;
   private final QuestionRepository repository;
   private final MemberRepository memberRepository;
 
-  public QuestionController(QuestionService questionService, QuestionMapper mapper,
-      QuestionRepository repository, MemberRepository memberRepository) {
-    this.questionService = questionService;
-    this.mapper = mapper;
-    this.repository = repository;
-    this.memberRepository = memberRepository;
-  }
-
   @PostMapping("/questions")
   public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto requestBody) {
-    Question question = questionService.createQuestion(
-        mapper.questionPostDtoToQuestion(requestBody));
-    QuestionResponseDto response = mapper.questionToQuestionPostResponseDto(question);
+    Question question = questionService.createQuestion(questionTransService.QuestionPostDtoToQuestion(requestBody));
     URI uri = UriComponentsBuilder.newInstance().path("/questions" + "/{resource-id}")
         .buildAndExpand(question.getId()).toUri();
-    return ResponseEntity.created(uri).body(response);
+    return ResponseEntity.created(uri).build();
   }
 
   @PatchMapping("/questions/{id}")
