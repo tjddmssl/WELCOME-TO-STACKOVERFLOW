@@ -44,12 +44,16 @@ public class QuestionService {
     return questionRepository.save(findQuestion);
   }
 
-  private Question findQuestion(Long questionId) {
+  public Question findQuestion(Long questionId) {
     Optional<Question> questionOptional = questionRepository.findById(questionId);
     return questionOptional.orElseThrow(
         () -> new BusinessLogicException(QuestionExceptionCode.QUESTION_NOT_FOUND));
   }
 
-  // NOTE tag
+  public Question removeQuestion(Long questionId) {
+    Question findQuestion = findQuestion(questionId);
+    questionRepository.delete(findQuestion);
+    return findQuestion;
+  }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.RestController;
 
+// 테스트용
 @RestController
 public class TagController {
 

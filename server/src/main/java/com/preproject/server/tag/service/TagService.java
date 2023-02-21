@@ -6,7 +6,6 @@ import com.preproject.server.tag.entity.Tag;
 import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.tag.entity.TagQuestion;
 import com.preproject.server.tag.exception.TagExceptionCode;
-import com.preproject.server.tag.mapper.TagMapper;
 import com.preproject.server.tag.repository.TagRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class TagService {
 
   private final TagRepository tagRepository;
-  private final TagMapper tagMapper;
 
   public Tag findTag(String name) {
     Optional<Tag> optionalTag = tagRepository.findTagByName(name);

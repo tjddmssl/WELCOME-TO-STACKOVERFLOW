@@ -27,22 +27,18 @@ public class QuestionTransService {
   public Question QuestionPostDtoToQuestion(QuestionPostDto questionPostDto) {
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
     question.setMember(memberService.getMember(questionPostDto.getMemberId()));
-    List<TagQuestion> tagQuestionList = questionPostDto.getTags().stream().map(name -> {
-      Tag tag = tagService.findTag(name);
-      TagQuestion tagQuestion = TagQuestion.builder().build();
-      tagQuestion.addQuestion(question);
-      tagQuestion.addTag(tag);
-      return tagQuestion;
-    }).collect(Collectors.toList());
-    question.setTagQuestions(tagQuestionList);
-    return question;
+    return getQuestion(question, questionPostDto.getTags());
   }
 
   public Question QuestionPatchDtoToQuestion(Long id, QuestionPatchDto questionPatchDto) {
     questionPatchDto.setId(id);
     Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
     // TODO 중복 코드 리팩토링
-    List<TagQuestion> tagQuestionList = questionPatchDto.getTags().stream().map(name -> {
+    return getQuestion(question, questionPatchDto.getTags());
+  }
+
+  private Question getQuestion(Question question, List<String> tags) {
+    List<TagQuestion> tagQuestionList = tags.stream().map(name -> {
       Tag tag = tagService.findTag(name);
       TagQuestion tagQuestion = TagQuestion.builder().build();
       tagQuestion.addQuestion(question);

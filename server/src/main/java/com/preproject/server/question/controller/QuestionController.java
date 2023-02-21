@@ -59,12 +59,14 @@ public class QuestionController {
 
   @GetMapping("/questions/{id}")
   public ResponseEntity getQuestion(@PathVariable("id") @Positive long id) {
-    return new ResponseEntity(HttpStatus.OK);
+    Question question = questionService.findQuestion(id);
+    return ResponseEntity.ok().body(new ResponseDto<>(question));
   }
 
   @DeleteMapping("/questions/{id}")
   public ResponseEntity deleteQuestion(@PathVariable("id") @Positive long id) {
-    return new ResponseEntity(HttpStatus.NO_CONTENT);
+    Question question = questionService.removeQuestion(id);
+    return ResponseEntity.noContent().build();
   }
 
 
