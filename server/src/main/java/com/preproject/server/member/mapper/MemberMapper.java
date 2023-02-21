@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
 public interface MemberMapper {
     Member postDtoToMember(MemberPostDto memberPostDto);
 
-    MemberPostResponseDto memberToMemberDto(Member member);
+//    MemberPostResponseDto memberToMemberDto(Member member);
 
 
     //리펙토링 부분
@@ -18,7 +18,7 @@ public interface MemberMapper {
         return Member.builder()
                 .password(patchDto.getPassword())
                 .displayName(patchDto.getDisplayName())
-                .profile(patchDto.getProfile())
+                .profile(patchDto.getProfileImage())
                 .aboutMe(patchDto.getAboutMe())
                 .build();
     }
@@ -28,7 +28,7 @@ public interface MemberMapper {
     MemberListDto memberToMemberListDto(Member member);
 
     //tag 미구현
-    MemberResponseDto MemberResponseDtoToMember(Member member);
+    MemberResponseDto memberResponseDtoToMember(Member member);
 
 
 }

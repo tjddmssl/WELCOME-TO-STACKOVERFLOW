@@ -1,8 +1,6 @@
 package com.preproject.server.member.controller;
 
 import com.preproject.server.answer.entity.Answer;
-import com.preproject.server.dto.PageInfo;
-import com.preproject.server.dto.PageResponseDto;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.dto.*;
 import com.preproject.server.member.entity.Member;
@@ -44,9 +42,11 @@ public class MemberController {
         Member findMember = memberService.createMember(member);
 
         //dto 변환 로직
-        MemberPostResponseDto memberPostResponseDto = memberMapper.memberToMemberDto(findMember);
+        MemberResponseDto memberResponseDto = memberMapper.memberResponseDtoToMember(findMember);
+        List<String> collect = findMember.getTagMembers().stream().map(tagMember -> tagMember.getTag().getName()).collect(Collectors.toList());
+        memberResponseDto.setTags(collect);
 
-        return new ResponseEntity(new ResponseDto(memberPostResponseDto), HttpStatus.CREATED);
+        return new ResponseEntity(new ResponseDto(memberResponseDto), HttpStatus.CREATED);
     }
 
     /*
@@ -56,9 +56,9 @@ public class MemberController {
     public ResponseEntity getMember(@PathVariable Long id) {
         Member member = memberService.getMember(id);
 
-        MemberResponseDto memberResponseDto = memberMapper.MemberResponseDtoToMember(member);
+        MemberResponseDto memberResponseDto = memberMapper.memberResponseDtoToMember(member);
         List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-        memberResponseDto.setTag(collect);
+        memberResponseDto.setTags(collect);
 
         return new ResponseEntity(new ResponseDto(memberResponseDto), HttpStatus.OK);
     }
@@ -84,12 +84,12 @@ public class MemberController {
         Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
 
 
-        MemberResponseDto responseDto = memberMapper.MemberResponseDtoToMember(updatedMember);
+        MemberResponseDto responseDto = memberMapper.memberResponseDtoToMember(updatedMember);
 
         //TODO 리펙토링
         List<String> collect = updatedMember.getTagMembers().stream()
                 .map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-        responseDto.setTag(collect);
+        responseDto.setTags(collect);
 
         return new ResponseEntity(new ResponseDto<MemberResponseDto>(responseDto),HttpStatus.OK);
     }

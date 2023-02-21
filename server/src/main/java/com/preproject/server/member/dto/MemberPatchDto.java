@@ -8,7 +8,7 @@ import java.util.List;
 public class MemberPatchDto {
     private String password;
     private String displayName;
-    private String profile;
+    private String profileImage;
     private String aboutMe;
     private List<String> tag;
 }

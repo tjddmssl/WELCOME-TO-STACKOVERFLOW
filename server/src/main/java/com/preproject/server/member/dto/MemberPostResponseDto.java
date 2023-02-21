@@ -13,11 +13,10 @@ public class MemberPostResponseDto {
     private String email;
     private String displayName;
     private String password;
-    private String profile;
+    private String profileImage;
     private String location;
     private String aboutMe;
     private MemberStatus memberStatus;
-    private MemberType memberType;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
