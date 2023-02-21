@@ -1,21 +1,17 @@
-package com.preproject.server.Member.entity;
+package com.preproject.server.member.entity;
 
 
-import com.preproject.server.Member.data.MemberStatus;
-import com.preproject.server.Member.data.MemberType;
 import com.preproject.server.baseEntity.BaseEntity;
+import com.preproject.server.member.data.MemberStatus;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.EnumType.*;
-import static javax.persistence.FetchType.*;
-import static lombok.AccessLevel.*;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Builder

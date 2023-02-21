@@ -1,6 +1,5 @@
-package com.preproject.server.Member.utils;
+package com.preproject.server.member.utils;
 
-import com.preproject.server.Member.data.MemberType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,7 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.preproject.server.Member.data.MemberType.*;
+import static com.preproject.server.member.data.MemberType.ROLE_ADMIN;
+import static com.preproject.server.member.data.MemberType.ROLE_USER;
 
 @Component
 public class CustomAuthorityUtils {

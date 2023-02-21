@@ -1,8 +1,8 @@
-package com.preproject.server.Member.Service;
+package com.preproject.server.member.Service;
 
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.Member.repository.MemberRepository;
-import com.preproject.server.Member.utils.CustomAuthorityUtils;
+import com.preproject.server.member.entity.Member;
+import com.preproject.server.member.repository.MemberRepository;
+import com.preproject.server.member.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

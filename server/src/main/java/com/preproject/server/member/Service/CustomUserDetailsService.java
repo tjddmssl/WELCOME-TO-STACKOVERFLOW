@@ -1,17 +1,13 @@
-package com.preproject.server.Member.Service;
+package com.preproject.server.member.Service;
 
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.Member.repository.MemberRepository;
-import com.preproject.server.Member.utils.CustomAuthorityUtils;
+import com.preproject.server.member.entity.Member;
+import com.preproject.server.member.repository.MemberRepository;
+import com.preproject.server.member.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
-package com.preproject.server.Member.Service;
+package com.preproject.server.member.Service;
 
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.Member.utils.CustomAuthorityUtils;
+import com.preproject.server.member.entity.Member;
+import com.preproject.server.member.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,7 @@
-package com.preproject.server.Member.mapper;
+package com.preproject.server.member.mapper;
 
-import com.preproject.server.Member.dto.MemberPostDto;
-import com.preproject.server.Member.entity.Member;
+import com.preproject.server.member.dto.MemberPostDto;
+import com.preproject.server.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

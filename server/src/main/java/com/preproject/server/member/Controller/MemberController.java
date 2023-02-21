@@ -1,10 +1,9 @@
-package com.preproject.server.Member.Controller;
+package com.preproject.server.member.Controller;
 
-import com.preproject.server.Member.Service.MemberServiceImpl;
-import com.preproject.server.Member.dto.MemberPostDto;
-import com.preproject.server.Member.dto.ResponseDto;
-import com.preproject.server.Member.entity.Member;
-import com.preproject.server.Member.mapper.MemberMapper;
+import com.preproject.server.member.Service.MemberServiceImpl;
+import com.preproject.server.member.dto.ResponseDto;
+import com.preproject.server.member.entity.Member;
+import com.preproject.server.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ public class MemberController {
     private final MemberMapper mapper;
 
     @PostMapping
-    public ResponseEntity createMember(@RequestBody MemberPostDto post) {
+    public ResponseEntity createMember(@RequestBody com.preproject.server.member.dto.MemberPostDto post) {
 
         Member member = mapper.postDtoToMember(post);
         log.info("member = {}", member.getId());
