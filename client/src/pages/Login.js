@@ -1,3 +1,4 @@
+import Header from '../components/Header';
 import LoginForm from '../components/LoginForm';
 
 //* LOGIN_001
@@ -5,7 +6,7 @@ import LoginForm from '../components/LoginForm';
 function Login() {
   return (
     <div>
-      <h1>Login page</h1>
+      <Header />
       <LoginForm />
     </div>
   );
