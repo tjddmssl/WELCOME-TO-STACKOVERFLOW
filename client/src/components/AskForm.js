@@ -27,11 +27,12 @@ const TitleForm = styled.div`
     border: 1px solid lightgrey;
   }
   button {
+    text-transform: capitalize;
     margin-top: 10px;
     width: 5%;
     background-color: #0a95ff;
     color: white;
-    font-size: x-small;
+    font-size: small;
   }
   button:hover {
     background-color: #0a95ff;
@@ -52,6 +53,10 @@ const Container = styled.div`
 
   p {
     margin-top: 10px;
+  }
+  button {
+    text-transform: capitalize;
+    font-size: small;
   }
 `;
 
@@ -79,11 +84,12 @@ const TagForm = styled.div`
     border: 1px solid lightgrey;
   }
   button {
+    text-transform: capitalize;
     margin-top: 10px;
     width: 5%;
     background-color: #0a95ff;
     color: white;
-    font-size: x-small;
+    font-size: small;
   }
   button:hover {
     background-color: #0a95ff;
@@ -91,6 +97,17 @@ const TagForm = styled.div`
   }
 `;
 
+const Form = styled.div`
+  padding-left: 25px;
+  .discard {
+    text-transform: capitalize;
+    margin-bottom: 30px;
+    color: red;
+  }
+  .discard:hover {
+    background-color: lightpink;
+  }
+`;
 function AskForm() {
   return (
     <div>
@@ -154,7 +171,9 @@ function AskForm() {
         <input type="text" placeholder="e.g.(vba css json)"></input>
         <Button>Next</Button>
       </TagForm>
-      <Button className="discard">Discard draft</Button>
+      <Form>
+        <Button className="discard">Discard draft</Button>
+      </Form>
     </div>
   );
 }
