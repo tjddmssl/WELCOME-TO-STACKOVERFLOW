@@ -7,16 +7,16 @@ import { useEffect, useState } from 'react';
 const Container = styled.div`
   width: 164px;
   display: block;
-  margin-top: 20px;
-  height: auto;
   position: relative;
+  border-right: 1px solid #d6d9dc;
 `;
 
 const StickyContainer = styled.div`
+  top: 50px;
   position: sticky;
   max-height: 100vh;
   height: 380px;
-  top: 10px;
+  padding-top: 24px;
 
   .nav-selected__a {
     font-weight: bold;
@@ -28,6 +28,7 @@ const StickyContainer = styled.div`
   }
   .nav-public__li {
     font-weight: lighter;
+    padding: 10px;
   }
   .nav-public__a {
     padding-left: 40px;
@@ -36,7 +37,6 @@ const StickyContainer = styled.div`
     padding-left: 5px;
   }
   li {
-    padding: 10px;
     font-size: 15px;
     height: 34px;
     display: flex;
