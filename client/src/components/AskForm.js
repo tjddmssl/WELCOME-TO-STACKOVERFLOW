@@ -51,7 +51,7 @@ const Container = styled.div`
   }
 
   p {
-    margin
+    margin-top: 10px;
   }
 `;
 
