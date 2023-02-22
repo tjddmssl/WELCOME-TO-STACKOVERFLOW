@@ -55,20 +55,6 @@ public class MemberController {
         return ResponseEntity.created(location).build();
     }
 
-    /*
-     * 유저 상세 조회 - user 정보만 따로 빼준다.
-     * */
-    @GetMapping("/{id}")
-    public ResponseEntity getMember(@PathVariable Long id) {
-        Member member = memberService.getMember(id);
-
-        MemberResponseDto memberResponseDto = memberMapper.memberResponseDtoToMember(member);
-        List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-        memberResponseDto.setTags(collect);
-
-        return new ResponseEntity(new ResponseDto(memberResponseDto), HttpStatus.OK);
-    }
-
 
     /*
     * 회원 삭제 기능 but 비밀 번호 암호화 시 추가 변경 필요
@@ -86,7 +72,7 @@ public class MemberController {
     public ResponseEntity updateMember(@PathVariable Long id, @RequestBody MemberPatchDto patchDto) {
         Member member = memberMapper.patchDtoToMember(patchDto);
 
-        //TODO 리펙토링 patchDto.getTag() -> List<TagMember> 변환 과정 만들기
+        //TODO 리펙토링 patchDto.getTag() -> List<TagMember> 변환 과정 만들기, 이미지 파일 또한 판단할 필요 있음
         Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
 
 

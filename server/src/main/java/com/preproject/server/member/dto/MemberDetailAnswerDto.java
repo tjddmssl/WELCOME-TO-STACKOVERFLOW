@@ -1,6 +1,7 @@
 package com.preproject.server.member.dto;
 
 import com.preproject.server.answer.entity.Answer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,13 @@ public class MemberDetailAnswerDto {
         this.content = answer.getContent();
         this.voteCount = answer.getVoteCount();
         this.createdDate = answer.getCreatedDate();
+    }
+
+    public MemberDetailAnswerDto(Long id, String content, long voteCount, LocalDateTime createdDate) {
+        this.id = id;
+        this.content = content;
+        this.voteCount = voteCount;
+        this.createdDate = createdDate;
     }
 }
 

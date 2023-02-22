@@ -35,6 +35,7 @@ public class Member extends BaseEntity {
     @Column(name = "Member_Id")
     private Long id;
     private String email;
+
     private String displayName;
     private String password;
     private String profile;

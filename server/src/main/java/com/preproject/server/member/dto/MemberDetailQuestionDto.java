@@ -24,4 +24,13 @@ public class MemberDetailQuestionDto {
         this.viewCount = question.getViewCount();
         this.createdDate = question.getCreatedDate();
     }
+
+    public MemberDetailQuestionDto(Long id, String title, List<String> tags, long votedCount, long viewCount, LocalDateTime createdDate) {
+        this.id = id;
+        this.title = title;
+        this.tags = tags;
+        this.votedCount = votedCount;
+        this.viewCount = viewCount;
+        this.createdDate = createdDate;
+    }
 }

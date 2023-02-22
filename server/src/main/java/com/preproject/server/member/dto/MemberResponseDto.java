@@ -1,11 +1,14 @@
 package com.preproject.server.member.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class MemberResponseDto {
     private Long id;
     private String email;
@@ -13,11 +16,11 @@ public class MemberResponseDto {
     private String displayName;
     private String profile;
     private String aboutMe;
-    private List<String> tags;
     private String location;
-
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+    private List<String> tags = new ArrayList<>();
+
 
 }
 //

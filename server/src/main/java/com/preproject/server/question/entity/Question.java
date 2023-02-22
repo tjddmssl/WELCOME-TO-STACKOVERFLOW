@@ -45,7 +45,7 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "Member_Id")
     @Setter
     private Member member;
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     @Builder.Default
     private List<Answer> answers = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class Question extends BaseEntity {
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     @Builder.Default
     private List<Vote> votes = new ArrayList<>();
 
