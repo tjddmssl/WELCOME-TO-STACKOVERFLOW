@@ -66,10 +66,5 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     @Default
     @Exclude
-    private List<TagQuestion> tagQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
-    @Default
-    @Exclude
     private List<Question> questions = new ArrayList<>();
 }
