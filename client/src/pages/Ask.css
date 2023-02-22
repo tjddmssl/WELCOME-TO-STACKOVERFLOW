@@ -1,0 +1,30 @@
+.problem > button {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 5%;
+    background-color: #0a95ff;
+    color: white;
+    font-size: x-small;
+  }
+.problem > button:hover {
+    background-color: #0a95ff;
+    color: lightgray;
+  }
+
+.try > button {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 5%;
+    background-color: #0a95ff;
+    color: white;
+    font-size: x-small;
+  }
+.try > button:hover {
+    background-color: #0a95ff;
+    color: lightgray;
+  }
+
+.discard {
+  margin-bottom: 30px;
+  color: red;
+}

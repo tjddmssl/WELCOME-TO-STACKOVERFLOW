@@ -8,7 +8,6 @@ import Questions from './pages/Questions';
 import View from './pages/View';
 import Tags from './pages/Tags';
 import Users from './pages/Users';
-import QButton from './components/QButton';
 import Ask from './pages/Ask';
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
         <Link to="/view">View</Link>
         <Link to="/tags">Tags</Link>
         <Link to="/users">Users</Link>
-        <Link to="/ask">{<QButton />}</Link>
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
