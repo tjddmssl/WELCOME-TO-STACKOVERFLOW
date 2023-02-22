@@ -9,6 +9,9 @@ import { BsStackOverflow } from 'react-icons/bs';
 
 const Container = styled.div`
   float: right;
+  @media screen and (max-width: 980px) {
+    display: none;
+  }
 `;
 //? 노란 박스
 const Memo = styled.ul`

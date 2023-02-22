@@ -4,7 +4,7 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
   background-color: #232629;
-  width: 100vw;
+  width: 100%;
 `;
 
 const FooterBackGround = styled.div`
