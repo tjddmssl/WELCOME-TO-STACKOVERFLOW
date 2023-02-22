@@ -1,4 +1,4 @@
-package com.preproject.server.Member.exception;
+package com.preproject.server.member.exception;
 
 import com.preproject.server.exception.ExceptionCode;
 import lombok.Getter;

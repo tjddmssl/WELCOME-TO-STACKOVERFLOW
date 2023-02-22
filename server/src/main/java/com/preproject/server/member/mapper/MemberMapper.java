@@ -12,6 +12,8 @@ public interface MemberMapper {
 
 //    MemberPostResponseDto memberToMemberDto(Member member);
 
+    @Mapping(source = "profile", target = "profileImage")
+    MemberSimpleDto memberToSimpleDto(Member member);
 
     //리펙토링 부분
     default Member patchDtoToMember(MemberPatchDto patchDto) {
@@ -29,7 +31,6 @@ public interface MemberMapper {
 
     //tag 미구현
     MemberResponseDto memberResponseDtoToMember(Member member);
-
 
 }
 
