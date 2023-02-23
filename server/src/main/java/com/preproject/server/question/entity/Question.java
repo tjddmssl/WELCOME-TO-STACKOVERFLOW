@@ -51,7 +51,7 @@ public class Question extends BaseEntity {
   @Builder.Default
   private List<Answer> answers = new ArrayList<>();
 
-  @OneToMany(mappedBy = "question")
+  @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
   @Builder.Default
   private List<Comment> comments = new ArrayList<>();
 
