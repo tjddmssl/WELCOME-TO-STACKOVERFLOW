@@ -2,6 +2,7 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
+import './AnswerForm.css';
 
 const Header = styled.div`
   border-top: 1px solid #e3e6e8;
@@ -13,16 +14,8 @@ const Header = styled.div`
 
 const Container = styled.div`
   margin-left: 25px;
-  width: 700px;
-
-  button {
-    text-transform: capitalize;
-    margin-top: 10px;
-    width: auto;
-    background-color: #0a95ff;
-    color: white;
-    font-size: small;
-  }
+  margin-right: 25px;
+  width: 800px;
 `;
 
 const Footer = styled.div`
@@ -48,7 +41,6 @@ function AnswerForm({ question }) {
       <Header>
         <h3>Your Answer</h3>
       </Header>
-
       <Container>
         <Editor
           previewStyle="tap" // 미리보기 스타일 지정
@@ -57,12 +49,12 @@ function AnswerForm({ question }) {
             // 툴바 옵션 설정
             ['heading', 'bold', 'italic', 'strike'],
             ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
-            ['table', 'image', 'link'],
+            ['ul', 'ol', 'task'],
+            ['image', 'link'],
             ['code', 'codeblock'],
           ]}
         ></Editor>
-        <Button>Post Your Answer</Button>
+        <Button className="post">Post Your Answer</Button>
         <Footer>
           Not the answer you{"'"}re looking for? Browse other questions tagged
           {question.tag &&

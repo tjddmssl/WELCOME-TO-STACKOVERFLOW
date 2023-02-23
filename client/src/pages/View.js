@@ -10,6 +10,7 @@ import QView from '../components/QView';
 import styled from 'styled-components';
 import AnswerForm from '../components/AnswerForm';
 import AnswerView from '../components/AnswerView';
+import NoAnswerView from '../components/NoAnswerView';
 import getAnswerSlice from '../redux/slice/getAnswer';
 
 //* VIEW_01
@@ -76,7 +77,7 @@ function View() {
               <QView>
                 <QViewDetail />
               </QView>
-              <AnswerView answer={answer} />
+              {answer ? <AnswerView answer={answer} /> : <NoAnswerView />}
             </ContentContainer>
             <Sidebar />
             <AnswerForm question={question} />
