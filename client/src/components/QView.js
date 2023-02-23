@@ -9,7 +9,7 @@ function QView() {
   const data = useSelector((state) => {
     return state.getQView.question;
   });
-  console.log(data);
+
   useEffect(() => {
     const getQuestion = async () => {
       try {

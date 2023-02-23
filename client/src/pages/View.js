@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -5,6 +6,7 @@ import Sidebar from '../components/Sidebar';
 import QViewDetail from '../components/QViewDetail';
 import QView from '../components/QView';
 import styled from 'styled-components';
+import AnswerForm from '../components/AnswerForm';
 
 //* VIEW_01
 
@@ -37,6 +39,9 @@ const ContentContainer = styled.div`
 
 //* View 001
 function View() {
+  const data = useSelector((state) => {
+    return state.getQView.question;
+  });
   return (
     <div>
       <Container>
@@ -50,8 +55,10 @@ function View() {
               </QView>
             </ContentContainer>
             <Sidebar />
+            <AnswerForm question={data} />
           </div>
         </MainContainer>
+
         <Footer />
       </Container>
     </div>
