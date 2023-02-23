@@ -5,6 +5,7 @@ import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.repository.QuestionRepository;
+import com.preproject.server.vote.entity.Vote;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +83,11 @@ public class QuestionService {
   public void removeQuestion(Long questionId) {
     Question findQuestion = findQuestion(questionId);
     questionRepository.delete(findQuestion);
+  }
+
+  public long addQuestionVoteCount(Question question, Vote.status status) {
+    question.setVoteCount(question.getVoteCount() + status.getNum());
+    return question.getVoteCount();
   }
 
   public Page<Question> createPageSimplePage(Pageable pageable, Long id) {
