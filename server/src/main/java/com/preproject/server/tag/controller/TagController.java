@@ -2,16 +2,25 @@ package com.preproject.server.tag.controller;
 
 import com.preproject.server.comment.entity.Comment;
 import com.preproject.server.comment.repository.CommentRepository;
+import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.repository.MemberRepository;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.repository.QuestionRepository;
+import com.preproject.server.tag.dto.TagGetDto;
 import com.preproject.server.tag.entity.Tag;
 import com.preproject.server.tag.entity.TagQuestion;
 import com.preproject.server.tag.repository.TagRepository;
+import com.preproject.server.tag.service.TagService;
+import com.preproject.server.tag.service.TagTransService;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // 테스트용
@@ -23,6 +32,17 @@ public class TagController {
   private final MemberRepository memberRepository;
   private final QuestionRepository questionRepository;
   private final CommentRepository commentRepository;
+
+
+  private final TagTransService tagTransService;
+  private final TagService tagService;
+
+  @GetMapping("/tags")
+  public ResponseEntity getTags(
+      @PageableDefault(size = 28, sort = "name") Pageable pageable) {
+    Page<TagGetDto> page = tagTransService.tagPageToTagGetDtoPage(tagService.findTags(pageable));
+    return ResponseEntity.ok().body(new ResponseDto<>(page));
+  }
 
   @PostConstruct
   public void initTag() {
