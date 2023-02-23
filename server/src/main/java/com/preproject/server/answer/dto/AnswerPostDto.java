@@ -8,6 +8,5 @@ import java.util.List;
 public class AnswerPostDto {
     private Long questionId;
     private String content;
-    private List<String> tags;
     private Long memberId;
 }

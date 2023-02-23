@@ -1,6 +1,7 @@
 package com.preproject.server.question.service;
 
 import com.preproject.server.exception.BusinessLogicException;
+import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
@@ -92,5 +93,9 @@ public class QuestionService {
 
   public Page<Question> createPageSimplePage(Pageable pageable, Long id) {
     return questionRepository.findSimpleQuestion(pageable, id);
+  }
+
+  public Question getQuestion(long questionId) {
+    return questionRepository.findById(questionId).get();
   }
 }

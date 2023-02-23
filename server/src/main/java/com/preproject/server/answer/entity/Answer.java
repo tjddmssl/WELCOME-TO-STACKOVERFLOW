@@ -7,11 +7,7 @@ import com.preproject.server.member.entity.Member;
 import com.preproject.server.comment.entity.Comment;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.vote.entity.Vote;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +24,7 @@ public class Answer extends BaseEntity {
   private Long id;
   @Column(nullable = false)
   @Lob
+  @Setter
   private String content;
 
   @Column(nullable = false)
@@ -37,9 +34,11 @@ public class Answer extends BaseEntity {
   //연관관계
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Member_Id")
+  @Setter
   private Member member;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Question_Id")
+  @Setter
   private Question question;
 
   @OneToMany(mappedBy = "answer")
