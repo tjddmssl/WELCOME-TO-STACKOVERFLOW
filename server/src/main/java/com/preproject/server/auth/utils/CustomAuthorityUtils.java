@@ -1,4 +1,4 @@
-package com.preproject.server.member.utils;
+package com.preproject.server.auth.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
