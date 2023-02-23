@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import { BsSearch } from 'react-icons/bs';
+import Footer from '../components/Footer';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,7 +39,6 @@ const TagHeader = styled.header`
   display: flex;
   flex-direction: column;
   padding-bottom: 16px;
-  font-size: 13px;
   color: #232639;
   line-height: 1.4;
   p {
@@ -43,11 +49,11 @@ const TagHeader = styled.header`
     vertical-align: baseline;
   }
 `;
+
 const Title = styled.h1`
   font-weight: 400;
   margin: 0 0 25px;
 `;
-import Footer from '../components/Footer';
 
 const ShowSynonyms = styled.a`
   text-decoration: none;
