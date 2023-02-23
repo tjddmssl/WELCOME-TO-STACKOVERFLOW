@@ -13,19 +13,27 @@ public class ErrorResponse {
 
   private final List<FieldError> fieldErrors;
   private final List<ConstraintViolationError> constraintViolationErrors;
+  private final BusinessLogicException businessLogicException;
 
   private ErrorResponse(List<FieldError> fieldErrors,
-      List<ConstraintViolationError> constraintViolationErrors) {
+      List<ConstraintViolationError> constraintViolationErrors,
+      BusinessLogicException businessLogicException) {
     this.fieldErrors = fieldErrors;
     this.constraintViolationErrors = constraintViolationErrors;
+    this.businessLogicException = businessLogicException;
   }
 
   public static ErrorResponse of(BindingResult bindingResult) {
-    return new ErrorResponse(FieldError.of(bindingResult), null);
+    return new ErrorResponse(FieldError.of(bindingResult), null, null);
   }
 
   public static ErrorResponse of(Set<ConstraintViolation<?>> constraintViolations) {
-    return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations));
+    return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations),
+        null);
+  }
+
+  public static ErrorResponse of(BusinessLogicException businessLogicException) {
+    return new ErrorResponse(null, null, businessLogicException);
   }
 
   @Getter

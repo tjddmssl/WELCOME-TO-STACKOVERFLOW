@@ -8,7 +8,6 @@ import com.preproject.server.comment.repository.CommentRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +16,7 @@ public class CommentService {
   private final CommentRepository commentRepository;
   private final CommentMapper commentMapper;
 
-  public Comment createComment(Comment comment){
-    // TODO verify question is available
+  public Comment createComment(Comment comment) {
     // TODO verify member id available
     return commentRepository.save(comment);
   }

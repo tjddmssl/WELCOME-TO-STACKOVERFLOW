@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
@@ -42,16 +43,14 @@ public class Comment extends BaseEntity {
   private Member member;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Question_Id")
+  @Setter
   private Question question;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Answer_Id")
   private Answer answer;
 
   public void setMember(Long memberId) {
-    this.member =  Member.builder().id(memberId).build();
+    this.member = Member.builder().id(memberId).build();
   }
 
-  public void setQuestion(Long questionId) {
-    this.question = Question.builder().id(questionId).build();
-  }
 }

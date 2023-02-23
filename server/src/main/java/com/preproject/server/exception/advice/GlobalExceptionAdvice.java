@@ -1,5 +1,6 @@
 package com.preproject.server.exception.advice;
 
+import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.exception.ErrorResponse;
 import javax.validation.ConstraintViolationException;
@@ -27,7 +28,7 @@ public class GlobalExceptionAdvice {
 
   @ExceptionHandler
   public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
-    return new ResponseEntity(e.getExceptionCode().getStatus());
+    return ResponseEntity.status(e.getExceptionCode().getStatus()).body(new ResponseDto<>(e.getExceptionCode().getMessage()));
   }
 
 }
