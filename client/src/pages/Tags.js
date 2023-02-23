@@ -11,12 +11,6 @@ const Wrapper = styled.div`
   padding-top: 50px;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-`;
-
 const Container = styled.div`
   flex-wrap: nowrap;
   display: flex;
