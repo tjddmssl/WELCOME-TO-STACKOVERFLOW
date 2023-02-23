@@ -43,7 +43,7 @@ public class TagController {
                     .build())).build(),
         Question.builder().title("title").content("content").member(memberList.get(1))
             .tagQuestions(List.of(
-                TagQuestion.builder().tag(tags.get(1)).question(Question.builder().id(1L).build())
+                TagQuestion.builder().tag(tags.get(0)).question(Question.builder().id(2L).build())
                     .build())).build(),
         Question.builder().title("title").content("content").member(memberList.get(2))
             .tagQuestions(List.of(

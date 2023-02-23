@@ -62,8 +62,7 @@ public class QuestionTransService {
   }
 
   public Page<QuestionListGetDto> questionToQuestionListGetDto(Page<Question> questionPage) {
-    Page<QuestionListGetDto> questionListGetDtoPage = questionPage.map(
+    return questionPage.map(
         questionMapper::questionToQuestionListGetDto);
-    return questionListGetDtoPage;
   }
 }
