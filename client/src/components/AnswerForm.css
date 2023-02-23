@@ -1,0 +1,8 @@
+.post {
+    text-transform: capitalize;
+    margin-top: 10px;
+    width: auto;
+    background-color: #0a95ff;
+    color: white;
+    font-size: small;
+}

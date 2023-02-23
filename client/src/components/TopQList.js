@@ -100,7 +100,7 @@ const UserInfoWrap = styled.div`
 `;
 
 const TopQList = ({ content }) => {
-  const titleUrl = '/';
+  // const titleUrl = '/';
   const tagLinkUrl = '/';
   const userProfileUrl = '/';
   return (
@@ -123,7 +123,7 @@ const TopQList = ({ content }) => {
       </QStatus>
       <QContent>
         <h3 className="topques-title__h3">
-          <a href={titleUrl}>{content.title}</a>
+          <a href="/view">{content.title}</a>
         </h3>
         <QInfo>
           <div>

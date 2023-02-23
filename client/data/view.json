@@ -1,0 +1,73 @@
+{
+  "question": 
+    {
+    "id": 1,
+    "title": "question title",
+    "content": "question content",
+    "tag": [
+      "java",
+      "array",
+      "integer"
+    ],
+    "createdDate": "2023-02-21T05:29:52.226Z",
+    "lastModifiedDate": "2023-02-21T05:29:52.226Z",
+    "member": {
+      "id": 0,
+      "displayName": "user0",
+      "profileImage": ""
+    },
+    "comment": [
+      {
+        "content": "comment1",
+        "createdDate": "2023-02-21T05:29:52.226Z",
+        "member": {
+          "id": 3,
+          "displayName": "user3",
+          "profileImage": ""
+        }
+      },
+      {
+        "content": "comment2",
+        "createdDate": "2023-02-21T05:29:52.226Z",
+        "member": {
+          "id": 2,
+          "displayName": "user2",
+          "profileImage": ""
+        }
+      }
+    ]
+  },
+"answer": {
+  "id": 1,
+  "content": "answer content",
+  "voteCount": "11",
+  "createdDate": "2023-02-21T05:42:15.661Z",
+  "member": {
+    "id": 13,
+    "displayName": "qwe",
+    "profileImage": ""
+  },
+  "comment": [
+    {
+      "content": "comment11",
+      "createdDate": "2023-02-21T05:42:15.661Z",
+      "member": {
+        "id": 13,
+        "displayName": "user13",
+        "profileImage": ""
+      }
+    },
+    {
+      "content": "comment22",
+      "createdDate": "2023-02-21T05:42:15.661Z",
+      "member": {
+        "id": 15,
+        "displayName": "user15",
+        "profileImage": ""
+      }
+    }
+  ]
+}
+}
+
+
