@@ -5,9 +5,6 @@ import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.repository.QuestionRepository;
-import com.preproject.server.tag.entity.TagQuestion;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -49,6 +46,10 @@ public class QuestionService {
     Optional<Question> questionOptional = questionRepository.findById(questionId);
     return questionOptional.orElseThrow(
         () -> new BusinessLogicException(QuestionExceptionCode.QUESTION_NOT_FOUND));
+  }
+
+  public Page<Question> findQuestions(Pageable pageable) {
+    return questionRepository.findAll(pageable);
   }
 
   public Question removeQuestion(Long questionId) {
