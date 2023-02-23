@@ -25,7 +25,8 @@ public class ErrorResponse {
   }
 
   public static ErrorResponse of(Set<ConstraintViolation<?>> constraintViolations) {
-    return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations));
+    return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations)
+    );
   }
 
   @Getter
