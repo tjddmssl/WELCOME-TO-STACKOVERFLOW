@@ -1,4 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import axios from 'axios';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -7,6 +9,8 @@ import QViewDetail from '../components/QViewDetail';
 import QView from '../components/QView';
 import styled from 'styled-components';
 import AnswerForm from '../components/AnswerForm';
+import AnswerView from '../components/AnswerView';
+import getAnswerSlice from '../redux/slice/getAnswer';
 
 //* VIEW_01
 
@@ -39,9 +43,28 @@ const ContentContainer = styled.div`
 
 //* View 001
 function View() {
-  const data = useSelector((state) => {
+  const dispatch = useDispatch();
+
+  const question = useSelector((state) => {
     return state.getQView.question;
   });
+
+  const answer = useSelector((state) => {
+    return state.getAnswer.answer;
+  });
+
+  useEffect(() => {
+    const getAnswerDetail = async () => {
+      try {
+        const response = await axios.get('http://localhost:3002/answer');
+        dispatch(getAnswerSlice.actions.get(response.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAnswerDetail();
+  }, []);
+
   return (
     <div>
       <Container>
@@ -53,9 +76,10 @@ function View() {
               <QView>
                 <QViewDetail />
               </QView>
+              <AnswerView answer={answer} />
             </ContentContainer>
             <Sidebar />
-            <AnswerForm question={data} />
+            <AnswerForm question={question} />
           </div>
         </MainContainer>
 

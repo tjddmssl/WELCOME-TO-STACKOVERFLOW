@@ -31,7 +31,6 @@ const ContentContainer = styled.div`
 `;
 
 const Content = styled.div`
-  margin-left: 20px;
   display: flex;
   flex-direction: column;
   .tag {
@@ -50,6 +49,17 @@ const Content = styled.div`
   button:hover {
     background-color: #d0e3f1;
   }
+  .comment {
+    color: #b6babf !important;
+    width: 100px !important;
+    margin-top: 40px;
+    background-color: transparent;
+  }
+
+  .comment:hover {
+    color: #0174cc !important;
+    background-color: transparent;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -58,6 +68,7 @@ const ButtonContainer = styled.div`
   button {
     background-color: transparent;
     color: #6b737c;
+    width: auto;
   }
 
   button:hover {
@@ -132,8 +143,9 @@ function QViewDetail({ question }) {
                 <MdWavingHand />
                 {' New contributor'}
               </div>
-            </div>
+            </div>{' '}
           </ButtonContainer>
+          <button className="comment">Add a comment</button>
         </Content>
       </ContentContainer>
     </>
