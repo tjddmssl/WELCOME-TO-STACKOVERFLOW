@@ -9,6 +9,7 @@ const Container = styled.div`
     color: white;
     font-size: 12px;
     padding: 10px;
+    text-transform: capitalize;
   }
 `;
 
