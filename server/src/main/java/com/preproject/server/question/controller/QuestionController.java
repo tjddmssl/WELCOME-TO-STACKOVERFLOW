@@ -6,6 +6,7 @@ import com.preproject.server.comment.mapper.CommentMapper;
 import com.preproject.server.comment.service.CommentService;
 import com.preproject.server.comment.service.CommentTransService;
 import com.preproject.server.dto.ResponseDto;
+import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.dto.QuestionResponseDto;
@@ -66,7 +67,7 @@ public class QuestionController {
         .path("/questions/{question-id}/comments/{comment-id}")
         .buildAndExpand(questionId, comment.getId()).toUri();
     return ResponseEntity.created(uri).body(
-        new ResponseDto(commentMapper.commentToCommentResponseDto(comment)));
+        new ResponseDto<>(commentMapper.commentToCommentResponseDto(comment)));
   }
 
   @PatchMapping("/questions/{id}")
@@ -83,13 +84,13 @@ public class QuestionController {
   @GetMapping("/questions/{id}")
   public ResponseEntity getQuestion(@PathVariable("id") @Positive long id) {
     Question question = questionService.findQuestion(id);
-    return ResponseEntity.ok().body(new ResponseDto<>(question));
+    QuestionGetDto questionGetDto = questionTransService.QuestionToQuestionGetDto(question);
+    return ResponseEntity.ok().body(new ResponseDto<>(questionGetDto));
   }
 
 
   @DeleteMapping("/questions/{id}")
   public ResponseEntity deleteQuestion(@PathVariable("id") @Positive long id) {
-    Question question = questionService.removeQuestion(id);
     return ResponseEntity.noContent().build();
   }
 

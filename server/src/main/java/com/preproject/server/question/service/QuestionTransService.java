@@ -1,6 +1,7 @@
 package com.preproject.server.question.service;
 
 import com.preproject.server.member.Service.MemberService;
+import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.entity.Question;
@@ -27,17 +28,16 @@ public class QuestionTransService {
   public Question QuestionPostDtoToQuestion(QuestionPostDto questionPostDto) {
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
     question.setMember(memberService.getMember(questionPostDto.getMemberId()));
-    return getQuestion(question, questionPostDto.getTags());
+    return getTagQuestion(question, questionPostDto.getTags());
   }
 
   public Question QuestionPatchDtoToQuestion(Long id, QuestionPatchDto questionPatchDto) {
     questionPatchDto.setId(id);
     Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
-    // TODO 중복 코드 리팩토링
-    return getQuestion(question, questionPatchDto.getTags());
+    return getTagQuestion(question, questionPatchDto.getTags());
   }
 
-  private Question getQuestion(Question question, List<String> tags) {
+  private Question getTagQuestion(Question question, List<String> tags) {
     List<TagQuestion> tagQuestionList = tags.stream().map(name -> {
       Tag tag = tagService.findTag(name);
       TagQuestion tagQuestion = TagQuestion.builder().build();
@@ -47,6 +47,12 @@ public class QuestionTransService {
     }).collect(Collectors.toList());
     question.setTagQuestions(tagQuestionList);
     return question;
+  }
+
+  public QuestionGetDto QuestionToQuestionGetDto(Question question) {
+    QuestionGetDto questionGetDto = questionMapper.questionToQuestionGetDto(question);
+    log.info(questionGetDto.toString());
+    return questionGetDto;
   }
 
 }

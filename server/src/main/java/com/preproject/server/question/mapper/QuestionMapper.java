@@ -1,5 +1,6 @@
 package com.preproject.server.question.mapper;
 
+import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.dto.QuestionResponseDto;
@@ -27,5 +28,6 @@ public interface QuestionMapper {
         .build();
   }
 
+  QuestionGetDto questionToQuestionGetDto(Question question);
 
 }
