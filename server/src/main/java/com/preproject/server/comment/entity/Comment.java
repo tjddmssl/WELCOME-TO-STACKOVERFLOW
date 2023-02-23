@@ -1,6 +1,7 @@
 package com.preproject.server.comment.entity;
 
 import com.preproject.server.answer.entity.Answer;
+import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.member.entity.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "Comment_Id")
@@ -44,4 +46,12 @@ public class Comment {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Answer_Id")
   private Answer answer;
+
+  public void setMember(Long memberId) {
+    this.member =  Member.builder().id(memberId).build();
+  }
+
+  public void setQuestion(Long questionId) {
+    this.question = Question.builder().id(questionId).build();
+  }
 }

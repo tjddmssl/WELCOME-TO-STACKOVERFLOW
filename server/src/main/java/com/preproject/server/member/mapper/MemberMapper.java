@@ -32,5 +32,6 @@ public interface MemberMapper {
     //tag 미구현
     MemberResponseDto memberResponseDtoToMember(Member member);
 
+    MemberSimpleDto memberToMemberSimpleDto(Member member);
 }
 

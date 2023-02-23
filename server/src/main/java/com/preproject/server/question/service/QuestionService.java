@@ -39,7 +39,6 @@ public class QuestionService {
     Question findQuestion = findQuestion(question.getId());
     Optional.ofNullable(question.getTitle()).ifPresent(findQuestion::setTitle);
     Optional.ofNullable(question.getContent()).ifPresent(findQuestion::setContent);
-    // TODO: tag 변경 시 연관 테이블 어떻게 업데이트하는지ㅠㅠㅠ
     if (!question.getTagQuestions().isEmpty()) {
       findQuestion.setTagQuestions(question.getTagQuestions());
     }
@@ -58,7 +57,7 @@ public class QuestionService {
     return findQuestion;
   }
 
-  public Page<Question> createPageSimplePage(Pageable pageable,Long id) {
-    return  questionRepository.findSimpleQuestion(pageable, id);
+  public Page<Question> createPageSimplePage(Pageable pageable, Long id) {
+    return questionRepository.findSimpleQuestion(pageable, id);
   }
 }

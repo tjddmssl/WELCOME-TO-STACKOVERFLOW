@@ -1,6 +1,8 @@
 package com.preproject.server.question.repository;
 
+import com.preproject.server.comment.dao.CommentSimpleDao;
 import com.preproject.server.question.entity.Question;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
