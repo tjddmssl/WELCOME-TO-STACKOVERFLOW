@@ -103,6 +103,7 @@ public class QuestionController {
 
   @DeleteMapping("/questions/{id}")
   public ResponseEntity deleteQuestion(@PathVariable("id") @Positive long id) {
+    questionService.removeQuestion(id);
     return ResponseEntity.noContent().build();
   }
 
