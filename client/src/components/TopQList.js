@@ -99,7 +99,7 @@ const UserInfoWrap = styled.div`
   }
 `;
 
-function TopQList() {
+const TopQList = ({ content }) => {
   const titleUrl = '/';
   const tagLinkUrl = '/';
   const userProfileUrl = '/';
@@ -107,7 +107,7 @@ function TopQList() {
     <Container>
       <QStatus>
         <div>
-          <span className="topques-votecount__span">0</span>
+          <span className="topques-votecount__span">{content.voteCount}</span>
           <span className="topques-vote__span">votes</span>
         </div>
         <div>
@@ -115,24 +115,26 @@ function TopQList() {
           <span className="topques-qstatus__span">answers</span>
         </div>
         <div>
-          <span className="topques-qstatuscount__span">0</span>
+          <span className="topques-qstatuscount__span">
+            {content.viewCount}
+          </span>
           <span className="topques-qstatus__span">views</span>
         </div>
       </QStatus>
       <QContent>
         <h3 className="topques-title__h3">
-          <a href={titleUrl}>
-            title title title title title title title title title title title
-            title
-          </a>
+          <a href={titleUrl}>{content.title}</a>
         </h3>
         <QInfo>
           <div>
             <ul className="topques-taglist__ul">
-              <li>
-                {/* tag 링크 */}
-                <a href={tagLinkUrl}>태그명</a>
-              </li>
+              {content.tag.map((el, idx) => {
+                return (
+                  <li key={idx}>
+                    <a href={tagLinkUrl}>{el}</a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <UserInfoWrap>
@@ -149,16 +151,16 @@ function TopQList() {
             <div>
               {/* 유저프로필 링크 */}
               <a className="topques-username__a" href={userProfileUrl}>
-                username
-              </a>{' '}
+                {content.member.displayName}
+              </a>
             </div>
             <div className="topques-reputation__div">1</div>
-            <div>asked 00 ago</div>
+            <div>asked at {content.createdDate}</div>
           </UserInfoWrap>
         </QInfo>
       </QContent>
     </Container>
   );
-}
+};
 
 export default TopQList;
