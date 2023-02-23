@@ -4,12 +4,22 @@ import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import { BsSearch } from 'react-icons/bs';
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+`;
+
 const Container = styled.div`
-  max-width: 1100px;
-  padding: 24px;
+  flex-wrap: nowrap;
   display: flex;
   justify-content: center;
   text-align: left;
+  .main-wrap {
+    max-width: 1100px;
+    width: calc(100% - 164px);
+    display: flex;
+  }
 `;
 
 const TagContainer = styled.div`
@@ -34,9 +44,11 @@ const TagHeader = styled.header`
   }
 `;
 const Title = styled.h1`
-  font-size: 26px !important;
-  margin: 0 0 16px !important;
+  font-weight: 400;
+  margin: 0 0 25px;
 `;
+import Footer from '../components/Footer';
+
 const ShowSynonyms = styled.a`
   text-decoration: none;
   color: #0074cc;
@@ -73,7 +85,6 @@ const InPut = styled.input`
   height: 2.3rem;
   border: 1px solid hsl(210deg 8% 75%);
   border-radius: 3px;
-
   &:focus {
     outline: none;
     border-color: hsl(206deg 90% 70%);
@@ -147,7 +158,6 @@ const Tag = styled.button`
   border: none;
   border-radius: 2px;
   cursor: pointer;
-
   &:hover {
     background-color: #d0e3f1;
     color: #2c5877;
@@ -176,40 +186,45 @@ const Content = styled.div`
 function Tags() {
   return (
     <>
-      <Header />
-      <Container>
-        <NavBar />
-        <TagContainer>
-          <TagHeader>
-            <Title>Tags</Title>
-            <p>
-              A tag is a keyword or label that categorizes your question with
-              other, similar questions. Using the right tags makes it easier for
-              others to find and answer your question.
-            </p>
-            <ShowSynonyms>Show all tag synonyms</ShowSynonyms>
-            <FormButtonContent>
-              <Form>
-                <BsSearch className="searchIcon" />
-                <InPut type="text" placeholder="Filter by tag name"></InPut>
-              </Form>
-              <FilterButtons>
-                <FilterButton className="popular">Popular</FilterButton>
-                <FilterButton className="name">Name</FilterButton>
-                <FilterButton className="new">New</FilterButton>
-              </FilterButtons>
-            </FormButtonContent>
-          </TagHeader>
-          <TagGridContainer>
-            <TagContents>
-              <Tag>javascript</Tag>
-              <Content>
-                {`For questions about programming in ECMAScript (JavaScript/JS) and its different dialects/implementations (except for ActionScript). Keep in mind that JavaScript is NOT the same as Java! Include all labels that are relevant to your question; e.g., [node.js], [jQuery], [JSON], [ReactJS], [angular], [ember.js], [vue.js], [typescript], [svelte], etc.`}
-              </Content>
-            </TagContents>
-          </TagGridContainer>
-        </TagContainer>
-      </Container>
+      <Wrapper>
+        <Header />
+        <Container>
+          <NavBar />
+          <div className="main-wrap">
+            <TagContainer>
+              <TagHeader>
+                <Title>Tags</Title>
+                <p>
+                  A tag is a keyword or label that categorizes your question
+                  with other, similar questions. Using the right tags makes it
+                  easier for others to find and answer your question.
+                </p>
+                <ShowSynonyms>Show all tag synonyms</ShowSynonyms>
+                <FormButtonContent>
+                  <Form>
+                    <BsSearch className="searchIcon" />
+                    <InPut type="text" placeholder="Filter by tag name"></InPut>
+                  </Form>
+                  <FilterButtons>
+                    <FilterButton className="popular">Popular</FilterButton>
+                    <FilterButton className="name">Name</FilterButton>
+                    <FilterButton className="new">New</FilterButton>
+                  </FilterButtons>
+                </FormButtonContent>
+              </TagHeader>
+              <TagGridContainer>
+                <TagContents>
+                  <Tag>javascript</Tag>
+                  <Content>
+                    {`For questions about programming in ECMAScript (JavaScript/JS) and its different dialects/implementations (except for ActionScript). Keep in mind that JavaScript is NOT the same as Java! Include all labels that are relevant to your question; e.g., [node.js], [jQuery], [JSON], [ReactJS], [angular], [ember.js], [vue.js], [typescript], [svelte], etc.`}
+                  </Content>
+                </TagContents>
+              </TagGridContainer>
+            </TagContainer>
+          </div>
+        </Container>
+        <Footer />
+      </Wrapper>
     </>
   );
 }
