@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Map;
@@ -15,7 +14,8 @@ import java.util.Map;
 //TODO Builder 직접 구혀하기
 @RequiredArgsConstructor
 @ToString
-public class PrincipalDetails extends Member implements UserDetails , OAuth2User {
+//public class PrincipalDetails extends Member implements UserDetails , OAuth2User {
+public class PrincipalDetails extends Member implements UserDetails{
     private final CustomAuthorityUtils authorityUtils;
 
     //OAuth2
@@ -36,10 +36,10 @@ public class PrincipalDetails extends Member implements UserDetails , OAuth2User
         this.attributes = attributes;
     }
 
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
+//    @Override
+//    public Map<String, Object> getAttributes() {
+//        return attributes;
+//    }
 
     //권한을 체크할 때 확인되는 인터페이스 SecurityFilterChain 에서 권한 체크에 사용
     @Override
@@ -78,9 +78,9 @@ public class PrincipalDetails extends Member implements UserDetails , OAuth2User
         return true;
     }
 
-    @Override
-    public String getName() {
-        return null;
-    }
+//    @Override
+//    public String getName() {
+//        return null;
+//    }
     //TODO Builder 패턴 직접 구현
 }

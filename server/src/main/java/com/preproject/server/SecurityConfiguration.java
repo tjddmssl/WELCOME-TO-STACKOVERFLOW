@@ -11,6 +11,7 @@ import com.preproject.server.auth.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,6 +33,7 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -48,10 +50,8 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(new MemberAccessDeniedHandler());
         http
                 .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.POST, "/*/members").permitAll()
-//                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
-                        .anyRequest().permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/join/member").permitAll()
+                        .anyRequest().authenticated()
                 );
         http
                 .apply(new CustomFilterConfigurer());

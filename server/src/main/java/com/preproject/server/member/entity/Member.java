@@ -38,7 +38,14 @@ public class Member extends BaseEntity {
     private List<String> roles = new ArrayList<>();
 
     @Setter
-    private String provider;    //어떤 OAuth 사용했는지 체크
+    @Builder.Default
+    private String provider = "JWT";    //어떤 OAuth 사용했는지 체크
     @Setter
-    private String provideId;   //해당 OAuth 의 key(id)
+    private String provideId ;   //해당 OAuth 의 key(id)
+
+    public Member(Member member) {
+        this.email = member.getEmail();
+        this.displayName = member.getDisplayName();
+        this.password = member.getPassword();
+    }
 }
