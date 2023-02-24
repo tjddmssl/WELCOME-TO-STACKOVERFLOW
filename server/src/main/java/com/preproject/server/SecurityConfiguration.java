@@ -51,7 +51,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/users").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 );
         http
                 .apply(new CustomFilterConfigurer());
