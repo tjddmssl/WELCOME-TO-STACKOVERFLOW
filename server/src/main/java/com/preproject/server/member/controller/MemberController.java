@@ -90,7 +90,7 @@ public class MemberController {
     * */
     @GetMapping
     public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdAt") Pageable pageable) {
-        Page<Member> memberPage = memberService.getPageMember();
+        Page<Member> memberPage = memberService.getPageMember(pageable);
 
         Page<MemberListDto> pageDto = memberPage.map(member -> {
             MemberListDto responseDto = memberMapper.memberToMemberListDto(member);

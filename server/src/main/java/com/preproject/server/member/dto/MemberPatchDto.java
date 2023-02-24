@@ -2,7 +2,7 @@ package com.preproject.server.member.dto;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class MemberPatchDto {
@@ -10,5 +10,5 @@ public class MemberPatchDto {
     private String displayName;
     private String profileImage;
     private String aboutMe;
-    private List<String> tag;
+    private Set<String> tag;
 }
