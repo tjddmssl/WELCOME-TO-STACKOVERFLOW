@@ -32,81 +32,82 @@ import java.util.stream.Collectors;
 @Slf4j
 @CrossOrigin("*")
 public class MemberController {
-  private final static String MEMBER_DEFAULT_URL = "/users";
-  private final MemberService memberService;
-  private final MemberMapper memberMapper;
+    private final static String MEMBER_DEFAULT_URL = "/users";
+    private final MemberService memberService;
+    private final MemberMapper memberMapper;
 
-  /*
-   * 회원가입 컨트롤
-   * */
-  @PostMapping
-  public ResponseEntity createMember(@RequestBody MemberPostDto post, HttpServletRequest request) {
-    Locale locale = request.getLocale();
-    log.info("locale = {} ", locale);
+    /*
+     * 회원가입 컨트롤
+     * */
+    @PostMapping
+    public ResponseEntity createMember(@RequestBody MemberPostDto post, HttpServletRequest request) {
+        Locale locale = request.getLocale();
+        log.info("locale = {} ", locale);
 
-    Member member = memberMapper.postDtoToMember(post);
-    member.setLocation(locale.getCountry());
-    log.info("member = {}", member.getId());
-    Member ceatedMember = memberService.createMember(member);
+        Member member = memberMapper.postDtoToMember(post);
+        member.setLocation(locale.getCountry());
+        log.info("member = {}", member.getId());
+        Member ceatedMember = memberService.createMember(member);
 
-    URI location = UriCreator.createUri(MEMBER_DEFAULT_URL,ceatedMember.getId());
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, ceatedMember.getId());
 
-    return ResponseEntity.created(location).build();
-  }
-
-
-  /*
-   * 회원 삭제 기능 but 비밀 번호 암호화 시 추가 변경 필요
-   * */
-  @DeleteMapping("/{id}")
-  public ResponseEntity deleteMember(@PathVariable Long id,@RequestBody String password) {
-    memberService.deleteMember(id, password);
-    return new ResponseEntity(HttpStatus.NO_CONTENT);
-  }
-
-  /*
-   * 회원 정보 수정
-   * */
-  @PatchMapping("/{id}")
-  public ResponseEntity updateMember(@PathVariable Long id, @RequestBody MemberPatchDto patchDto) {
-    Member member = memberMapper.patchDtoToMember(patchDto);
-
-    //TODO 리펙토링 patchDto.getTag() -> List<TagMember> 변환 과정 만들기, 이미지 파일 또한 판단할 필요 있음
-    Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
+        return ResponseEntity.created(location).build();
 
 
-    MemberResponseDto responseDto = memberMapper.memberResponseDtoToMember(updatedMember);
+    }
 
-    //TODO 리펙토링
-    List<String> collect = updatedMember.getTagMembers().stream()
-        .map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-    responseDto.setTags(collect);
 
-    return new ResponseEntity(new ResponseDto<MemberResponseDto>(responseDto),HttpStatus.OK);
-  }
+    /*
+     * 회원 삭제 기능 but 비밀 번호 암호화 시 추가 변경 필요
+     * */
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteMember(@PathVariable Long id, @RequestBody String password) {
+        memberService.deleteMember(id, password);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
-  /*
-   * 회원들 정보 조회 수정 필요
-   * */
-  @GetMapping
-  public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdAt") Pageable pageable) {
-    Page<Member> memberPage = memberService.getPageMember(pageable);
+    /*
+     * 회원 정보 수정
+     * */
+    @PatchMapping("/{id}")
+    public ResponseEntity updateMember(@PathVariable Long id, @RequestBody MemberPatchDto patchDto) {
+        Member member = memberMapper.patchDtoToMember(patchDto);
 
-    Page<MemberListDto> pageDto = memberPage.map(member -> {
-      MemberListDto responseDto = memberMapper.memberToMemberListDto(member);
-      List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-      responseDto.setTags(collect);
+        //TODO 리펙토링 patchDto.getTag() -> List<TagMember> 변환 과정 만들기, 이미지 파일 또한 판단할 필요 있음
+        Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
 
-      long sum = member.getQuestions().stream().mapToLong(Question::getVoteCount).sum();
-      sum += member.getAnswers().stream().mapToLong(Answer::getVoteCount).sum();
 
-      responseDto.setVoteCount(sum);
-      return responseDto;
-    });
+        MemberResponseDto responseDto = memberMapper.memberResponseDtoToMember(updatedMember);
 
-    return new ResponseEntity(pageDto,HttpStatus.OK);
+        //TODO 리펙토링
+        List<String> collect = updatedMember.getTagMembers().stream()
+                .map(tag -> tag.getTag().getName()).collect(Collectors.toList());
+        responseDto.setTags(collect);
 
-  }
+        return new ResponseEntity(new ResponseDto<MemberResponseDto>(responseDto), HttpStatus.OK);
+    }
+
+    /*
+     * 회원들 정보 조회 수정 필요
+     * */
+    @GetMapping
+    public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdAt") Pageable pageable) {
+        Page<Member> memberPage = memberService.getPageMember(pageable);
+
+        Page<MemberListDto> pageDto = memberPage.map(member -> {
+            MemberListDto responseDto = memberMapper.memberToMemberListDto(member);
+            List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
+            responseDto.setTags(collect);
+
+            long sum = member.getQuestions().stream().mapToLong(Question::getVoteCount).sum();
+            sum += member.getAnswers().stream().mapToLong(Answer::getVoteCount).sum();
+
+            responseDto.setVoteCount(sum);
+            return responseDto;
+        });
+
+        return new ResponseEntity(pageDto, HttpStatus.OK);
+    }
 
 
 }

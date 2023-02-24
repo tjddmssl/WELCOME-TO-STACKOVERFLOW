@@ -1,6 +1,5 @@
 package com.preproject.server.member.controller;
 
-import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.Service.MemberService;
@@ -9,12 +8,14 @@ import com.preproject.server.member.dto.MemberDetailQuestionDto;
 import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
-import com.preproject.server.member.repository.MemberRepository;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.service.QuestionService;
 import com.preproject.server.vote.service.VoteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,19 +66,19 @@ public class MemberDetailsController {
       @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
 
     //TODO 서비스단 타고 가서 값 만들고
-//        Page<Question> questionPage = questionService.createPageSimplePage(pageable, id);
-//        Page<MemberDetailQuestionDto> result = questionPage.map(MemberDetailQuestionDto::new);
-//        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
-
-    ArrayList<String> strings = new ArrayList<>();
-    strings.add("JAVA");
-    strings.add("Spring Boot");
-    Page<MemberDetailQuestionDto> memberPage = new PageImpl<>(
-        List.of(new MemberDetailQuestionDto(1L, "test", strings, 1L, 1L, LocalDateTime.now()),
-            new MemberDetailQuestionDto(2L, "test", strings, 2L, 1L, LocalDateTime.now()),
-            new MemberDetailQuestionDto(3L, "test", strings, 1L, 1L, LocalDateTime.now())),
-        PageRequest.of(0, 10), 3);
-    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
+        Page<Question> questionPage = questionService.createPageSimplePage(pageable, id);
+        Page<MemberDetailQuestionDto> result = questionPage.map(MemberDetailQuestionDto::new);
+        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
+//
+//    ArrayList<String> strings = new ArrayList<>();
+//    strings.add("JAVA");
+//    strings.add("Spring Boot");
+//    Page<MemberDetailQuestionDto> memberPage = new PageImpl<>(
+//        List.of(new MemberDetailQuestionDto(1L, "test", strings, 1L, 1L, LocalDateTime.now()),
+//            new MemberDetailQuestionDto(2L, "test", strings, 2L, 1L, LocalDateTime.now()),
+//            new MemberDetailQuestionDto(3L, "test", strings, 1L, 1L, LocalDateTime.now())),
+//        PageRequest.of(0, 10), 3);
+//    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
   }
 
   @GetMapping("/{id}/answer")
