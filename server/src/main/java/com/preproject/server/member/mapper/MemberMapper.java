@@ -5,15 +5,10 @@ import com.preproject.server.member.dto.*;
 import com.preproject.server.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberMapper {
-    Member postDtoToMember(MemberPostDto memberPostDto);
-
-}
-
   Member postDtoToMember(MemberPostDto memberPostDto);
 
 //    MemberPostResponseDto memberToMemberDto(Member member);

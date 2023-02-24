@@ -1,32 +1,43 @@
 package com.preproject.server.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+
+import javax.validation.ConstraintViolation;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.springframework.validation.BindingResult;
 
 @Getter
 public class ErrorResponse {
 
   private final List<FieldError> fieldErrors;
   private final List<ConstraintViolationError> constraintViolationErrors;
+  private final HttpStatus httpStatus;
+
+
 
   private ErrorResponse(List<FieldError> fieldErrors,
-      List<ConstraintViolationError> constraintViolationErrors) {
+                        List<ConstraintViolationError> constraintViolationErrors
+                        ,HttpStatus httpStatus) {
     this.fieldErrors = fieldErrors;
     this.constraintViolationErrors = constraintViolationErrors;
+    this.httpStatus = httpStatus;
   }
 
   public static ErrorResponse of(BindingResult bindingResult) {
-    return new ErrorResponse(FieldError.of(bindingResult), null);
+    return new ErrorResponse(FieldError.of(bindingResult), null,null);
   }
 
   public static ErrorResponse of(Set<ConstraintViolation<?>> constraintViolations) {
-    return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations)
+    return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations),null
     );
+  }
+
+  public static ErrorResponse of(HttpStatus httpStatus) {
+    return new ErrorResponse(null,null,httpStatus);
   }
 
   @Getter

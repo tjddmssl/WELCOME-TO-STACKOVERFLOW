@@ -1,7 +1,7 @@
 package com.preproject.server;
 
 import com.preproject.server.auth.JwtTokenizer;
-import com.preproject.server.auth.controller.MemberAuthenticationEntryPoint;
+import com.preproject.server.auth.entryPoint.MemberAuthenticationEntryPoint;
 import com.preproject.server.auth.filter.JwtAuthenticationFilter;
 import com.preproject.server.auth.filter.JwtVerificationFilter;
 import com.preproject.server.auth.handler.MemberAccessDeniedHandler;
@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(new MemberAccessDeniedHandler());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/api/join/member").permitAll()
+                        .antMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().authenticated()
                 );
         http
