@@ -10,6 +10,7 @@ import Tags from './pages/Tags';
 import Users from './pages/Users';
 // import QButton from './components/QButton';
 import Ask from './pages/Ask';
+import ViewEdit from './pages/ViewEdit';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/tags" element={<Tags />} />
         <Route path="/users" element={<Users />} />
         <Route path="/ask" element={<Ask />} />
+        <Route path="/edit" element={<ViewEdit />} />
       </Routes>
     </div>
   );

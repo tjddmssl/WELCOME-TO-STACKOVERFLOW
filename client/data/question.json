@@ -1,0 +1,39 @@
+{
+  "response": {
+    "id": 1,
+    "title": "질문 수정",
+    "content": "수정 테스트",
+    "tag": [
+      "java",
+      "array",
+      "integer"
+    ],
+    "createdDate": "2023-02-21T05:29:52.226Z",
+    "lastModifiedDate": "2023-02-21T05:29:52.226Z",
+    "member": {
+      "id": 0,
+      "displayName": "user0",
+      "profileImage": ""
+    },
+    "comments": [
+      {
+        "content": "comment1",
+        "createdDate": "2023-02-21T05:29:52.226Z",
+        "member": {
+          "id": 3,
+          "displayName": "user3",
+          "profileImage": ""
+        }
+      },
+      {
+        "content": "comment2",
+        "createdDate": "2023-02-21T05:29:52.226Z",
+        "member": {
+          "id": 2,
+          "displayName": "user2",
+          "profileImage": ""
+        }
+      }
+    ]
+  }
+}
