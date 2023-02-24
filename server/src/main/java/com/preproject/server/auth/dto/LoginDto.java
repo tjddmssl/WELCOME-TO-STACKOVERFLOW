@@ -1,4 +1,4 @@
-package com.preproject.server.auth;
+package com.preproject.server.auth.dto;
 
 import lombok.Getter;
 

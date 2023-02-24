@@ -1,4 +1,4 @@
-package com.preproject.server.auth;
+package com.preproject.server.auth.details;
 
 import com.preproject.server.auth.utils.CustomAuthorityUtils;
 import com.preproject.server.member.entity.Member;

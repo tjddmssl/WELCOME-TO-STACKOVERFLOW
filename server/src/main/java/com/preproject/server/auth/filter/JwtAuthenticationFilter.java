@@ -2,7 +2,7 @@ package com.preproject.server.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.preproject.server.auth.JwtTokenizer;
-import com.preproject.server.auth.LoginDto;
+import com.preproject.server.auth.dto.LoginDto;
 import com.preproject.server.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
