@@ -1,62 +1,107 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from '@mui/material';
 
-const TagForm = styled.div`
+const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 1000px;
-  height: auto;
-  margin-left: 25px;
-  margin-bottom: 40px;
-  border: 1px solid lightgrey;
-  padding: 5px 20px;
-  padding-bottom: 10px;
-  @media screen and (max-width: 1369px) {
-    width: 100%;
-  }
+  /* overflow: scroll; */
+  /* width: 750px; */
+  max-width: 100%;
+  justify-content: center;
+  padding-left: 10px;
+  border: 1px solid #babfc4;
+  border-radius: 5px;
+  color: black;
+  margin: 10px 0 0;
 
-  h4 {
-    margin-bottom: 10px;
-  }
-  p {
-    margin-top: 0px;
-  }
-  input {
-    width: 750px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid lightgrey;
-    &:focus {
-      outline: none;
-      border-color: hsl(206deg 100% 52%);
-      box-shadow: 0px 0px 0px 5px #e1ecf4;
-    }
-  }
-  button {
-    text-transform: capitalize;
-    margin-top: 10px;
-    width: 5%;
-    background-color: #0a95ff;
-    color: white;
-    font-size: small;
-  }
-  button:hover {
-    background-color: #0a95ff;
-    color: lightgray;
+  &:focus-within {
+    outline: none;
+    border-color: hsl(206deg 100% 52%);
+    box-shadow: 0px 0px 0px 5px #e1ecf4;
   }
 `;
+const Input = styled.input`
+  width: 100%;
+  min-width: 50%;
+  border: none;
+  border-radius: 5px;
+  padding: 14px;
+  padding-left: 14px;
 
-export default function TagAdd() {
+  &:focus {
+    outline: none;
+  }
+`;
+const Tags = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  margin-right: 10px;
+  padding: 0 8px;
+  padding-right: 5px;
+  border-radius: 5px;
+  background-color: #e1ecf4;
+  white-space: nowrap;
+  color: #4a80a7;
+  font-size: 0.7rem;
+`;
+const Button = styled.button`
+  display: flex;
+  padding: 6px;
+  border: none;
+  background-color: unset;
+  cursor: pointer;
+  color: #4a80a7;
+`;
+
+export default function TagAdd({ tags, setTags }) {
+  const [input, setInput] = useState('');
+  const [isKeyReleased, setIsKeyReleased] = useState(false);
+
+  const onChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const onKeyDown = (e) => {
+    const trimmedInput = input.trim();
+
+    if ((e.keyCode === 13 || e.keyCode === 188) && trimmedInput.length) {
+      e.preventDefault();
+      setTags((prevState) => [...prevState, trimmedInput]);
+      setInput('');
+    }
+    if (e.keyCode === 8 && !input.length && tags.length && isKeyReleased) {
+      const tagsCopy = [...tags];
+      const poppedTag = tagsCopy.pop();
+      e.preventDefault();
+      setTags(tagsCopy);
+      setInput(poppedTag);
+    }
+    setIsKeyReleased(false);
+  };
+
+  const onKeyUp = () => {
+    setIsKeyReleased(true);
+  };
+
+  const deleteTag = (index) => {
+    setTags((prevState) => prevState.filter((tag, i) => i !== index));
+  };
   return (
-    <TagForm>
-      <h4>Tags</h4>
-      <p>
-        Add up to 5 tags to describe what your question is about. Start typing
-        to see sugestions.
-      </p>
-      <input type="text" placeholder="e.g.(vba css json)"></input>
-      <Button>Next</Button>
-    </TagForm>
+    <Container>
+      {tags &&
+        tags.map((tag, index) => (
+          <Tags key={`${index.toString()}-${tag}`}>
+            {tag}
+            <Button onClick={() => deleteTag(index)}>x</Button>
+          </Tags>
+        ))}
+      <Input
+        value={input}
+        placeholder="e.g.(vba css json)"
+        onKeyUp={onKeyUp}
+        onKeyDown={onKeyDown}
+        onChange={onChange}
+      />
+    </Container>
   );
 }
