@@ -26,5 +26,11 @@ public class TagMember {
     @JoinColumn(name = "Tag_Id")
     private Tag tag;
 
+    // ### 연관관계 편의 메서드 ### //
+    public void addMember(Member member){
+        this.member = member;
+        this.member.getTagMembers().add(this);
+        this.tag.getTagMembers().add(this);
+    }
 
 }

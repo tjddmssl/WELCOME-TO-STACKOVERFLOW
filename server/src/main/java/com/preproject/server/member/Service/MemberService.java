@@ -19,7 +19,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -67,9 +66,9 @@ public class MemberService {
         Optional.ofNullable(member.getAboutMe()).ifPresent(savedMember::setAboutMe);
 
         if (!tagMember.isEmpty()) {
-            getTagMember(tagMember, savedMember);
+            addTagMember(tagMember,savedMember);
         }
-        return member;
+        return savedMember;
     }
 
 
@@ -93,13 +92,15 @@ public class MemberService {
         return memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(MemberExceptionCode.MEMBER_NOT_FOUND));
     }
 
-    private Set<TagMember> getTagMember(Set<String> tagMember, Member member) {
-        return tagMember.stream().map(name -> {
-            Tag tag = tagService.findTag(name);
+    private Member addTagMember(Set<String> tagMember, Member member) {
+        List<Tag> tagList = tagService.findTagList();
+
+        tagMember.iterator().forEachRemaining(name -> {
+            Tag tag = tagList.get(tagList.indexOf(name));
             TagMember findTagMember = TagMember.builder().build();
-            member.addTagMember(findTagMember);
-            return findTagMember;
-        }).collect(Collectors.toSet());
+            findTagMember.addMember(member);
+        });
+        return member;
     }
 }
 
