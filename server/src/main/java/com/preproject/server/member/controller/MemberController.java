@@ -52,6 +52,8 @@ public class MemberController {
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, ceatedMember.getId());
 
         return ResponseEntity.created(location).build();
+
+
     }
 
 
