@@ -13,6 +13,9 @@ const TitleForm = styled.div`
   border: 1px solid lightgrey;
   padding: 5px 20px;
   padding-bottom: 10px;
+  @media screen and (max-width: 1369px) {
+    width: 100%;
+  }
   h4 {
     margin-bottom: 10px;
   }
@@ -46,6 +49,9 @@ const Container = styled.div`
   margin-bottom: 25px;
   border: 1px solid lightgrey;
   padding: 5px 20px;
+  @media screen and (max-width: 1369px) {
+    width: 100%;
+  }
 
   h4 {
     margin-bottom: 10px;
@@ -70,6 +76,9 @@ const TagForm = styled.div`
   border: 1px solid lightgrey;
   padding: 5px 20px;
   padding-bottom: 10px;
+  @media screen and (max-width: 1369px) {
+    width: 100%;
+  }
   h4 {
     margin-bottom: 10px;
   }
@@ -108,6 +117,15 @@ const Form = styled.div`
     background-color: lightpink;
   }
 `;
+const EditorWrapper = styled.div`
+  margin-top: 10px;
+  border-radius: 3px;
+  &:focus-within {
+    outline: 1px solid #58a4de;
+    border-radius: 2px solid #58a4de;
+    box-shadow: 0px 0px 10px #ddeaf7;
+  }
+`;
 function AskForm() {
   return (
     <div>
@@ -128,18 +146,22 @@ function AskForm() {
           Introduce the problem and expand on what you put in the title. Minumum
           20 characters.
         </p>
-        <Editor
-          previewStyle="tap" // 미리보기 스타일 지정
-          height="300px" // 에디터 창 높이
-          toolbarItems={[
-            // 툴바 옵션 설정
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
-            ['table', 'image', 'link'],
-            ['code', 'codeblock'],
-          ]}
-        ></Editor>
+        <EditorWrapper>
+          <Editor
+            previewStyle="tap" // 미리보기 스타일 지정
+            height="300px" // 에디터 창 높이
+            toolbarItems={[
+              // 툴바 옵션 설정
+              ['heading', 'bold', 'italic', 'strike'],
+              ['hr', 'quote'],
+              ['ul', 'ol', 'task', 'indent', 'outdent'],
+              ['table', 'image', 'link'],
+              ['code', 'codeblock'],
+            ]}
+            autofocus={false}
+            hideModeSwitch={true}
+          ></Editor>
+        </EditorWrapper>
         <Button>Next</Button>
       </Container>
       <Container className="try">
@@ -148,18 +170,22 @@ function AskForm() {
           Describe what you tried, what you expected to happen, and what
           actually resulted. Minumum 20 characters.
         </p>
-        <Editor
-          previewStyle="tap" // 미리보기 스타일 지정
-          height="300px" // 에디터 창 높이
-          toolbarItems={[
-            // 툴바 옵션 설정
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
-            ['table', 'image', 'link'],
-            ['code', 'codeblock'],
-          ]}
-        ></Editor>
+        <EditorWrapper>
+          <Editor
+            previewStyle="tap" // 미리보기 스타일 지정
+            height="300px" // 에디터 창 높이
+            toolbarItems={[
+              // 툴바 옵션 설정
+              ['heading', 'bold', 'italic', 'strike'],
+              ['hr', 'quote'],
+              ['ul', 'ol', 'task', 'indent', 'outdent'],
+              ['table', 'image', 'link'],
+              ['code', 'codeblock'],
+            ]}
+            autofocus={false}
+            hideModeSwitch={true}
+          ></Editor>
+        </EditorWrapper>
         <Button>Next</Button>
       </Container>
       <TagForm>

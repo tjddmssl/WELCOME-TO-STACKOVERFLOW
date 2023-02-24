@@ -21,18 +21,22 @@ const MainContainer = styled.div`
   .mainside-wrap__div {
     max-width: 1100px;
     width: calc(100% - 164px);
-    display: flex;
-    flex-direction: column;
-    margin-left: 25px;
   }
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 1088px;
+  margin-left: 24px;
 `;
 
 const UsersHeader = styled.div`
   margin-top: 20px;
   margin-bottom: 70px;
   h1 {
-    margin-top: 30px;
-    font-weight: lighter;
+    font-weight: 400;
+    margin: 0 0 25px;
   }
 
   .header {
@@ -43,7 +47,7 @@ const UsersHeader = styled.div`
   .search {
     display: flex;
     align-items: center;
-    height: 40px;
+    height: 36px;
     width: 300px;
     border: 1px solid #bbbfc4;
     border-radius: 3px;
@@ -92,27 +96,29 @@ function Users() {
   return (
     <div>
       <Container>
+        <Header />
         <MainContainer>
-          <Header />
           <NavBar />
           <div className="mainside-wrap__div">
-            <UsersHeader>
-              <h1>Users</h1>
-              <div className="header">
-                <form className="search">
-                  <SearchIcon />
-                  <input type="text" placeholder="Filter by user"></input>
-                </form>
-                <div className="buttons">
-                  <Button className="first">Reputation</Button>
-                  <Button>New users</Button>
-                  <Button>Voters</Button>
-                  <Button>Editors</Button>
-                  <Button>Moderators</Button>
+            <UserContainer>
+              <UsersHeader>
+                <h1>Users</h1>
+                <div className="header">
+                  <form className="search">
+                    <SearchIcon />
+                    <input type="text" placeholder="Filter by user"></input>
+                  </form>
+                  <div className="buttons">
+                    <Button className="first">Reputation</Button>
+                    <Button>New users</Button>
+                    <Button>Voters</Button>
+                    <Button>Editors</Button>
+                    <Button>Moderators</Button>
+                  </div>
                 </div>
-              </div>
-            </UsersHeader>
-            <UserCard />
+              </UsersHeader>
+              <UserCard />
+            </UserContainer>
           </div>
         </MainContainer>
         <Footer />

@@ -24,7 +24,9 @@ const Guide = styled.div`
   margin-top: 25px;
   margin-bottom: 25px;
   margin-left: 25px;
-
+  @media screen and (max-width: 1369px) {
+    max-width: 100%;
+  }
   h2 {
     font-weight: lighter;
   }
@@ -45,6 +47,9 @@ const Sidebar = styled.div`
   border: darkgrey;
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
+  @media screen and (max-width: 1361px) {
+    display: none;
+  }
 
   ul {
     background-color: #f8f9f9;
