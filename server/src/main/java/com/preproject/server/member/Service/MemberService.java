@@ -1,4 +1,5 @@
 package com.preproject.server.member.Service;
+
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,3 +45,4 @@ public class MemberService {
 
   }
 }
+

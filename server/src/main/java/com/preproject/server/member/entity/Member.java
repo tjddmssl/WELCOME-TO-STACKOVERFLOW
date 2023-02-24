@@ -23,6 +23,7 @@ import static javax.persistence.EnumType.*;
 import static javax.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
+
 @Entity
 @Builder
 @NoArgsConstructor(access = PROTECTED)
@@ -32,11 +33,13 @@ import static lombok.AccessLevel.*;
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "Member_Id")
     private Long id;
     private String email;
 
     private String displayName;
+    @Setter
     private String password;
     private String profile;
     @Setter
@@ -44,6 +47,23 @@ public class Member extends BaseEntity {
     private String aboutMe;
     @Enumerated(STRING)
     private MemberStatus memberStatus;
+
+    @ElementCollection(fetch = EAGER)
+    @Setter
+    private List<String> roles = new ArrayList<>();
+
+    @Setter
+    @Builder.Default
+    private String provider = "JWT";    //어떤 OAuth 사용했는지 체크
+    @Setter
+    private String provideId ;   //해당 OAuth 의 key(id)
+
+    public Member(Member member) {
+        this.email = member.getEmail();
+        this.displayName = member.getDisplayName();
+        this.password = member.getPassword();
+    }
+
     @Enumerated(STRING)
     private MemberType memberType;
 
@@ -68,4 +88,5 @@ public class Member extends BaseEntity {
     @Default
     @Exclude
     private List<Question> questions = new ArrayList<>();
+
 }

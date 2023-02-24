@@ -3,16 +3,17 @@ package com.preproject.server.member.data;
 import lombok.Getter;
 
 public enum MemberType {
-    MEMBER_USER(1,"일반 회원") , MEMBER_ADMIN(2,"관리ㄴ");
+    ROLE_USER(1,"일반 회원") , ROLE_ADMIN(2,"관리자");
+
 
     @Getter
     private int index;
 
     @Getter
-    private String name;
+    private String description;
 
-    MemberType(int index, String name) {
+    MemberType(int index, String description) {
         this.index = index;
-        this.name = name;
+        this.description = description;
     }
 }
