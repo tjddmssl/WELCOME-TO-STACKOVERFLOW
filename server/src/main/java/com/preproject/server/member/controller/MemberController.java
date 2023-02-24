@@ -105,6 +105,7 @@ public class MemberController {
         });
 
         return new ResponseEntity(pageDto,HttpStatus.OK);
+
     }
 
 
