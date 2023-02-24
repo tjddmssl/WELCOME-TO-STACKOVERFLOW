@@ -1,7 +1,6 @@
 package com.preproject.server.tag.entity;
 
 import com.preproject.server.member.entity.Member;
-import com.preproject.server.question.entity.Question;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +19,7 @@ public class TagMember {
     // 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Member_Id")
+    @Setter
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

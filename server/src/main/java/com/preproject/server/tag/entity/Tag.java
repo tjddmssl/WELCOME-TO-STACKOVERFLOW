@@ -3,11 +3,11 @@ package com.preproject.server.tag.entity;
 import com.preproject.server.baseEntity.BaseEntity;
 import com.sun.istack.NotNull;
 import lombok.*;
+import lombok.Builder.Default;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Builder.Default;
 
 @Entity
 @Builder
@@ -15,7 +15,6 @@ import lombok.Builder.Default;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Tag extends BaseEntity {
-    //오디터블 써야하는지?
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Tag_Id")
@@ -35,5 +34,4 @@ public class Tag extends BaseEntity {
     @OneToMany(mappedBy = "tag")
     @Default
     private List<TagQuestion> tagQuestions = new ArrayList<>();
-
 }
