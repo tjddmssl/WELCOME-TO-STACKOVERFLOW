@@ -24,7 +24,6 @@ a{
 
 a:hover, a:active, a:visited{
   text-decoration: none;
-  color: #000;
 }
 
 button {
