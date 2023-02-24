@@ -14,12 +14,12 @@ import java.util.List;
 @Builder
 public class AnswerGetResponseDto {
 
-    private Long answerId;
+    private Long id;
     private Long questionId;
     private Long voteCount;
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
-    private MemberSimpleDto memberSimple;
-    private List<CommentSimpleDto> commentsSimple;
+    private MemberSimpleDto member;
+    private List<CommentSimpleDto> comments;
 }

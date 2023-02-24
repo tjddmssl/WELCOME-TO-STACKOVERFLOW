@@ -67,10 +67,10 @@ public class AnswerController {
         List<AnswerGetResponseDto> answerGetResponseDtoList
                 = answerList.stream().map(mapper::answerToAnswerGetResponseDto).collect(Collectors.toList());
 
-        answerGetResponseDtoList.stream().map(answerGetResponseDto -> {
-            answerGetResponseDto.setCommentsSimple(commentService.findCommentSimpleDto(answerGetResponseDto.getAnswerId()));
-            return answerGetResponseDto;
-        }).collect(Collectors.toList());
+//        answerGetResponseDtoList.stream().map(answerGetResponseDto -> {
+//            answerGetResponseDto.setCommentsSimple(commentService.findCommentSimpleDto(answerGetResponseDto.getAnswerId()));
+//            return answerGetResponseDto;
+//        }).collect(Collectors.toList());
         return new ResponseEntity(answerGetResponseDtoList, HttpStatus.OK);
     }
 

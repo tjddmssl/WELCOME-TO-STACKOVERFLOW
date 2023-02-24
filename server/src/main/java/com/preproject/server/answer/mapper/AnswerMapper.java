@@ -29,22 +29,21 @@ public interface AnswerMapper {
                 .lastModifiedDate(answer.getLastModifiedDate())
                 .build();
     }
-    @Mapping(source = "id", target = "answerId")
+
     @Mapping(source = "question.id", target = "questionId")
-    @Mapping(source = "comments", target = "commentsSimple")
-    default AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer)
-    {
-        return AnswerGetResponseDto.builder()
-                .content(answer.getContent())
-                .voteCount(answer.getVoteCount())
-                .memberSimple(new MemberSimpleDto(
-                        answer.getMember().getId(),
-                        answer.getMember().getDisplayName(),
-                        answer.getMember().getProfile()
-                ))
-
-                .build();
-
-    }
+    AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer);
+//    {
+//        return AnswerGetResponseDto.builder()
+//                .content(answer.getContent())
+//                .voteCount(answer.getVoteCount())
+//                .member(new MemberSimpleDto(
+//                        answer.getMember().getId(),
+//                        answer.getMember().getDisplayName(),
+//                        answer.getMember().getProfile()
+//                ))
+//
+//                .build();
+//
+//    }
 
 }

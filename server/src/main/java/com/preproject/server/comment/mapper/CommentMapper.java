@@ -14,6 +14,7 @@ import org.mapstruct.ReportingPolicy;
 public interface CommentMapper {
 
   Comment questionCommentPostDtoToComment(CommentPostDto commentPostDto);
+  Comment answerCommentPostDtoToComment(CommentPostDto commentPostDto);
 
   @Mapping(target = "questionId", source = "question.id")
   @Mapping(target = "memberId", source = "member.id")

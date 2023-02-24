@@ -48,6 +48,7 @@ public class Comment extends BaseEntity {
   private Question question;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Answer_Id")
+  @Setter
   private Answer answer;
 
   public void setMember(Long memberId) {
