@@ -8,11 +8,21 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 25px;
-  h1 {
-    margin-left: 25px;
-    margin-top: 100px;
+`;
+const AskHeader = styled.div`
+  display: flex !important;
+  justify-content: space-between;
+  text-align: left;
+  height: 150px;
+  width: 1400px;
+  margin-left: 25px;
+  margin-top: 70px;
+  img {
+    width: 700px;
+    height: 150px;
   }
 `;
+
 const Guide = styled.div`
   background-color: #edf4fa;
   border: 1px solid #aecdea;
@@ -50,7 +60,6 @@ const Sidebar = styled.div`
   @media screen and (max-width: 1361px) {
     display: none;
   }
-
   ul {
     background-color: #f8f9f9;
     padding: 14px;
@@ -77,8 +86,10 @@ function Ask() {
         </li>
       </Sidebar>
       <Container>
-        <h1>Ask a public question</h1>
-
+        <AskHeader>
+          <h1>Ask a public question</h1>
+          <img alt="header" src="img/background.svg" />
+        </AskHeader>
         <Guide>
           <h2>Writing a good question</h2>
           <p>
