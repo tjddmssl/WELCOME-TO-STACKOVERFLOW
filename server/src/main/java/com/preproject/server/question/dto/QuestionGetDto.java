@@ -1,30 +1,33 @@
 package com.preproject.server.question.dto;
 
-import com.preproject.server.answer.entity.Answer;
-import com.preproject.server.comment.entity.Comment;
-import com.preproject.server.member.entity.Member;
+import com.preproject.server.comment.dto.CommentSimpleDto;
+import com.preproject.server.member.dto.MemberSimpleDto;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+
+@Getter
+@Builder
+@AllArgsConstructor
 public class QuestionGetDto {
 
+  private Long id;
   private String title;
   private String content;
   private Long viewCount;
   private Long voteCount;
   private IS_VOTED isVoted;
-  // Answer DAO?
-  private List<Answer> answers;
-  // Member DAO?
-  private Member member;
-  // Comment DAO?
-  private List<Comment> comments;
+  private MemberSimpleDto member;
+  private List<CommentSimpleDto> comments;
+  @Setter
   private List<String> tags;
+  private LocalDateTime createdDate;
+  private LocalDateTime lastModifiedDate;
 
   public enum IS_VOTED {
 
