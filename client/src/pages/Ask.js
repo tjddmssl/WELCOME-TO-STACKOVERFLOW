@@ -3,6 +3,11 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import './Ask.css';
+import TagAdd from '../components/TagAdd';
+import { useState } from 'react';
+// import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -73,6 +78,41 @@ const Sidebar = styled.div`
 `;
 //* VIEW_02 질문 새로 입력하기
 function Ask() {
+  const [askTags, setAskTags] = useState([]);
+  const [askTitle, setAskTitle] = useState('');
+  const [askFirstBody, setFirstAskBody] = useState('');
+  const [askSecondBody, setSecondAskBody] = useState('');
+
+  // const { register, handleSubmit } = useForm();
+
+  // const validateTitle = value => {
+  //   if (value.length < 15) {
+  //     return 'Title must be at least 15 characters.';
+  //   }
+  //   return true;
+  // };
+
+  const handleSubmit = (title, content) => {
+    const newData = {
+      id: uuidv4(),
+      title,
+      content,
+    };
+    const postData = async () => {
+      try {
+        await axios({
+          url: 'http://localhost:3002/question',
+          method: 'post',
+          data: newData,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postData();
+    window.location.href = 'http://localhost:3000/';
+  };
+
   return (
     <>
       <Header />
@@ -111,7 +151,16 @@ function Ask() {
             </li>
           </ul>
         </Guide>
-        <AskForm />
+        <AskForm
+          askTitle={askTitle}
+          setAskTitle={setAskTitle}
+          askFirstBody={askFirstBody}
+          setFirstAskBody={setFirstAskBody}
+          askSecondBody={askSecondBody}
+          setSecondAskBody={setSecondAskBody}
+          handleSubmit={handleSubmit}
+        />
+        <TagAdd askTags={askTags} setAskTags={setAskTags} />
       </Container>
       <Footer />
     </>
