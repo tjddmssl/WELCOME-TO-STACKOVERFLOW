@@ -5,13 +5,18 @@ import com.preproject.server.answer.dto.AnswerPatchDto;
 import com.preproject.server.answer.dto.AnswerPostDto;
 import com.preproject.server.answer.dto.AnswerResponseDto;
 import com.preproject.server.answer.entity.Answer;
+import com.preproject.server.comment.dto.CommentSimpleDto;
+import com.preproject.server.comment.service.CommentService;
 import com.preproject.server.member.dto.MemberSimpleDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AnswerMapper {
+
     Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto);
     Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
 
@@ -26,13 +31,20 @@ public interface AnswerMapper {
     }
     @Mapping(source = "id", target = "answerId")
     @Mapping(source = "question.id", target = "questionId")
-    AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer) ;
-//    {
-//        return AnswerGetResponseDto.builder()
-//                .answerId(answer.getId())
-//                .content(answer.getContent())
-//                .voteCount(answer.getVoteCount())
-//                .questionId(answer.getQuestion().getId()).build();
-//    }
+    @Mapping(source = "comments", target = "commentsSimple")
+    default AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer)
+    {
+        return AnswerGetResponseDto.builder()
+                .content(answer.getContent())
+                .voteCount(answer.getVoteCount())
+                .memberSimple(new MemberSimpleDto(
+                        answer.getMember().getId(),
+                        answer.getMember().getDisplayName(),
+                        answer.getMember().getProfile()
+                ))
+
+                .build();
+
+    }
 
 }

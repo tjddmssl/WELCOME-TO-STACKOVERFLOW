@@ -5,6 +5,8 @@ import com.preproject.server.member.dto.MemberSimpleDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @Getter
 @AllArgsConstructor
@@ -18,6 +20,6 @@ public class AnswerGetResponseDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
-    private MemberSimpleDto memberSimpleDto;
-    private CommentSimpleDto commentSimpleDto;
+    private MemberSimpleDto memberSimple;
+    private List<CommentSimpleDto> commentsSimple;
 }

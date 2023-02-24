@@ -8,6 +8,7 @@ import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.answer.mapper.AnswerMapper;
 import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.answer.service.AnswerTransService;
+import com.preproject.server.comment.service.CommentService;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class AnswerController {
     private final AnswerService answerService;
     private final AnswerTransService answerTransService;
     private final AnswerMapper mapper;
+    private final CommentService commentService;
 
     @PostMapping("/question/{question-id}/answers")
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
@@ -65,6 +67,10 @@ public class AnswerController {
         List<AnswerGetResponseDto> answerGetResponseDtoList
                 = answerList.stream().map(mapper::answerToAnswerGetResponseDto).collect(Collectors.toList());
 
+        answerGetResponseDtoList.stream().map(answerGetResponseDto -> {
+            answerGetResponseDto.setCommentsSimple(commentService.findCommentSimpleDto(answerGetResponseDto.getAnswerId()));
+            return answerGetResponseDto;
+        }).collect(Collectors.toList());
         return new ResponseEntity(answerGetResponseDtoList, HttpStatus.OK);
     }
 
