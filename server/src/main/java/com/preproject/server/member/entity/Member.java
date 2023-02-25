@@ -49,7 +49,8 @@ public class Member extends BaseEntity {
     @Setter
     private String aboutMe;
     @Enumerated(STRING)
-    private MemberStatus memberStatus;
+    @Default
+    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @ElementCollection(fetch = EAGER)
     @Setter
@@ -62,6 +63,7 @@ public class Member extends BaseEntity {
     private String provideId ;   //해당 OAuth 의 key(id)
 
     public Member(Member member) {
+        this.id = member.getId();
         this.email = member.getEmail();
         this.displayName = member.getDisplayName();
         this.password = member.getPassword();

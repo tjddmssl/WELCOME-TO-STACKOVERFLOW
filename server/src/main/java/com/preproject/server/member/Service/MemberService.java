@@ -81,7 +81,7 @@ public class MemberService {
      * 회원이 존재 하면 예외 발생
      * */
     private void verifyExistsEmail(String email) {
-        if (memberRepository.findByEmail(email).isPresent())
+        if (memberRepository.findByEmailMemberActive(email).isPresent())
             throw new BusinessLogicException(MemberExceptionCode.MEMBER_EXIST);
     }
 
