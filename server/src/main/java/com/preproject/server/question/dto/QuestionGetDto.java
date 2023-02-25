@@ -2,11 +2,11 @@ package com.preproject.server.question.dto;
 
 import com.preproject.server.comment.dto.CommentSimpleDto;
 import com.preproject.server.member.dto.MemberSimpleDto;
+import com.preproject.server.vote.IS_VOTED;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,18 +30,5 @@ public class QuestionGetDto {
   private LocalDateTime createdDate;
   private LocalDateTime lastModifiedDate;
 
-  public enum IS_VOTED {
 
-    NOT_SIGNED_IN("not signed in"),
-    NOT_VOTED("didn't vote"),
-    VOTED("voted"),
-    ;
-
-    @Getter
-    private final String status;
-
-    IS_VOTED(String status) {
-      this.status = status;
-    }
-  }
 }

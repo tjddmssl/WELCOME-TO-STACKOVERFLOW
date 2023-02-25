@@ -4,9 +4,11 @@ import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.service.QuestionService;
+import com.preproject.server.vote.IS_VOTED;
 import com.preproject.server.vote.entity.Vote;
 import com.preproject.server.vote.entity.Vote.status;
 import com.preproject.server.vote.repository.VoteRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,7 +35,7 @@ public class VoteService {
   public long voteUp(long questionId, long memberId) {
     Vote vote = Vote.builder().member(memberService.getMember(memberId))
         .question(questionService.findQuestion(questionId)).status(
-            status.VOTE_PLUS).build();
+            status.PLUS).build();
     voteRepository.save(vote);
     return questionService.addQuestionVoteCount(vote.getQuestion(), vote.getStatus());
   }
@@ -41,8 +43,19 @@ public class VoteService {
   public long voteDown(long questionId, long memberId) {
     Vote vote = Vote.builder().member(memberService.getMember(memberId))
         .question(questionService.findQuestion(questionId)).status(
-            status.VOTE_MINUS).build();
+            status.MINUS).build();
     voteRepository.save(vote);
     return questionService.addQuestionVoteCount(vote.getQuestion(), vote.getStatus());
   }
+
+//  public IS_VOTED checkIsVoted(long questionId, long memberId) {
+//    Optional<Vote> voteOptional = voteRepository.findVoteByMemberAndQuestion(questionId, memberId);
+//
+//    voteOptional.ifPresent(vote -> {
+//      if(vote.getStatus().equals())
+//    });
+//
+//  }
+
+
 }

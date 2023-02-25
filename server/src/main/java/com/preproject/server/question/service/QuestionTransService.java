@@ -72,6 +72,7 @@ public class QuestionTransService {
     questionGetDto.setTag(
         question.getTagQuestions().stream().map(tagQuestion -> tagQuestion.getTag().getName())
             .collect(Collectors.toList()));
+    // TODO VOTED 상태 체크
 
     return questionGetDto;
   }

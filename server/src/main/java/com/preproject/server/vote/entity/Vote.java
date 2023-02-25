@@ -36,8 +36,8 @@ public class Vote {
     private Answer answer;
 
     public enum status {
-        VOTE_PLUS(1),
-        VOTE_MINUS(-1);
+        PLUS(1),
+        MINUS(-1);
 
         @Getter
         private final int num;
