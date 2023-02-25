@@ -21,11 +21,12 @@ public class QuestionGetDto {
   private String content;
   private Long viewCount;
   private Long voteCount;
+  @Setter
   private IS_VOTED isVoted;
   private MemberSimpleDto member;
   private List<CommentSimpleDto> comments;
   @Setter
-  private List<String> tags;
+  private List<String> tag;
   private LocalDateTime createdDate;
   private LocalDateTime lastModifiedDate;
 

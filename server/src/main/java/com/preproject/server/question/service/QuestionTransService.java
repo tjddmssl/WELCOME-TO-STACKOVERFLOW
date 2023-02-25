@@ -3,6 +3,8 @@ package com.preproject.server.question.service;
 import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.mapper.MemberMapper;
+import com.preproject.server.question.dto.MemberQuestionDto;
+import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionListGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
@@ -67,9 +69,10 @@ public class QuestionTransService {
   public QuestionGetDto questionToQuestionGetDto(Question question) {
     log.info("## Question to QuestionGetDto Trans Service ##");
     QuestionGetDto questionGetDto = questionMapper.questionToQuestionGetDto(question);
-    questionGetDto.setTags(
+    questionGetDto.setTag(
         question.getTagQuestions().stream().map(tagQuestion -> tagQuestion.getTag().getName())
             .collect(Collectors.toList()));
+
     return questionGetDto;
   }
 
@@ -80,6 +83,24 @@ public class QuestionTransService {
           question.getTagQuestions().stream().map(tagQuestion -> tagQuestion.getTag().getName())
               .collect(Collectors.toList()));
       dto.setMember(memberMapper.memberToSimpleDto(question.getMember()));
+      return dto;
+    });
+  }
+
+  public Page<VotedQuestionDto> questionPageToVotedQuestionDto(Page<Question> questionPage) {
+    return questionPage.map(question -> {
+      VotedQuestionDto dto = questionMapper.questionToVotedQuestionDto(question);
+      dto.setTag(question.getTagQuestions().stream().map(name -> name.getTag().getName()).collect(
+          Collectors.toList()));
+      return dto;
+    });
+  }
+
+  public Page<MemberQuestionDto> questionPageToMemberQuestionDto(Page<Question> questionPage) {
+    return questionPage.map(question -> {
+      MemberQuestionDto dto = questionMapper.questionToMemberQuestionDto(question);
+      dto.setTag(question.getTagQuestions().stream().map(name -> name.getTag().getName()).collect(
+          Collectors.toList()));
       return dto;
     });
   }

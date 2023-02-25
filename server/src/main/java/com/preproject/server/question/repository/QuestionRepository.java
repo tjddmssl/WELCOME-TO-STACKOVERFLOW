@@ -37,4 +37,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
       + "join tq.tag t where t.id = :id order by q.createdDate desc")
   List<LocalDateTime> getCreatedDateByTag(@Param("id") Long id);
 
+  @Query("select q from Question q join q.votes v join v.member m  where m.id = :id")
+  Page<Question> findVotedQuestions(Pageable pageable, @Param("id") long memberId);
+
+  @Query("select q from Question q join q.member m where m.id = :id")
+  Page<Question> findQuestionsByMemberId(Pageable pageable, @Param("id") long memberId);
 }

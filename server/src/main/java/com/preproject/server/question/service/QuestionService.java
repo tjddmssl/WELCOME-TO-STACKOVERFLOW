@@ -64,6 +64,15 @@ public class QuestionService {
     return questionRepository.findQuestionsByTagName(tagName, pageable);
   }
 
+  public Page<Question> findVotedQuestions(Pageable pageable, long memberId){
+    // TODO verify if member is available
+    return questionRepository.findVotedQuestions(pageable, memberId);
+  }
+
+  public Page<Question> findQuestionsByUser(Pageable pageable, long memberId) {
+    return questionRepository.findQuestionsByMemberId(pageable, memberId);
+  }
+
   public List<RelatedQuestionDao> findRelatedQuestions(Long questionId) {
     log.info("## GET RELATED QUESTIONS ##");
     Question findQuestion = findQuestion(questionId);
