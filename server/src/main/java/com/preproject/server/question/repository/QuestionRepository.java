@@ -23,6 +23,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
       + "order by q.createdDate desc ")
   List<RelatedQuestionDao> findQuestionsByTag(@Param("id") Long tagId);
 
+  @Query("select q from Question q join q.tagQuestions tq join tq.tag t where t.name = :name")
+  Page<Question> findQuestionsByTagName(@Param("name") String tagName, Pageable pageable);
+
   @Query("select COUNT(q) "
       + "from Question q "
       + "join q.tagQuestions tq "

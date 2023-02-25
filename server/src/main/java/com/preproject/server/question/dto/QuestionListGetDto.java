@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Builder
@@ -15,9 +16,13 @@ public class QuestionListGetDto {
   private long id;
   private String title;
   private String content;
+  private long viewCount;
+  private long voteCount;
+  @Setter
   private List<String> tags;
   private LocalDateTime createdDate;
   private LocalDateTime lastModifiedDate;
-  private List<MemberSimpleDto> members;
+  @Setter
+  private MemberSimpleDto member;
 
 }

@@ -60,6 +60,10 @@ public class QuestionService {
     return questionRepository.findAll(pageable);
   }
 
+  public Page<Question> findQuestionsByTagName(String tagName, Pageable pageable) {
+    return questionRepository.findQuestionsByTagName(tagName, pageable);
+  }
+
   public List<RelatedQuestionDao> findRelatedQuestions(Long questionId) {
     log.info("## GET RELATED QUESTIONS ##");
     Question findQuestion = findQuestion(questionId);

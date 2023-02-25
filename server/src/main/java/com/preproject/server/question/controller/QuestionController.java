@@ -74,7 +74,7 @@ public class QuestionController {
 
   @GetMapping("/questions")
   public ResponseEntity getQuestions(
-      @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
+      @PageableDefault(sort = "createdDate") Pageable pageable) {
     Page<Question> questionPage = questionService.findQuestions(pageable);
     Page<QuestionListGetDto> questionListGetDtoPage = questionTransService.questionToQuestionListGetDto(
         questionPage);
@@ -85,6 +85,13 @@ public class QuestionController {
   public ResponseEntity getRelatedQuestions(@PathVariable("id") long questionId) {
     List<RelatedQuestionDao> questionDaoList = questionService.findRelatedQuestions(questionId);
     return ResponseEntity.ok().body(new ResponseDto<>(questionDaoList));
+  }
+
+  @GetMapping("/questions/tagged/{tag-name}")
+  public ResponseEntity getQuestionsByTagName(@PathVariable("tag-name") String tagName, @PageableDefault(sort = "createdDate") Pageable pageable){
+    Page<Question> questionPage = questionService.findQuestionsByTagName(tagName, pageable);
+    Page<QuestionListGetDto> questionListGetDtoPage = questionTransService.questionToQuestionListGetDto(questionPage);
+    return ResponseEntity.ok().body(questionListGetDtoPage);
   }
 
 
