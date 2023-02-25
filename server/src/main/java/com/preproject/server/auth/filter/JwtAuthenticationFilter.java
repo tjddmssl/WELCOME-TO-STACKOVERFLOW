@@ -3,9 +3,11 @@ package com.preproject.server.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.preproject.server.auth.JwtTokenizer;
 import com.preproject.server.auth.dto.LoginDto;
+import com.preproject.server.auth.dto.PrincipalDto;
 import com.preproject.server.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,7 @@ import java.util.Map;
 * 클라이언트의 로그인 인증 정보 수신 -> AuthenticationManager 에 전달해 인증 처리 위임
 * */
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
@@ -54,8 +57,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new LinkedHashMap<>();
+        PrincipalDto principal = PrincipalDto.builder().id(member.getId()).email(member.getEmail()).displayName(member.getDisplayName()).build();
         claims.put("username", member.getEmail());
         claims.put("roles", member.getRoles());
+        claims.put("principal", principal);
+        log.info("principal = {} ", principal);
+        log.info("###### principal = {}", claims.get("principal").getClass());
 
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());

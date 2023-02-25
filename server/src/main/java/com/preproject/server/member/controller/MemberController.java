@@ -18,10 +18,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.security.Principal;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -109,5 +113,12 @@ public class MemberController {
         return new ResponseEntity(pageDto, HttpStatus.OK);
     }
 
+    //시큐리티 컨텍스트 테스트용
+    @GetMapping("/security-test")
+    public String securityTest(@AuthenticationPrincipal Principal authentication) {
+        LinkedHashMap principal1 =(LinkedHashMap) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info("#### principal = {}", principal1.getClass());
+        return "시큐리티 테스트입니다. 갑사합니다 ";
+    }
 
 }
