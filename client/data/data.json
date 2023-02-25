@@ -4,7 +4,10 @@
       "id": 1,
       "title": "title1",
       "content": "question content2",
-      "tag": ["spring", "spring boot"],
+      "tag": [
+        "spring",
+        "spring boot"
+      ],
       "voteCount": 3,
       "viewCount": 12,
       "createdDate": "2023-02-21T05:42:50.855Z",
@@ -19,7 +22,10 @@
       "id": 2,
       "title": "title2",
       "content": "question content2",
-      "tag": ["javascript", "react"],
+      "tag": [
+        "javascript",
+        "react"
+      ],
       "voteCount": -1,
       "viewCount": 22,
       "createdDate": "2023-02-21T05:42:50.855Z",
@@ -34,7 +40,9 @@
       "id": 3,
       "title": "title3",
       "content": "question content3",
-      "tag": ["kotlin"],
+      "tag": [
+        "kotlin"
+      ],
       "voteCount": 11,
       "viewCount": 32,
       "createdDate": "2023-02-21T05:42:50.855Z",
@@ -49,7 +57,10 @@
       "id": 4,
       "title": "title4",
       "content": "question content4",
-      "tag": ["spring", "spring boot"],
+      "tag": [
+        "spring",
+        "spring boot"
+      ],
       "voteCount": 22,
       "viewCount": 33,
       "createdDate": "2023-02-21T05:42:50.855Z",
@@ -57,6 +68,25 @@
       "member": {
         "id": 4,
         "displayName": "user4",
+        "profileImage": ""
+      }
+    },
+    {
+      "id": "af540653-f40c-4762-b5fe-43d7524aa0c6",
+      "title": "테스트",
+      "content": "테스트",
+      "tag": [
+        "테스트",
+        "테스트",
+        "테스트"
+      ],
+      "voteCount": 4,
+      "viewCount": 12,
+      "createdDate": "2023-02-21T05:42:50.855Z",
+      "lastModifiedDate": "2023-02-21T05:42:50.855Z",
+      "member": {
+        "id": 1,
+        "displayName": "user1",
         "profileImage": ""
       }
     }
