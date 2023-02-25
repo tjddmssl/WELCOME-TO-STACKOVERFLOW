@@ -15,11 +15,16 @@ import com.preproject.server.tag.entity.Tag;
 import com.preproject.server.tag.entity.TagQuestion;
 import com.preproject.server.tag.exception.TagExceptionCode;
 import com.preproject.server.tag.service.TagService;
+import com.preproject.server.vote.IS_VOTED;
+import com.preproject.server.vote.service.VoteService;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +36,7 @@ public class QuestionTransService {
   private final MemberService memberService;
   private final MemberMapper memberMapper;
   private final TagService tagService;
+  private final VoteService voteService;
 
 
   public Question questionPostDtoToQuestion(QuestionPostDto questionPostDto) {
@@ -72,8 +78,18 @@ public class QuestionTransService {
     questionGetDto.setTag(
         question.getTagQuestions().stream().map(tagQuestion -> tagQuestion.getTag().getName())
             .collect(Collectors.toList()));
-    // TODO VOTED 상태 체크
-
+    // VOTED 상태 체크
+    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.getPrincipal().equals("anonymousUser")) {
+      questionGetDto.setIsVoted(IS_VOTED.NOT_SIGNED_IN);
+    } else {
+      LinkedHashMap principal = (LinkedHashMap) authentication.getPrincipal();
+      log.info("## member id signed in: {}", principal.get("id"));
+      IS_VOTED voted = voteService.getVoteStatus(((Integer) principal.get("id")).longValue(),
+          question.getId());
+      log.info(voted.getStatus());
+      questionGetDto.setIsVoted(voted);
+    }
     return questionGetDto;
   }
 

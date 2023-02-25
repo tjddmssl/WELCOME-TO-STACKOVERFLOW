@@ -6,8 +6,8 @@ public enum IS_VOTED {
 
   NOT_SIGNED_IN("not signed in"),
   NOT_VOTED("didn't vote"),
-  VOTE_PLUS("PLUS"),
-  VOTE_MINUS("MINUS")
+  VOTE_PLUS("voted plus"),
+  VOTE_MINUS("voted minus")
   ;
 
   @Getter
