@@ -1,7 +1,6 @@
 package com.preproject.server.question.controller;
 
 import com.preproject.server.dto.ResponseDto;
-import com.preproject.server.member.repository.MemberRepository;
 import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.dto.MemberQuestionDto;
 import com.preproject.server.question.dto.VotedQuestionDto;
@@ -41,8 +40,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @Slf4j
 public class QuestionController {
-
-  private final MemberRepository memberRepository;
 
   private final String DEFAULT_URI = "/questions";
   private final QuestionService questionService;
