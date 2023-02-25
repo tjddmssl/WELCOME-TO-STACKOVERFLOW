@@ -14,7 +14,7 @@ import NoAnswerView from '../components/NoAnswerView';
 import getAnswerSlice from '../redux/slice/getAnswer';
 
 //* VIEW_01
-
+// TODO 코멘트 map해서 보여주기
 const Container = styled.div`
   display: flex;
   flex-direction: column;

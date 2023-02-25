@@ -2,6 +2,7 @@ import { GoTriangleUp, GoTriangleDown } from 'react-icons/go';
 import { FiBookmark } from 'react-icons/fi';
 import { RxCountdownTimer } from 'react-icons/rx';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -33,15 +34,24 @@ const IconContainer = styled.div`
   svg {
     margin-bottom: 10px;
   }
+
+  svg:hover {
+    cursor: pointer;
+  }
 `;
 function Vote() {
+  //TODO voteCount 받아와서 보여주기
+  const data = useSelector((state) => {
+    return state.getTopQList.content;
+  });
+
   return (
     <div>
       <Container>
         <button>
           <GoTriangleUp />
         </button>
-        <div>0</div>
+        <div>{data.voteCount}</div>
         <button>
           <GoTriangleDown />
         </button>
