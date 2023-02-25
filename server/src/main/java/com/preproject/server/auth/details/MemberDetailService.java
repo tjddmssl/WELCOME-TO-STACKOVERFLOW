@@ -27,9 +27,11 @@ public class MemberDetailService implements UserDetailsService {
         log.info("#### DB에 있는 DATA와 검증 시작!");
         Member findMember = memberRepository.findByEmailMemberActive(username).orElseThrow(() ->
         {
+
             log.error("#### error ####");
             return new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         });
+        log.info("#### findMemberId = {}", findMember.getId());
         return new PrincipalDetails(findMember,authorityUtils);
     }
 }
