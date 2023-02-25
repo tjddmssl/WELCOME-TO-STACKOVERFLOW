@@ -49,7 +49,8 @@ public class Member extends BaseEntity {
     @Setter
     private String aboutMe;
     @Enumerated(STRING)
-    private MemberStatus memberStatus;
+    @Default
+    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @ElementCollection(fetch = EAGER)
     @Setter
