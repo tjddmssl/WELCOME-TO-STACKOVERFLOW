@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import QButton from './QButton';
 import Vote from './Vote';
 import { MdWavingHand } from 'react-icons/md';
@@ -16,7 +17,7 @@ const TitleContainer = styled.div`
     max-width: 500px;
   }
   button {
-    margin-left: 890px;
+    margin-left: 600px;
     width: 100px;
   }
 `;
@@ -106,12 +107,20 @@ const ButtonContainer = styled.div`
 `;
 
 function QViewDetail({ question }) {
+  const navigate = useNavigate();
+  const navigateToAsk = () => {
+    navigate('./view/ask');
+  };
+
+  const navigateToEdit = () => {
+    navigate('./edit');
+  };
   return (
     <>
       <TitleContainer>
         <div className="title">
           <h2>{question.title}</h2>
-          <QButton />
+          <QButton onClick={navigateToAsk} />
         </div>
         <TitleDate>
           <p>
@@ -129,7 +138,7 @@ function QViewDetail({ question }) {
           </div>
           <ButtonContainer>
             <button>Share</button>
-            <button>Edit</button>
+            <button onClick={navigateToEdit}>Edit</button>
             <button>Follow</button>
             {/* // TODO user card 클릭 시 유저 상세조회 페이지로 이동 */}
             <div className="usercard">

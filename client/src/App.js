@@ -36,7 +36,8 @@ function App() {
         <Route path="/tags" element={<Tags />} />
         <Route path="/users" element={<Users />} />
         <Route path="/ask" element={<Ask />} />
-        <Route path="/edit" element={<ViewEdit />} />
+        <Route path="/view/ask" element={<Ask />} />
+        <Route path="/view/edit" element={<ViewEdit />} />
       </Routes>
     </div>
   );
