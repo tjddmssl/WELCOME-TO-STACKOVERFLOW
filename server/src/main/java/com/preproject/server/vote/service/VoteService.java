@@ -1,6 +1,7 @@
 package com.preproject.server.vote.service;
 
 import com.preproject.server.answer.entity.Answer;
+import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.service.QuestionService;
@@ -21,6 +22,7 @@ public class VoteService {
   private final VoteRepository voteRepository;
   private final MemberService memberService;
   private final QuestionService questionService;
+  private final AnswerService answerService;
 
   public Page<Question> createQuestionSimplePage(Pageable pageable, Long id) {
     return voteRepository.findSimpleQuestion(pageable, id);
@@ -30,7 +32,7 @@ public class VoteService {
     return voteRepository.findSimpleAnswer(pageable, id);
   }
 
-  public long voteUp(long questionId, long memberId) {
+  public long questionVoteUp(long questionId, long memberId) {
     Vote vote = Vote.builder().member(memberService.getMember(memberId))
         .question(questionService.findQuestion(questionId)).status(
             status.VOTE_PLUS).build();
@@ -38,11 +40,27 @@ public class VoteService {
     return questionService.addQuestionVoteCount(vote.getQuestion(), vote.getStatus());
   }
 
-  public long voteDown(long questionId, long memberId) {
+  public long questionVoteDown(long questionId, long memberId) {
     Vote vote = Vote.builder().member(memberService.getMember(memberId))
         .question(questionService.findQuestion(questionId)).status(
             status.VOTE_MINUS).build();
     voteRepository.save(vote);
     return questionService.addQuestionVoteCount(vote.getQuestion(), vote.getStatus());
+  }
+
+  public long answerVoteUp(long answerId, long memberId) {
+    Vote vote = Vote.builder().member(memberService.getMember(memberId))
+            .answer(answerService.findAnswer(answerId)).status(
+                    status.VOTE_PLUS).build();
+    voteRepository.save(vote);
+    return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus());
+  }
+
+  public long answerVoteDown(long answerId, long memberId) {
+    Vote vote = Vote.builder().member(memberService.getMember(memberId))
+            .answer(answerService.findAnswer(answerId)).status(
+                    status.VOTE_MINUS).build();
+    voteRepository.save(vote);
+    return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus());
   }
 }

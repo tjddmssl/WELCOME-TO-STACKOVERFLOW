@@ -30,9 +30,11 @@ public class Vote {
     //Nullable 해줘야하는지?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Question_Id")
+    @Nullable
     private Question question;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Answer_Id")
+    @Nullable
     private Answer answer;
 
     public enum status {

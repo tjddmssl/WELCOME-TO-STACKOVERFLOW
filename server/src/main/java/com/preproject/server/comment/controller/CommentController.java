@@ -36,4 +36,18 @@ public class CommentController {
     return ResponseEntity.created(uri).body(
         new ResponseDto<>(commentTransService.commentToCommentResponseDto(comment)));
   }
+
+  @PostMapping("/questions/{question-id}/answers/{answer-id}/comments")
+  public ResponseEntity postAnswerComment(
+          @Valid @RequestBody CommentPostDto commentPostDto,
+          @PathVariable("answer-id") @Positive long answerId,
+          @PathVariable("question-id") @Positive long questionId) {
+    Comment comment = commentService.createComment(
+            commentTransService.answerCommentPostDtoToComment(commentPostDto, answerId));
+    URI uri = UriComponentsBuilder.newInstance()
+            .path("/questions/{question-id}/answers/{answer-id}/comments/{comment-id}")
+            .buildAndExpand(questionId, answerId, comment.getId()).toUri();
+    return ResponseEntity.created(uri).body(
+            new ResponseDto<>(commentTransService.commentToCommentResponseDto(comment)));
+  }
 }
