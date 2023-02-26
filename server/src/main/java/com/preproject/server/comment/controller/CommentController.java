@@ -43,7 +43,7 @@ public class CommentController {
           @PathVariable("answer-id") @Positive long answerId,
           @PathVariable("question-id") @Positive long questionId) {
     Comment comment = commentService.createComment(
-            commentTransService.answerCommentPostDtoToComment(commentPostDto, answerId));
+            commentTransService.answerCommentPostDtoToComment(commentPostDto, answerId, questionId));
     URI uri = UriComponentsBuilder.newInstance()
             .path("/questions/{question-id}/answers/{answer-id}/comments/{comment-id}")
             .buildAndExpand(questionId, answerId, comment.getId()).toUri();

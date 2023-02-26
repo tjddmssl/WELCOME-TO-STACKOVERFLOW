@@ -30,7 +30,7 @@ public interface AnswerMapper {
                 .build();
     }
 
-    @Mapping(source = "question.id", target = "questionId")
+    @Mapping(source = "answer.question.id", target = "questionId")
     AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer);
 //    {
 //        return AnswerGetResponseDto.builder()
