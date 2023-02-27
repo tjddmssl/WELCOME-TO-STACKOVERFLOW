@@ -2,6 +2,7 @@ package com.preproject.server.member.Service;
 
 import com.preproject.server.auth.utils.CustomAuthorityUtils;
 import com.preproject.server.exception.BusinessLogicException;
+import com.preproject.server.helper.event.MemberRegistrationApplicationEvent;
 import com.preproject.server.member.data.MemberStatus;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.exception.MemberExceptionCode;
@@ -11,6 +12,7 @@ import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,12 +32,15 @@ public class MemberService {
     private final TagService tagService;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final ApplicationEventPublisher publisher;
     @Transactional
     public Member createMember(Member member) {
         log.info("member = {}", member);
         verifyExistsEmail(member.getEmail());
         setDefaultMemberInfo(member);
-        return memberRepository.save(member);
+        Member save = memberRepository.save(member);
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(this,save));
+        return save;
     }
 
     @Transactional
@@ -72,7 +77,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void deleteMember(Long memberId, String password) {
+    public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(MemberExceptionCode.MEMBER_NOT_FOUND));
 
         findMember.setMemberStatus(MemberStatus.MEMBER_DELETE);
