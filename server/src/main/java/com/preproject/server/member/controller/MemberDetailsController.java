@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,19 +101,19 @@ public class MemberDetailsController {
       @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
 
     //TODO 서비스단 타고 가서 값 만들고
-//        Page<Question> questionPage = voteService.createQuestionSimplePage(pageable,id);
-//        Page<MemberDetailQuestionDto> result = questionPage.map(MemberDetailQuestionDto::new);
-//        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
+        Page<Question> questionPage = voteService.createQuestionSimplePage(pageable,id);
+        Page<MemberDetailQuestionDto> result = questionPage.map(MemberDetailQuestionDto::new);
+        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
 
-    ArrayList<String> strings = new ArrayList<>();
-    strings.add("JAVA");
-    strings.add("Spring Boot");
-    Page<MemberDetailQuestionDto> memberPage = new PageImpl<>(
-        List.of(new MemberDetailQuestionDto(1L, "test", strings, 1L, 1L, LocalDateTime.now()),
-            new MemberDetailQuestionDto(2L, "test", strings, 2L, 1L, LocalDateTime.now()),
-            new MemberDetailQuestionDto(3L, "test", strings, 1L, 1L, LocalDateTime.now())),
-        PageRequest.of(0, 10), 3);
-    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
+//    ArrayList<String> strings = new ArrayList<>();
+//    strings.add("JAVA");
+//    strings.add("Spring Boot");
+//    Page<MemberDetailQuestionDto> memberPage = new PageImpl<>(
+//        List.of(new MemberDetailQuestionDto(1L, "test", strings, 1L, 1L, LocalDateTime.now()),
+//            new MemberDetailQuestionDto(2L, "test", strings, 2L, 1L, LocalDateTime.now()),
+//            new MemberDetailQuestionDto(3L, "test", strings, 1L, 1L, LocalDateTime.now())),
+//        PageRequest.of(0, 10), 3);
+//    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
 
   }
 

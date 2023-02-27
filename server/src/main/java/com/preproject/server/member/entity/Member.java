@@ -50,6 +50,7 @@ public class Member extends BaseEntity {
     private String aboutMe;
     @Enumerated(STRING)
     @Default
+    @Setter
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @ElementCollection(fetch = EAGER)
