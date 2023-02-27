@@ -72,10 +72,6 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    private static boolean isProvider(Member member, Member findMember) {
-        return findMember.getProvider().equals(member.getProvider());
-    }
-
     @Transactional
     public void deleteMember(Long memberId) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(MemberExceptionCode.MEMBER_NOT_FOUND));
@@ -108,23 +104,24 @@ public class MemberService {
     }
 
 
+
     /*
      * 회원이 존재 하면 예외 발생
      * */
-
     private void verifyExistsEmail(String email) {
-        if (memberRepository.findByEmailMemberActive(email).isPresent())
+        if (memberRepository.findByEmailMemberActiveTmp(email).isPresent())
             throw new BusinessLogicException(MemberExceptionCode.MEMBER_EXIST);
     }
+
 
     /*
      * 회원이 없으명 예외 발생
      * */
     // 내부 동작 메서드 //
-
     private Member checkMemberExist(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(MemberExceptionCode.MEMBER_NOT_FOUND));
     }
+
     private Member addTagMember(Set<String> tagMember, Member member) {
         List<Tag> tagList = tagService.findTagList();
 
@@ -135,7 +132,6 @@ public class MemberService {
         });
         return member;
     }
-
     private void setDefaultMemberInfo(Member member) {
         String encryptedPassword = Optional.ofNullable(passwordEncoder.encode(member.getPassword())).get();
         member.setPassword(encryptedPassword);
@@ -153,6 +149,9 @@ public class MemberService {
         findMember.getTagMembers().clear();
         findMember.setAboutMe("");
         findMember.setMemberStatus(MemberStatus.MEMBER_ACTIVE);
+    }
+    private boolean isProvider(Member member, Member findMember) {
+        return findMember.getProvider().equals(member.getProvider());
     }
 
 

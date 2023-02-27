@@ -56,7 +56,6 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //세션 생성X
         http
-//                .oauth2Login(withDefaults()) //OAuth2 로그인 활성화
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer,authorityUtils,memberService,clientRegistration())));
         http
                 .formLogin().disable()
@@ -66,7 +65,7 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(new MemberAccessDeniedHandler());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/users").authenticated()
+                        .antMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().permitAll()
                 );
         http
@@ -114,7 +113,8 @@ public class SecurityConfiguration {
     public ClientRegistrationRepository clientRegistrationRepository() {
         ClientRegistration clientRegistration = clientRegistration();
         return new InMemoryClientRegistrationRepository(clientRegistration);
-    }//스프링 부트에서 자동으로 등록해주는 OAuth2 를 위한 설정을 직적 등록 다양한정보 추가 가능
+    }
+    //스프링 부트에서 자동으로 등록해주는 OAuth2 를 위한 설정을 직적 등록 다양한정보 추가 가능
 
     private ClientRegistration clientRegistration() {
         // (4-1)
@@ -127,6 +127,4 @@ public class SecurityConfiguration {
     }//어떤 벤더인가를 알려주는 역할 수 행 및 Provider 역할 수행
 
 }
-//권한 없으면 403 에러가 터짐
-    //이걸 바꾸는 것도 생각해 봐야될듯?
 
