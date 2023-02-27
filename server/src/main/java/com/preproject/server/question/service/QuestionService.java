@@ -1,6 +1,7 @@
 package com.preproject.server.question.service;
 
 import com.preproject.server.exception.BusinessLogicException;
+import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
@@ -13,10 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +67,7 @@ public class QuestionService {
     return questionRepository.findQuestionsByTagName(tagName, pageable);
   }
 
-  public Page<Question> findVotedQuestions(Pageable pageable, long memberId){
+  public Page<Question> findVotedQuestions(Pageable pageable, long memberId) {
     // TODO verify if member is available
     return questionRepository.findVotedQuestions(pageable, memberId);
   }
@@ -113,7 +117,19 @@ public class QuestionService {
     return questionRepository.findSimpleQuestion(pageable, id);
   }
 
-  public Question getQuestion(long questionId) {
-    return questionRepository.findById(questionId).get();
+  // SEARCH
+  private Specification<Question> search(String keyword) {
+    return (q, query, cb) -> {
+      query.distinct(true);
+      Join<Question, Member> m = q.join("member", JoinType.LEFT);
+      return cb.or(cb.like(q.get("content"), "%" + keyword + "%"),
+          cb.like(q.get("title"), "%" + keyword + "%"),
+          cb.like(m.get("displayName"), "%" + keyword + "%"));
+    };
+  }
+
+  public Page<Question> getSearchedPage(String keyword, Pageable pageable) {
+    Specification<Question> spec = search(keyword);
+    return questionRepository.findAll(spec, pageable);
   }
 }
