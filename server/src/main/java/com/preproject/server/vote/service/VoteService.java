@@ -60,7 +60,7 @@ public class VoteService {
     // -> +2 해야지 (전 투표 취소 + 이번 up)
     long memberId = getAuthenticatedMemberId();
     Optional<Vote> prev = voteRepository.findVoteByMemberAndQuestion(memberId, questionId);
-    log.info("## is found: {}" , prev);
+    log.info("## is found: {}", prev);
     if (prev.isEmpty()) {
       Vote vote = Vote.builder().member(memberService.getMember(memberId))
           .question(questionService.findQuestion(questionId)).status(
@@ -131,16 +131,16 @@ public class VoteService {
 
   public long answerVoteUp(long answerId, long memberId) {
     Vote vote = Vote.builder().member(memberService.getMember(memberId))
-            .answer(answerService.findAnswer(answerId)).status(
-                    status.VOTE_PLUS).build();
+        .answer(answerService.findAnswer(answerId)).status(
+            status.PLUS).build();
     voteRepository.save(vote);
     return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus());
   }
 
   public long answerVoteDown(long answerId, long memberId) {
     Vote vote = Vote.builder().member(memberService.getMember(memberId))
-            .answer(answerService.findAnswer(answerId)).status(
-                    status.VOTE_MINUS).build();
+        .answer(answerService.findAnswer(answerId)).status(
+            status.MINUS).build();
     voteRepository.save(vote);
     return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus());
   }
