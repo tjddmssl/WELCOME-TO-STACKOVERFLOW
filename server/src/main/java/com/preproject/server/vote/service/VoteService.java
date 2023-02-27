@@ -103,8 +103,8 @@ public class VoteService {
     } else {
       Vote prevVote = prev.get();
       voteRepository.delete(prevVote);
-      if (prev.get().getStatus().getNum() == -1) {
-        return questionService.addQuestionVoteCount(prev.get().getQuestion(), status.PLUS.getNum());
+      if (prevVote.getStatus().getNum() == -1) {
+        return questionService.addQuestionVoteCount(prevVote.getQuestion(), status.PLUS.getNum());
       } else {
         Vote vote = Vote.builder().member(memberService.getMember(memberId))
             .question(questionService.findQuestion(questionId)).status(status.MINUS).build();
@@ -129,19 +129,49 @@ public class VoteService {
     }
   }
 
-  public long answerVoteUp(long answerId, long memberId) {
-    Vote vote = Vote.builder().member(memberService.getMember(memberId))
-        .answer(answerService.findAnswer(answerId)).status(
-            status.PLUS).build();
-    voteRepository.save(vote);
-    return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus());
+  public long answerVoteUp(long questionId, long answerId) {
+    long memberId = getAuthenticatedMemberId();
+    Optional<Vote> prev = voteRepository.findVoteByMemberAndAnswer(memberId, answerId);
+    if (prev.isEmpty()) {
+      Vote vote = Vote.builder().member(memberService.getMember(memberId))
+          .answer(answerService.findAnswer(answerId)).status(status.PLUS).build();
+      voteRepository.save(vote);
+      return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus().getNum());
+    } else {
+      Vote prevVote = prev.get();
+      voteRepository.delete(prevVote);
+      if (prevVote.getStatus().getNum() == -1) {
+        return answerService.addAnswerVoteCount(prevVote.getAnswer(), status.MINUS.getNum());
+      } else {
+        Vote vote = Vote.builder().member(memberService.getMember(memberId))
+            .answer(answerService.findAnswer(answerId)).status(status.PLUS).build();
+        voteRepository.save(vote);
+        return answerService.addAnswerVoteCount(vote.getAnswer(),
+            vote.getStatus().getNum() * 2);
+      }
+    }
   }
 
-  public long answerVoteDown(long answerId, long memberId) {
-    Vote vote = Vote.builder().member(memberService.getMember(memberId))
-        .answer(answerService.findAnswer(answerId)).status(
-            status.MINUS).build();
-    voteRepository.save(vote);
-    return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus());
+  public long answerVoteDown(long questionId, long answerId) {
+    long memberId = getAuthenticatedMemberId();
+    Optional<Vote> prev = voteRepository.findVoteByMemberAndAnswer(memberId, answerId);
+    if (prev.isEmpty()) {
+      Vote vote = Vote.builder().member(memberService.getMember(memberId))
+          .answer(answerService.findAnswer(answerId)).status(status.MINUS).build();
+      voteRepository.save(vote);
+      return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus().getNum());
+    } else {
+      Vote prevVote = prev.get();
+      voteRepository.delete(prevVote);
+      if (prevVote.getStatus().getNum() == -1) {
+        return answerService.addAnswerVoteCount(prevVote.getAnswer(), status.PLUS.getNum());
+      } else {
+        Vote vote = Vote.builder().member(memberService.getMember(memberId))
+            .answer(answerService.findAnswer(answerId)).status(status.MINUS).build();
+        voteRepository.save(vote);
+        return answerService.addAnswerVoteCount(vote.getAnswer(),
+            vote.getStatus().getNum() * 2);
+      }
+    }
   }
 }

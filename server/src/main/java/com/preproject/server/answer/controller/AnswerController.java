@@ -23,6 +23,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/")
@@ -30,55 +31,57 @@ import java.util.stream.Collectors;
 @Validated
 @Slf4j
 public class AnswerController {
-    private final AnswerService answerService;
-    private final AnswerTransService answerTransService;
-    private final AnswerMapper mapper;
-    private final CommentService commentService;
 
-    @PostMapping("/question/{question-id}/answers")
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
-                                     @PathVariable("question-id") @Positive Long questionId) {
+  private final AnswerService answerService;
+  private final AnswerTransService answerTransService;
+  private final AnswerMapper mapper;
+  private final CommentService commentService;
 
-        log.info("## request body: {}", answerPostDto);
-        Answer answer = answerService.creatAnswer(
-                answerTransService.answerPostDtoToAnswer(answerPostDto));
-        URI uri = UriCreator.createUri("/question/{question-id}/answers",answer.getId());
-        AnswerResponseDto responseDto = mapper.answerToAnswerResponseDto(answer);
-        return ResponseEntity.created(uri).body(new ResponseDto<>(responseDto));
+  @PostMapping("/questions/{question-id}/answers")
+  public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
+      @PathVariable("question-id") @Positive Long questionId) {
+    answerPostDto.setQuestionId(questionId);
+    log.info("## request body: {}", answerPostDto);
+    Answer answer = answerService.creatAnswer(
+        answerTransService.answerPostDtoToAnswer(answerPostDto));
+    URI uri = UriComponentsBuilder.newInstance()
+        .path("/questions/{question-id}/answers/{answers-id}")
+        .buildAndExpand(questionId, answer.getId()).toUri();
+    AnswerResponseDto responseDto = mapper.answerToAnswerResponseDto(answer);
+    return ResponseEntity.created(uri).body(new ResponseDto<>(responseDto));
 
-    }
+  }
 
-    @PatchMapping("/question/{question-id}/answers/{answer-id}")
-    public ResponseEntity patchAnswer(@Valid @RequestBody AnswerPatchDto answerPatchDto,
-                                      @PathVariable("question-id") @Positive Long questionId,
-                                      @PathVariable("answer-id") @Positive Long answerId) {
+  @PatchMapping("/questions/{question-id}/answers/{answer-id}")
+  public ResponseEntity patchAnswer(@Valid @RequestBody AnswerPatchDto answerPatchDto,
+      @PathVariable("question-id") @Positive Long questionId,
+      @PathVariable("answer-id") @Positive Long answerId) {
 
-        Answer answer = answerService.updateAnswer(
-                answerTransService.answerPatchDtoToAnswer(answerPatchDto));
-        URI uri = UriCreator.createUri("/question/{question-id}/answers",answer.getId());
-        AnswerResponseDto responseDto = mapper.answerToAnswerResponseDto(answer);
-        return ResponseEntity.ok().header("Location", uri.toString())
-                .body(new ResponseDto<>(responseDto));
+    Answer answer = answerService.updateAnswer(
+        answerTransService.answerPatchDtoToAnswer(answerPatchDto, questionId, answerId));
+    URI uri = UriComponentsBuilder.newInstance()
+        .path("/questions/{question-id}/answers/{answers-id}")
+        .buildAndExpand(questionId, answer.getId()).toUri();
+    AnswerResponseDto responseDto = mapper.answerToAnswerResponseDto(answer);
+    return ResponseEntity.ok().header("Location", uri.toString())
+        .body(new ResponseDto<>(responseDto));
 
-    }
-    @GetMapping("/question/{question-id}/answers")
-    public ResponseEntity getAnswers(@PathVariable("question-id") @Positive Long questionId ) {
-        List<Answer> answerList = answerService.findAnswersByQuestionId(questionId);
-        List<AnswerGetResponseDto> answerGetResponseDtoList
-                = answerList.stream().map(mapper::answerToAnswerGetResponseDto).collect(Collectors.toList());
+  }
 
-//        answerGetResponseDtoList.stream().map(answerGetResponseDto -> {
-//            answerGetResponseDto.setCommentsSimple(commentService.findCommentSimpleDto(answerGetResponseDto.getAnswerId()));
-//            return answerGetResponseDto;
-//        }).collect(Collectors.toList());
-        return new ResponseEntity(answerGetResponseDtoList, HttpStatus.OK);
-    }
+  @GetMapping("/questions/{question-id}/answers")
+  public ResponseEntity getAnswers(@PathVariable("question-id") @Positive Long questionId) {
+    List<Answer> answerList = answerService.findAnswersByQuestionId(questionId);
+    List<AnswerGetResponseDto> answerGetResponseDtoList
+        = answerList.stream().map(mapper::answerToAnswerGetResponseDto)
+        .collect(Collectors.toList());
+    return new ResponseEntity(answerGetResponseDtoList, HttpStatus.OK);
+  }
 
-    @DeleteMapping("/question/{question-id}/answers/{answer-id}")
-    public ResponseEntity deleteAnswer(@PathVariable("question-id") @Positive Long questionId,
-                                       @PathVariable("answer-id") @Positive Long answerId) {
-        answerService.removeAnswer(answerId);
-        return ResponseEntity.noContent().build();
+  @DeleteMapping("/questions/{question-id}/answers/{answer-id}")
+  public ResponseEntity deleteAnswer(@PathVariable("question-id") @Positive Long questionId,
+      @PathVariable("answer-id") @Positive Long answerId) {
+    answerService.removeAnswer(answerId);
+    return ResponseEntity.noContent().build();
 
-    }
+  }
 }

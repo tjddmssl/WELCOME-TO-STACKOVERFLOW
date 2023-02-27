@@ -49,8 +49,8 @@ public class AnswerService {
 
     }
 
-    public long addAnswerVoteCount(Answer answer, Vote.status status) {
-        answer.setVoteCount(answer.getVoteCount() + status.getNum());
+    public long addAnswerVoteCount(Answer answer, int num) {
+        answer.setVoteCount(answer.getVoteCount() + num);
         return answer.getVoteCount();
     }
 

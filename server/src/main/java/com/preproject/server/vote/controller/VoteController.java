@@ -33,17 +33,15 @@ public class VoteController {
 
   @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_up")
   public ResponseEntity postAnswerVoteUp(@PathVariable("question-id") @Positive long questionId,
-      @PathVariable("answer-id") @Positive Long answerId,
-      @RequestParam("member") long memberId) {
-    long voteCount = voteService.answerVoteUp(questionId, memberId);
+      @PathVariable("answer-id") @Positive Long answerId) {
+    long voteCount = voteService.answerVoteUp(questionId, answerId);
     return ResponseEntity.ok().body(voteCount);
   }
 
   @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_down")
   public ResponseEntity postAnswerVoteDown(@PathVariable("question-id") @Positive long questionId,
-      @PathVariable("answer-id") @Positive Long answerId,
-      @RequestParam("member") long memberId) {
-    long voteCount = voteService.answerVoteDown(questionId, memberId);
+      @PathVariable("answer-id") @Positive Long answerId) {
+    long voteCount = voteService.answerVoteDown(questionId, answerId);
     return ResponseEntity.ok().body(voteCount);
   }
 

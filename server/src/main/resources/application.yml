@@ -24,21 +24,23 @@ spring:
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: g0bukp9h4ten05qs8l54p9a49ilfil0l.apps.googleusercontent.com
+            client-secret: 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
             scope:
               - email
               - profile
 logging:
   level:
     org.hibernate.sql: info
-#    org.hibernate.type: trace
-
+  #    org.hibernate.type: trace
+ 
 jwt:
   key:
     secret: ufkufisgf8wgfudsfbwe82e23eqewd11edqf123ewqd1ed1
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
+
+
 
 mail:
   address:
