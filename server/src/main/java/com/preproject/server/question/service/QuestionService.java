@@ -117,7 +117,7 @@ public class QuestionService {
     return questionRepository.findSimpleQuestion(pageable, id);
   }
 
-  // SEARCH
+  // SEARCH - member displayName / question title, content
   private Specification<Question> search(String keyword) {
     return (q, query, cb) -> {
       query.distinct(true);
