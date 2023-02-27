@@ -14,33 +14,38 @@ import javax.persistence.*;
 @Getter
 public class Vote {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Vote_Id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Vote_Id")
+    private Long id;
 
-  @Enumerated(EnumType.STRING)
-  private status status;  // 좋아요 +1 / 싫어요 -1
+    @Enumerated(EnumType.STRING)
+    private status status;  // 좋아요 +1 / 싫어요 -1
 
-  //연관관계
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "Member_Id")
-  private Member member;
+    //연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Member_Id")
+    private Member member;
 
-  //Nullable 해줘야하는지?
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "Question_Id")
-  private Question question;
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "Answer_Id")
-  private Answer answer;
+    //Nullable 해줘야하는지?
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Question_Id")
+    @Nullable
+    private Question question;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Answer_Id")
+    @Nullable
+    private Answer answer;
 
-  @RequiredArgsConstructor
-  public enum status {
-    PLUS(1),
-    MINUS(-1);
+    public enum status {
+        PLUS(1),
+        MINUS(-1);
 
-    @Getter
-    private final int num;
-  }
+        @Getter
+        private final int num;
+
+        status(int num) {
+            this.num = num;
+        }
+    }
 }

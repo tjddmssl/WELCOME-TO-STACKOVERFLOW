@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 
 @Getter
@@ -47,6 +48,7 @@ public class Comment extends BaseEntity {
   private Question question;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Answer_Id")
+  @Setter
   private Answer answer;
 
   public void setMember(Long memberId) {

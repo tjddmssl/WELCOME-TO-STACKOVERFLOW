@@ -28,6 +28,21 @@ public class VoteController {
   @PostMapping("/questions/{id}/vote-down")
   public ResponseEntity postQuestionVoteDown(@PathVariable("id") @Positive long questionId) {
     long voteCount = voteService.voteDown(questionId);
+
+  @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_up")
+  public ResponseEntity postAnswerVoteUp(@PathVariable("question-id") @Positive long questionId,
+                                         @PathVariable("answer-id") @Positive Long answerId,
+                                         @RequestParam("member") long memberId) {
+    long voteCount = voteService.answerVoteUp(questionId, memberId);
     return ResponseEntity.ok().body(voteCount);
   }
+
+  @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_down")
+  public ResponseEntity postAnswerVoteDown(@PathVariable("question-id") @Positive long questionId,
+                                           @PathVariable("answer-id") @Positive Long answerId,
+                                           @RequestParam("member") long memberId) {
+    long voteCount = voteService.answerVoteDown(questionId, memberId);
+    return ResponseEntity.ok().body(voteCount);
+  }
+  
 }

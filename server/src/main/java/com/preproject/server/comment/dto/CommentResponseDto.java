@@ -8,4 +8,5 @@ public class CommentResponseDto {
   private String content;
   private Long memberId;
   private Long questionId;
+  private Long answerId;
 }
