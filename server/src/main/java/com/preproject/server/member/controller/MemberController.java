@@ -20,11 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
-import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +41,7 @@ public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/users";
     private final MemberService memberService;
     private final MemberMapper memberMapper;
+
 
     /*
      * 회원가입 컨트롤
@@ -115,10 +118,23 @@ public class MemberController {
 
     //시큐리티 컨텍스트 테스트용
     @GetMapping("/security-test")
-    public String securityTest(@AuthenticationPrincipal Principal authentication) {
-        LinkedHashMap principal1 =(LinkedHashMap) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String securityTest(@AuthenticationPrincipal LinkedHashMap authentication) {
+        LinkedHashMap principal1 = (LinkedHashMap) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         log.info("#### principal = {}", principal1.getClass());
         return "시큐리티 테스트입니다. 갑사합니다 ";
+    }
+
+    //OAuth2 테스트
+    @GetMapping("/hello-oauth2")
+    public String home(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient authorizedClient) {
+        OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+        System.out.println("Access Token Value: " + accessToken.getTokenValue());
+        System.out.println("Access Token Type: " + accessToken.getTokenType().getValue());
+        System.out.println("Access Token Scopes: " + accessToken.getScopes());
+        System.out.println("Access Token Issued At: " + accessToken.getIssuedAt());
+        System.out.println("Access Token Expires At: " + accessToken.getExpiresAt());
+
+        return "hello-oauth2";
     }
 
 }

@@ -14,7 +14,6 @@ import java.util.Map;
 //TODO Builder 직접 구혀하기
 @RequiredArgsConstructor
 @ToString
-//public class PrincipalDetails extends Member implements UserDetails , OAuth2User {
 public class PrincipalDetails extends Member implements UserDetails{
     private final CustomAuthorityUtils authorityUtils;
 
@@ -36,10 +35,6 @@ public class PrincipalDetails extends Member implements UserDetails{
         this.attributes = attributes;
     }
 
-//    @Override
-//    public Map<String, Object> getAttributes() {
-//        return attributes;
-//    }
 
     //권한을 체크할 때 확인되는 인터페이스 SecurityFilterChain 에서 권한 체크에 사용
     @Override
