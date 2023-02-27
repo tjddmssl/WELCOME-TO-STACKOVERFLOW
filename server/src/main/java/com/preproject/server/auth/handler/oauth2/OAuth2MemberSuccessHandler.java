@@ -60,6 +60,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .provider(provider)
                 .displayName(displayName)
                 .provideId(providerId)
+                .emailAuth(true)   //이메일 인증을 할 필요가 없다.
                 .build();
 //        return memberService.createMember(member);
         return memberService.oAuth2CreateOrGet(member);
