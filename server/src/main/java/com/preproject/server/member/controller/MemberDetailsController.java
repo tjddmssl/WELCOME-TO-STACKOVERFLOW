@@ -1,20 +1,17 @@
 package com.preproject.server.member.controller;
 
+import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.dto.MemberDetailAnswerDto;
-import com.preproject.server.member.dto.MemberDetailQuestionDto;
 import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
-import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.service.QuestionService;
 import com.preproject.server.vote.service.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,7 +55,7 @@ public class MemberDetailsController {
 //        return new ResponseEntity(new ResponseDto<>(responseDto),HttpStatus.CREATED);
   }
 
-//
+  //
 //  @GetMapping("/{id}/questions")
 //  public ResponseEntity getMemberDetailQuestion(@PathVariable Long id,
 //      @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
@@ -80,21 +76,21 @@ public class MemberDetailsController {
 ////    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
 //  }
 //
-//  @GetMapping("/{id}/answer")
-//  public ResponseEntity getMemberDetailAnswer(@PathVariable Long id,
-//      @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
-//
-//    //TODO 서비스단 타고 가서 값 만들고
-////        Page<Answer> answerPage = answerService.createSimplePage(pageable,id);
-////        Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
-////        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
+  @GetMapping("/{id}/answers")
+  public ResponseEntity getMemberDetailAnswer(@PathVariable Long id,
+      @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
+
+    //TODO 서비스단 타고 가서 값 만들고
+    Page<Answer> answerPage = answerService.getVotedAnswers(pageable, id);
+    Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
+    return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
 //
 //    Page<MemberDetailAnswerDto> memberPage = new PageImpl<>(
 //        List.of(new MemberDetailAnswerDto(1L, "content", 1L, LocalDateTime.now()),
 //            new MemberDetailAnswerDto(2L, "content", 1L, LocalDateTime.now())),
 //        PageRequest.of(0, 10), 3);
 //    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
-//  }
+  }
 //
 //  @GetMapping("/{id}/voted-questions")
 //  public ResponseEntity getMemberVotedQuestion(@PathVariable Long id,
@@ -122,14 +118,14 @@ public class MemberDetailsController {
       @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
 
     //TODO 서비스단 타고 가서 값 만들고
-//        Page<Answer> answerPage = voteService.createAnswerSimplePage(pageable,id);
-//        Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
-//        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
+        Page<Answer> answerPage = voteService.createAnswerSimplePage(pageable,id);
+        Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
+        return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
 
-    Page<MemberDetailAnswerDto> memberPage = new PageImpl<>(
-        List.of(new MemberDetailAnswerDto(1L, "content", 1L, LocalDateTime.now()),
-            new MemberDetailAnswerDto(2L, "content", 1L, LocalDateTime.now())),
-        PageRequest.of(0, 10), 3);
-    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
+//    Page<MemberDetailAnswerDto> memberPage = new PageImpl<>(
+//        List.of(new MemberDetailAnswerDto(1L, "content", 1L, LocalDateTime.now()),
+//            new MemberDetailAnswerDto(2L, "content", 1L, LocalDateTime.now())),
+//        PageRequest.of(0, 10), 3);
+//    return new ResponseEntity(new ResponseDto<>(memberPage), HttpStatus.OK);
   }
 }

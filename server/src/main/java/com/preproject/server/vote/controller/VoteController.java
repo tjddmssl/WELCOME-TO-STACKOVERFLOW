@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,19 +30,17 @@ public class VoteController {
     return ResponseEntity.ok().body(voteCount);
   }
 
-  @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_up")
+  @PostMapping("/questions/{question-id}/answers/{answer-id}/vote-up")
   public ResponseEntity postAnswerVoteUp(@PathVariable("question-id") @Positive long questionId,
-      @PathVariable("answer-id") @Positive Long answerId,
-      @RequestParam("member") long memberId) {
-    long voteCount = voteService.answerVoteUp(questionId, memberId);
+      @PathVariable("answer-id") @Positive Long answerId) {
+    long voteCount = voteService.answerVoteUp(questionId, answerId);
     return ResponseEntity.ok().body(voteCount);
   }
 
-  @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_down")
+  @PostMapping("/questions/{question-id}/answers/{answer-id}/vote-down")
   public ResponseEntity postAnswerVoteDown(@PathVariable("question-id") @Positive long questionId,
-      @PathVariable("answer-id") @Positive Long answerId,
-      @RequestParam("member") long memberId) {
-    long voteCount = voteService.answerVoteDown(questionId, memberId);
+      @PathVariable("answer-id") @Positive Long answerId) {
+    long voteCount = voteService.answerVoteDown(questionId, answerId);
     return ResponseEntity.ok().body(voteCount);
   }
 

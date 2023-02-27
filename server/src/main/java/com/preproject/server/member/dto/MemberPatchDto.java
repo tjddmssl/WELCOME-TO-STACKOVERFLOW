@@ -6,6 +6,7 @@ import java.util.Set;
 
 @Data
 public class MemberPatchDto {
+    private Long id;
     private String password;
     private String displayName;
     private String profileImage;

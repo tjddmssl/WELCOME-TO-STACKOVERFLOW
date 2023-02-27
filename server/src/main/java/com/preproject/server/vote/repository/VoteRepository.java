@@ -23,4 +23,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
         + "where m.id = :memberId "
         + "and q.id = :questionId")
     Optional<Vote> findVoteByMemberAndQuestion(@Param("memberId") long memberId, @Param("questionId") long questionId);
+
+    @Query("select v from Vote v join v.answer a join v.member m where a.id = :answerId and m.id = :memberId")
+    Optional<Vote> findVoteByMemberAndAnswer(@Param("memberId") long memberId, @Param("answerId") long answerId);
 }

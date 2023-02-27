@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -116,11 +117,19 @@ public class QuestionController {
     return ResponseEntity.ok().body(memberQuestionDtoPage);
   }
 
+  @GetMapping("/questions/search")
+  public ResponseEntity getQuestionByKeyword(
+      @RequestParam(value = "keyword", defaultValue = "") String keyword,
+      @PageableDefault(sort = "createdDate") Pageable pageable) {
+    Page<Question> questionPage = questionService.getSearchedPage(keyword, pageable);
+    Page<QuestionListGetDto> questionListGetDtoPage = questionTransService.questionToQuestionListGetDto(questionPage);
+    return ResponseEntity.ok().body(questionListGetDtoPage);
+  }
+
   @DeleteMapping("/questions/{id}")
   public ResponseEntity deleteQuestion(@PathVariable("id") @Positive long id) {
     questionService.removeQuestion(id);
     return ResponseEntity.noContent().build();
   }
-
 
 }

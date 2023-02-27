@@ -17,21 +17,23 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AnswerMapper {
 
-    Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto);
-    Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
+  Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto);
 
-    default AnswerResponseDto answerToAnswerResponseDto(Answer answer){
-        return AnswerResponseDto.builder()
-                .answerId(answer.getId())
-                .memberId(answer.getMember().getId())
-                .questionId(answer.getQuestion().getId())
-                .createdDate(answer.getCreatedDate())
-                .lastModifiedDate(answer.getLastModifiedDate())
-                .build();
-    }
+  Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
 
-    @Mapping(source = "answer.question.id", target = "questionId")
-    AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer);
+  default AnswerResponseDto answerToAnswerResponseDto(Answer answer) {
+    return AnswerResponseDto.builder()
+        .answerId(answer.getId())
+        .memberId(answer.getMember().getId())
+        .content(answer.getContent())
+        .questionId(answer.getQuestion().getId())
+        .createdDate(answer.getCreatedDate())
+        .lastModifiedDate(answer.getLastModifiedDate())
+        .build();
+  }
+
+  @Mapping(source = "question.id", target = "questionId")
+  AnswerGetResponseDto answerToAnswerGetResponseDto(Answer answer);
 //    {
 //        return AnswerGetResponseDto.builder()
 //                .content(answer.getContent())

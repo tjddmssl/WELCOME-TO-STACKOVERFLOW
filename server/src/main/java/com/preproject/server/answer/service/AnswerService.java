@@ -7,7 +7,6 @@ import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.repository.QuestionRepository;
 import com.preproject.server.question.service.QuestionService;
-import com.preproject.server.vote.entity.Vote;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final QuestionRepository questionRepository;
     private final QuestionService questionService;
 
     public Answer creatAnswer(Answer answer) {
@@ -49,8 +47,8 @@ public class AnswerService {
 
     }
 
-    public long addAnswerVoteCount(Answer answer, Vote.status status) {
-        answer.setVoteCount(answer.getVoteCount() + status.getNum());
+    public long addAnswerVoteCount(Answer answer, int num) {
+        answer.setVoteCount(answer.getVoteCount() + num);
         return answer.getVoteCount();
     }
 
@@ -60,8 +58,7 @@ public class AnswerService {
         answerRepository.delete(findAnswer);
     }
 
-
-    public Page<Answer> createSimplePage(Pageable pageable, Long id) {
-        return answerRepository.findSimpleAnswer(pageable,id);
+    public Page<Answer> getVotedAnswers(Pageable pageable, long id){
+        return answerRepository.findVotedAnswers(pageable, id);
     }
 }

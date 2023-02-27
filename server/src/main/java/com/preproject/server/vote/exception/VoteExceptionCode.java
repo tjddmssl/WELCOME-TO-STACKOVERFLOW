@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum VoteExceptionCode implements ExceptionCode {
 
   ALREADY_VOTED(HttpStatus.BAD_REQUEST, "you already voted this content."),
-  NOT_SIGNED_IN(HttpStatus.FORBIDDEN, "you have to sign in to vote.")
+  NOT_SIGNED_IN(HttpStatus.FORBIDDEN, "you have to sign in to vote."),
+  TOO_EARLY_VOTE(HttpStatus.TOO_EARLY,"A few minutes must pass after signing up to vote")
   ;
 
   private final HttpStatus status;
