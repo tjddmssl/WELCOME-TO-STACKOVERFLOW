@@ -1,5 +1,7 @@
 package com.preproject.server.tag.controller;
 
+import com.preproject.server.answer.entity.Answer;
+import com.preproject.server.answer.repository.AnswerRepository;
 import com.preproject.server.comment.entity.Comment;
 import com.preproject.server.comment.repository.CommentRepository;
 import com.preproject.server.dto.ResponseDto;
@@ -32,6 +34,7 @@ public class TagController {
   private final MemberRepository memberRepository;
   private final QuestionRepository questionRepository;
   private final CommentRepository commentRepository;
+  private final AnswerRepository answerRepository;
 
 
   private final TagTransService tagTransService;
@@ -78,9 +81,30 @@ public class TagController {
         Comment.builder().member(memberList.get(2)).content("comment").question(questions.get(0))
             .build()
     );
+    List<Answer> answers = List.of(
+            Answer.builder().member(memberList.get(0)).content("answer1").question(questions.get(0))
+                    .build(),
+            Answer.builder().member(memberList.get(1)).content("answer5").question(questions.get(0))
+                    .build(),
+            Answer.builder().member(memberList.get(1)).content("answer2").question(questions.get(1))
+                    .build(),
+            Answer.builder().member(memberList.get(2)).content("answer3").question(questions.get(2))
+                    .build()
+    );
+
+//    List<Comment> comments2 = List.of(
+//            Comment.builder().member(memberList.get(0)).content("comment").answer(answers.get(0))
+//                    .build(),
+//            Comment.builder().member(memberList.get(1)).content("comment").answer(answers.get(0))
+//                    .build(),
+//            Comment.builder().member(memberList.get(2)).content("comment").answer(answers.get(1))
+//                    .build()
+//    );
     tagRepository.saveAll(tags);
     memberRepository.saveAll(memberList);
     questionRepository.saveAll(questions);
     commentRepository.saveAll(comments);
+//    commentRepository.saveAll(comments2);
+    answerRepository.saveAll(answers);
   }
 }

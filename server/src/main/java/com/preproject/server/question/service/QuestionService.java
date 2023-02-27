@@ -1,12 +1,10 @@
 package com.preproject.server.question.service;
 
 import com.preproject.server.exception.BusinessLogicException;
-import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.repository.QuestionRepository;
-import com.preproject.server.vote.entity.Vote;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,13 +49,27 @@ public class QuestionService {
   public Question findQuestion(Long questionId) {
     log.info("## GET QUESTIONS by id ##");
     Optional<Question> questionOptional = questionRepository.findById(questionId);
-    return questionOptional.orElseThrow(
+    Question question = questionOptional.orElseThrow(
         () -> new BusinessLogicException(QuestionExceptionCode.QUESTION_NOT_FOUND));
+    return addQuestionViewCount(question);
   }
 
   public Page<Question> findQuestions(Pageable pageable) {
     log.info("## GET ALL QUESTIONS ##");
     return questionRepository.findAll(pageable);
+  }
+
+  public Page<Question> findQuestionsByTagName(String tagName, Pageable pageable) {
+    return questionRepository.findQuestionsByTagName(tagName, pageable);
+  }
+
+  public Page<Question> findVotedQuestions(Pageable pageable, long memberId){
+    // TODO verify if member is available
+    return questionRepository.findVotedQuestions(pageable, memberId);
+  }
+
+  public Page<Question> findQuestionsByUser(Pageable pageable, long memberId) {
+    return questionRepository.findQuestionsByMemberId(pageable, memberId);
   }
 
   public List<RelatedQuestionDao> findRelatedQuestions(Long questionId) {
@@ -86,9 +98,15 @@ public class QuestionService {
     questionRepository.delete(findQuestion);
   }
 
-  public long addQuestionVoteCount(Question question, Vote.status status) {
-    question.setVoteCount(question.getVoteCount() + status.getNum());
+  public long addQuestionVoteCount(Question question, int status) {
+    question.setVoteCount(question.getVoteCount() + status);
+    questionRepository.save(question);
     return question.getVoteCount();
+  }
+
+  private Question addQuestionViewCount(Question question) {
+    question.setViewCount(question.getViewCount() + 1);
+    return questionRepository.save(question);
   }
 
   public Page<Question> createPageSimplePage(Pageable pageable, Long id) {

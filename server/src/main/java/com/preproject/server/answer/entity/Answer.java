@@ -29,6 +29,7 @@ public class Answer extends BaseEntity {
 
   @Column(nullable = false)
   @Builder.Default
+  @Setter
   private Long voteCount = 0L;
 
   //연관관계
@@ -41,11 +42,11 @@ public class Answer extends BaseEntity {
   @Setter
   private Question question;
 
-  @OneToMany(mappedBy = "answer")
+  @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
   @Builder.Default
   private List<Comment> comments = new ArrayList<>();
 
-  @OneToMany(mappedBy = "answer")
+  @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
   @Builder.Default
   private List<Vote> votes = new ArrayList<>();
 }

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum TagExceptionCode implements ExceptionCode {
 
   TAG_NOT_FOUND(HttpStatus.NOT_FOUND, "Tag Not Found"),
@@ -15,6 +15,6 @@ public enum TagExceptionCode implements ExceptionCode {
   // TODO 추가
   ;
 
-  private HttpStatus status;
-  private String message;
+  private final HttpStatus status;
+  private final String message;
 }
