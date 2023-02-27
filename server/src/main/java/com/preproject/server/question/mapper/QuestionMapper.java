@@ -1,5 +1,7 @@
 package com.preproject.server.question.mapper;
 
+import com.preproject.server.question.dto.MemberQuestionDto;
+import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionListGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
@@ -32,4 +34,8 @@ public interface QuestionMapper {
   QuestionGetDto questionToQuestionGetDto(Question question);
 
   QuestionListGetDto questionToQuestionListGetDto(Question question);
+
+  VotedQuestionDto questionToVotedQuestionDto(Question question);
+
+  MemberQuestionDto questionToMemberQuestionDto(Question question);
 }

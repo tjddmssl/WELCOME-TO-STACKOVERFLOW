@@ -1,4 +1,4 @@
-package com.preproject.server.member.exception;
+package com.preproject.server.vote.exception;
 
 import com.preproject.server.exception.ExceptionCode;
 import lombok.Getter;
@@ -7,11 +7,10 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum MemberExceptionCode implements ExceptionCode {
+public enum VoteExceptionCode implements ExceptionCode {
 
-  MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "Member Not Found"),
-  MEMBER_EXIST(HttpStatus.CONFLICT,"Member is already Exist!")
-  // TODO 추가
+  ALREADY_VOTED(HttpStatus.BAD_REQUEST, "you already voted this content."),
+  NOT_SIGNED_IN(HttpStatus.FORBIDDEN, "you have to sign in to vote.")
   ;
 
   private final HttpStatus status;

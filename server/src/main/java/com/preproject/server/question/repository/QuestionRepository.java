@@ -23,6 +23,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
       + "order by q.createdDate desc ")
   List<RelatedQuestionDao> findQuestionsByTag(@Param("id") Long tagId);
 
+  @Query("select q from Question q join q.tagQuestions tq join tq.tag t where t.name = :name")
+  Page<Question> findQuestionsByTagName(@Param("name") String tagName, Pageable pageable);
+
   @Query("select COUNT(q) "
       + "from Question q "
       + "join q.tagQuestions tq "
@@ -34,4 +37,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
       + "join tq.tag t where t.id = :id order by q.createdDate desc")
   List<LocalDateTime> getCreatedDateByTag(@Param("id") Long id);
 
+  @Query("select q from Question q join q.votes v join v.member m  where m.id = :id")
+  Page<Question> findVotedQuestions(Pageable pageable, @Param("id") long memberId);
+
+  @Query("select q from Question q join q.member m where m.id = :id")
+  Page<Question> findQuestionsByMemberId(Pageable pageable, @Param("id") long memberId);
 }

@@ -2,6 +2,8 @@ package com.preproject.server.question.controller;
 
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.question.dao.RelatedQuestionDao;
+import com.preproject.server.question.dto.MemberQuestionDto;
+import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionListGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
@@ -74,7 +76,7 @@ public class QuestionController {
 
   @GetMapping("/questions")
   public ResponseEntity getQuestions(
-      @PageableDefault(size = 10, page = 0, sort = "createdDate") Pageable pageable) {
+      @PageableDefault(sort = "createdDate") Pageable pageable) {
     Page<Question> questionPage = questionService.findQuestions(pageable);
     Page<QuestionListGetDto> questionListGetDtoPage = questionTransService.questionToQuestionListGetDto(
         questionPage);
@@ -87,6 +89,32 @@ public class QuestionController {
     return ResponseEntity.ok().body(new ResponseDto<>(questionDaoList));
   }
 
+  @GetMapping("/questions/tagged/{tag-name}")
+  public ResponseEntity getQuestionsByTagName(@PathVariable("tag-name") String tagName,
+      @PageableDefault(sort = "createdDate") Pageable pageable) {
+    Page<Question> questionPage = questionService.findQuestionsByTagName(tagName, pageable);
+    Page<QuestionListGetDto> questionListGetDtoPage = questionTransService.questionToQuestionListGetDto(
+        questionPage);
+    return ResponseEntity.ok().body(questionListGetDtoPage);
+  }
+
+  @GetMapping("/users/{id}/voted-questions")
+  public ResponseEntity getVotedQuestions(@PathVariable("id") long memberId,
+      @PageableDefault(sort = "createdDate") Pageable pageable) {
+    Page<Question> questionPage = questionService.findVotedQuestions(pageable, memberId);
+    Page<VotedQuestionDto> votedQuestionDtoPage = questionTransService.questionPageToVotedQuestionDto(
+        questionPage);
+    return ResponseEntity.ok().body(votedQuestionDtoPage);
+  }
+
+  @GetMapping("/users/{id}/questions")
+  public ResponseEntity getQuestionsByUserId(@PathVariable("id") long memberId,
+      @PageableDefault(sort = "createdDate") Pageable pageable) {
+    Page<Question> questionPage = questionService.findQuestionsByUser(pageable, memberId);
+    Page<MemberQuestionDto> memberQuestionDtoPage = questionTransService.questionPageToMemberQuestionDto(
+        questionPage);
+    return ResponseEntity.ok().body(memberQuestionDtoPage);
+  }
 
   @DeleteMapping("/questions/{id}")
   public ResponseEntity deleteQuestion(@PathVariable("id") @Positive long id) {

@@ -4,7 +4,6 @@ import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.entity.Question;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -14,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Vote {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Vote_Id")
@@ -38,8 +38,8 @@ public class Vote {
     private Answer answer;
 
     public enum status {
-        VOTE_PLUS(1),
-        VOTE_MINUS(-1);
+        PLUS(1),
+        MINUS(-1);
 
         @Getter
         private final int num;
