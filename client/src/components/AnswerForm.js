@@ -3,6 +3,9 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import './AnswerForm.css';
+import { useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const Header = styled.div`
   border-top: 1px solid #e3e6e8;
@@ -36,6 +39,43 @@ const Footer = styled.div`
 `;
 
 function AnswerForm({ question }) {
+  const [answerContent, setAnswerContent] = useState('');
+  const questionRef = useRef();
+
+  const handleChangeAnswer = () => {
+    const Answer = questionRef.current?.getInstance().getMarkdown();
+    setAnswerContent(Answer);
+  };
+
+  //todo 데이터 형식 바뀌면 그에 맞게 바꾸기
+  const submitAnswerHander = () => {
+    let newanswer = {
+      id: uuidv4(),
+      content: answerContent,
+      voteCount: '0',
+      createdDate: '2023-02-21T05:42:15.661Z',
+      member: {
+        id: 13,
+        displayName: 'qwe',
+        profileImage: '',
+      },
+    };
+
+    const postAnswer = async () => {
+      try {
+        await axios({
+          url: 'http://localhost:3002/answer',
+          method: 'post',
+          data: newanswer,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postAnswer();
+    window.location.href = 'http://localhost:3000/view';
+  };
+
   return (
     <div>
       <Header>
@@ -43,6 +83,12 @@ function AnswerForm({ question }) {
       </Header>
       <Container>
         <Editor
+          onChange={handleChangeAnswer}
+          ref={questionRef}
+          placeholder={'please write here'}
+          initialValue={' '}
+          hideModeSwitch={true}
+          initialEditType="wysiwyg"
           previewStyle="tap" // 미리보기 스타일 지정
           height="300px" // 에디터 창 높이
           toolbarItems={[
@@ -54,7 +100,9 @@ function AnswerForm({ question }) {
             ['code', 'codeblock'],
           ]}
         ></Editor>
-        <Button className="post">Post Your Answer</Button>
+        <Button onClick={submitAnswerHander} className="post">
+          Post Your Answer
+        </Button>
         <Footer>
           Not the answer you{"'"}re looking for? Browse other questions tagged
           {question.tag &&
