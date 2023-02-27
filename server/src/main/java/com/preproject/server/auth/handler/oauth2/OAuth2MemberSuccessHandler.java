@@ -61,7 +61,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .displayName(displayName)
                 .provideId(providerId)
                 .build();
-        return memberService.createMember(member);
+//        return memberService.createMember(member);
+        return memberService.oAuth2CreateOrGet(member);
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities,Member member) throws IOException {
