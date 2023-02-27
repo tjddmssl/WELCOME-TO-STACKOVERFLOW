@@ -53,6 +53,12 @@ function View() {
   const answer = useSelector((state) => {
     return state.getAnswer.answer;
   });
+  //todo url 고치기
+  const handleDelete = () => {
+    axios.delete('/question/{question-Id}/answers/{answersId}', {
+      data: {},
+    });
+  };
 
   useEffect(() => {
     const getAnswerDetail = async () => {
@@ -77,7 +83,11 @@ function View() {
               <QView>
                 <QViewDetail />
               </QView>
-              {answer ? <AnswerView answer={answer} /> : <NoAnswerView />}
+              {answer ? (
+                <AnswerView answer={answer} handleDelete={handleDelete} />
+              ) : (
+                <NoAnswerView />
+              )}
             </ContentContainer>
             <Sidebar />
             <AnswerForm question={question} />

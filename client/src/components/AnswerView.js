@@ -64,7 +64,11 @@ const UserContainer = styled.div`
 const Comment = styled.div``;
 
 // TODO map으로 여러개 뿌려줘야 함
-function AnswerView({ answer }) {
+function AnswerView({ answer, handleDelete }) {
+  const onDelete = () => {
+    handleDelete(answer);
+  };
+
   return (
     <>
       <h3>N Answers</h3>
@@ -76,6 +80,7 @@ function AnswerView({ answer }) {
             <ButtonContainer>
               <button>Share</button>
               <button>Edit</button>
+              <button onClick={onDelete}>Delete</button>
               <button>Follow</button>
             </ButtonContainer>
             <UserContainer>
