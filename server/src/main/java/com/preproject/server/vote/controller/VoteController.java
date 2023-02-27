@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,31 +19,32 @@ public class VoteController {
 
   private final VoteService voteService;
 
-  // TODO 세션에서 어떻게 체크해요???? 몰라서 그냥 request param 으로 가져올게요????
   @PostMapping("/questions/{id}/vote-up")
   public ResponseEntity postQuestionVoteUp(@PathVariable("id") @Positive long questionId) {
-    long voteCount = voteService.voteUp(questionId);
+    long voteCount = voteService.questionVoteUp(questionId);
     return ResponseEntity.ok().body(voteCount);
   }
 
   @PostMapping("/questions/{id}/vote-down")
   public ResponseEntity postQuestionVoteDown(@PathVariable("id") @Positive long questionId) {
-    long voteCount = voteService.voteDown(questionId);
+    long voteCount = voteService.questionVoteDown(questionId);
+    return ResponseEntity.ok().body(voteCount);
+  }
 
   @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_up")
   public ResponseEntity postAnswerVoteUp(@PathVariable("question-id") @Positive long questionId,
-                                         @PathVariable("answer-id") @Positive Long answerId,
-                                         @RequestParam("member") long memberId) {
+      @PathVariable("answer-id") @Positive Long answerId,
+      @RequestParam("member") long memberId) {
     long voteCount = voteService.answerVoteUp(questionId, memberId);
     return ResponseEntity.ok().body(voteCount);
   }
 
   @PostMapping("/questions/{question-id}/answers/{answer-id}/vote_down")
   public ResponseEntity postAnswerVoteDown(@PathVariable("question-id") @Positive long questionId,
-                                           @PathVariable("answer-id") @Positive Long answerId,
-                                           @RequestParam("member") long memberId) {
+      @PathVariable("answer-id") @Positive Long answerId,
+      @RequestParam("member") long memberId) {
     long voteCount = voteService.answerVoteDown(questionId, memberId);
     return ResponseEntity.ok().body(voteCount);
   }
-  
+
 }
