@@ -1,6 +1,7 @@
 package com.preproject.server.vote.entity;
 
 import com.preproject.server.answer.entity.Answer;
+import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.entity.Question;
 import lombok.*;
@@ -13,7 +14,7 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Vote {
+public class Vote extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

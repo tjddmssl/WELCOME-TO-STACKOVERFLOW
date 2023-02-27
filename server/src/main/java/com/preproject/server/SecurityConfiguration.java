@@ -66,7 +66,7 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(new MemberAccessDeniedHandler());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/users").authenticated()
+                        .antMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().permitAll()
                 );
         http

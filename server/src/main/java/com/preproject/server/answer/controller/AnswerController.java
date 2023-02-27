@@ -8,9 +8,7 @@ import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.answer.mapper.AnswerMapper;
 import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.answer.service.AnswerTransService;
-import com.preproject.server.comment.service.CommentService;
 import com.preproject.server.dto.ResponseDto;
-import com.preproject.server.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,7 +33,6 @@ public class AnswerController {
   private final AnswerService answerService;
   private final AnswerTransService answerTransService;
   private final AnswerMapper mapper;
-  private final CommentService commentService;
 
   @PostMapping("/questions/{question-id}/answers")
   public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
