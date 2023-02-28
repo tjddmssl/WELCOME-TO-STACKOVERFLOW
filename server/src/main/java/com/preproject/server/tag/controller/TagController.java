@@ -51,7 +51,6 @@ public class TagController {
   public void initTag() {
     List<Tag> tags = List.of(
         Tag.builder().name("java").description("java description").build(),
-        Tag.builder().name("javascript").description("javascript description").build(),
         Tag.builder().name("spring").description("spring description").build()
     );
     List<Member> memberList = List.of(
@@ -70,7 +69,7 @@ public class TagController {
                     .build())).build(),
         Question.builder().title("title").content("content").member(memberList.get(2))
             .tagQuestions(List.of(
-                TagQuestion.builder().tag(tags.get(2)).question(Question.builder().id(1L).build())
+                TagQuestion.builder().tag(tags.get(1)).question(Question.builder().id(1L).build())
                     .build())).build()
     );
     List<Comment> comments = List.of(
@@ -82,14 +81,14 @@ public class TagController {
             .build()
     );
     List<Answer> answers = List.of(
-            Answer.builder().member(memberList.get(0)).content("answer1").question(questions.get(0))
-                    .build(),
-            Answer.builder().member(memberList.get(1)).content("answer5").question(questions.get(0))
-                    .build(),
-            Answer.builder().member(memberList.get(1)).content("answer2").question(questions.get(1))
-                    .build(),
-            Answer.builder().member(memberList.get(2)).content("answer3").question(questions.get(2))
-                    .build()
+        Answer.builder().member(memberList.get(0)).content("answer1").question(questions.get(0))
+            .build(),
+        Answer.builder().member(memberList.get(1)).content("answer5").question(questions.get(0))
+            .build(),
+        Answer.builder().member(memberList.get(1)).content("answer2").question(questions.get(1))
+            .build(),
+        Answer.builder().member(memberList.get(2)).content("answer3").question(questions.get(2))
+            .build()
     );
 
 //    List<Comment> comments2 = List.of(
