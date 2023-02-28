@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Footer from '../components/Footer';
@@ -169,8 +169,8 @@ const EditorWrapper = styled.div`
   }
 `;
 const SendBtn = styled.button`
-  margin-top: 0.7rem;
   margin-right: 1rem;
+  margin-bottom: 4rem;
   padding: 10px;
   border: 1px solid #79a7c7;
   border-radius: 3px;
@@ -185,11 +185,11 @@ const SendBtn = styled.button`
 function Ask() {
   const [title, setTitle] = useState('');
   const [problemBody, setProblemBody] = useState('');
-  // const [tryBody, setTryBody] = useState('');
+  const [tryBody, setTryBody] = useState('');
   const [tags, setTags] = useState([]);
 
   const problemRef = useRef();
-  // const tryRef = useRef();
+  const tryRef = useRef();
 
   // const submitClickHandler = () => {
   //   let newData = {
@@ -218,8 +218,7 @@ function Ask() {
     let newData = {
       id: uuidv4(),
       title,
-      content: problemBody,
-      // trycontent: tryBody,
+      content: problemBody + tryBody,
       tag: tags,
       voteCount: 4,
       viewCount: 12,
@@ -251,10 +250,10 @@ function Ask() {
     setProblemBody(problemdata);
   };
 
-  // const onChangeTry = () => {
-  //   const trydata = tryRef.current.getInstance().getMarkdown();
-  //   setTryBody(trydata);
-  // };
+  const onChangeTry = () => {
+    const trydata = tryRef.current.getInstance().getMarkdown();
+    setTryBody(trydata);
+  };
 
   return (
     <>
@@ -341,7 +340,7 @@ function Ask() {
             Describe what you tried, what you expected to happen, and what
             actually resulted. Minumum 20 characters.
           </p>
-          {/* <EditorWrapper>
+          <EditorWrapper>
             <Editor
               ref={tryRef}
               placeholder={'please write here'}
@@ -361,7 +360,7 @@ function Ask() {
               hideModeSwitch={true}
               onChange={onChangeTry}
             ></Editor>
-          </EditorWrapper> */}
+          </EditorWrapper>
         </Container>
         <TagForm>
           <h4>Tags</h4>
@@ -373,7 +372,7 @@ function Ask() {
         </TagForm>
         <Form>
           <SendBtn onClick={submitClickHandler}> Post your question</SendBtn>
-          <Button className="discard">Discard draft</Button>
+          {/* <Button className="discard">Discard draft</Button> */}
         </Form>
       </AllContainer>
       <Footer />
