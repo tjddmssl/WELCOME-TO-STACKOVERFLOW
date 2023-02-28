@@ -1,0 +1,102 @@
+{
+  "response": {
+    "content": [
+      {
+        "id": 1,
+        "title": "title1",
+        "content": "question content2",
+        "tag": [
+          "spring",
+          "spring boot"
+        ],
+        "voteCount": 3,
+        "viewCount": 12,
+        "createdDate": "2023-02-21T05:42:50.855Z",
+        "lastModifiedDate": "2023-02-21T05:42:50.855Z",
+        "member": {
+          "id": 1,
+          "displayName": "user1",
+          "profileImage": ""
+        }
+      },
+      {
+        "id": 2,
+        "title": "title2",
+        "content": "question content2",
+        "tag": [
+          "javascript",
+          "react"
+        ],
+        "voteCount": -1,
+        "viewCount": 22,
+        "createdDate": "2023-02-21T05:42:50.855Z",
+        "lastModifiedDate": "2023-02-21T05:42:50.855Z",
+        "member": {
+          "id": 2,
+          "displayName": "user2",
+          "profileImage": ""
+        }
+      },
+      {
+        "id": 3,
+        "title": "title3",
+        "content": "question content3",
+        "tag": [
+          "kotlin"
+        ],
+        "voteCount": 11,
+        "viewCount": 32,
+        "createdDate": "2023-02-21T05:42:50.855Z",
+        "lastModifiedDate": "2023-02-21T05:42:50.855Z",
+        "member": {
+          "id": 3,
+          "displayName": "user3",
+          "profileImage": ""
+        }
+      },
+      {
+        "id": 4,
+        "title": "title4",
+        "content": "question content4",
+        "tag": [
+          "spring",
+          "spring boot"
+        ],
+        "voteCount": 22,
+        "viewCount": 33,
+        "createdDate": "2023-02-21T05:42:50.855Z",
+        "lastModifiedDate": "2023-02-21T05:42:50.855Z",
+        "member": {
+          "id": 4,
+          "displayName": "user4",
+          "profileImage": ""
+        }
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "empty": false,
+        "sorted": true,
+        "unsorted": false
+      },
+      "offset": 0,
+      "pageNumber": 0,
+      "pageSize": 5,
+      "paged": true,
+      "unpaged": false
+    },
+    "last": true,
+    "totalPages": 0,
+    "totalElements": 0,
+    "first": true,
+    "number": 0,
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "size": 5,
+    "numberOfElements": 0,
+    "empty": true
+  }
+}

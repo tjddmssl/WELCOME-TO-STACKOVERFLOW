@@ -1,8 +1,35 @@
 import QList from './QList';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import getAllQuesionSlice from '../redux/slice/getAllQuestionSlice';
 
 //* 질문 리스트 조건부 렌더링하기
 function QLists() {
-  return <QList />;
+  const dispatch = useDispatch();
+  const questions = useSelector((state) => {
+    return state.getAllQuestion.response.content;
+  });
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3005/response');
+        console.log(response.data);
+        dispatch(getAllQuesionSlice.actions.get(response.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+  return (
+    <div>
+      {questions &&
+        questions.map((el) => {
+          return <QList key={el.id} question={el} />;
+        })}
+    </div>
+  );
 }
 
 export default QLists;
