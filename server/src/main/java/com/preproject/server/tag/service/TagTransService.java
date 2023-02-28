@@ -24,7 +24,7 @@ public class TagTransService {
       TagGetDto dto = tagMapper.tagToTagGetDto(tag);
       dto.setQuestionCount(questionRepository.getQuestionCountByTag(tag.getId()));
       List<LocalDateTime> createdDateList = questionRepository.getCreatedDateByTag(tag.getId());
-      dto.setLastCreatedDate(createdDateList.size() == 0 ? null : createdDateList.get(0));
+      dto.setCreatedDate(createdDateList.size() == 0 ? null : createdDateList.get(0));
       return dto;
     });
   }

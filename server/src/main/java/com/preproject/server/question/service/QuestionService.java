@@ -8,6 +8,7 @@ import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.repository.QuestionRepository;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +37,14 @@ public class QuestionService {
   private final QuestionRepository questionRepository;
   private final MemberService memberService;
 
+  public LinkedHashMap checkAuthenticated() {
+    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.getPrincipal().equals("anonymousUser")) {
+      throw new BusinessLogicException(QuestionExceptionCode.NOT_SIGNED_IN);
+    }
+    return (LinkedHashMap) authentication.getPrincipal();
+  }
+
   @Transactional
   public Question createQuestion(Question question) {
     // TODO verify if member is present
@@ -44,7 +55,11 @@ public class QuestionService {
   @Transactional
   public Question updateQuestion(Question question) {
     log.info("## PATCH QUESTION ##");
+    LinkedHashMap principal = checkAuthenticated();
     Question findQuestion = findQuestion(question.getId());
+    if (!Long.valueOf((Integer) principal.get("id")).equals(findQuestion.getMember().getId())) {
+      throw new BusinessLogicException(QuestionExceptionCode.UNAUTHORIZED);
+    }
     Optional.ofNullable(question.getTitle()).ifPresent(findQuestion::setTitle);
     Optional.ofNullable(question.getContent()).ifPresent(findQuestion::setContent);
     if (!question.getTagQuestions().isEmpty()) {
@@ -104,6 +119,10 @@ public class QuestionService {
   @Transactional
   public void removeQuestion(Long questionId) {
     Question findQuestion = findQuestion(questionId);
+    LinkedHashMap principal = checkAuthenticated();
+    if (!Long.valueOf((Integer) principal.get("id")).equals(findQuestion.getMember().getId())) {
+      throw new BusinessLogicException(QuestionExceptionCode.UNAUTHORIZED);
+    }
     questionRepository.delete(findQuestion);
   }
 

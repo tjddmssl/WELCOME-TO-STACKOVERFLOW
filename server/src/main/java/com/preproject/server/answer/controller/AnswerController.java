@@ -10,7 +10,6 @@ import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.answer.service.AnswerTransService;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.dto.MemberDetailAnswerDto;
-import com.preproject.server.vote.service.VoteService;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
@@ -42,7 +41,6 @@ public class AnswerController {
 
   private final AnswerService answerService;
   private final AnswerTransService answerTransService;
-  private final VoteService voteService;
   private final AnswerMapper mapper;
 
   @PostMapping("/questions/{question-id}/answers")
