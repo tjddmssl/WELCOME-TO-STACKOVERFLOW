@@ -78,6 +78,7 @@ public class MemberController {
      * */
     @PatchMapping("/{id}")
     public ResponseEntity updateMember(@PathVariable Long id, @RequestBody MemberPatchDto patchDto) {
+        patchDto.setId(id);
         Member member = memberMapper.patchDtoToMember(patchDto);
 
         //TODO 리펙토링 patchDto.getTag() -> List<TagMember> 변환 과정 만들기, 이미지 파일 또한 판단할 필요 있음

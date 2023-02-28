@@ -18,7 +18,7 @@ public interface MemberMapper {
 
   //리펙토링 부분
   default Member patchDtoToMember(MemberPatchDto patchDto) {
-    return Member.builder()
+    return Member.builder().id(patchDto.getId())
         .password(patchDto.getPassword())
         .displayName(patchDto.getDisplayName())
         .profile(patchDto.getProfileImage())

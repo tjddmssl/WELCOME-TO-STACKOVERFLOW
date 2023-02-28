@@ -89,6 +89,7 @@ public class Member extends BaseEntity {
     private List<Vote> votes = new ArrayList<>();
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)
     @Default
+    @Setter
     @Exclude
     private Set<TagMember> tagMembers = new LinkedHashSet<>();
     @OneToMany(mappedBy = "member")
@@ -104,7 +105,10 @@ public class Member extends BaseEntity {
     //#### 연관관계 편의 메서드 #### //
     public void addTagMember(TagMember tagMember) {
         this.tagMembers.add(tagMember);
-        tagMember.setMember(this);
+    }
+
+    public void clearTagMember() {
+        this.tagMembers.clear();
     }
 
     //email 인증 전용
