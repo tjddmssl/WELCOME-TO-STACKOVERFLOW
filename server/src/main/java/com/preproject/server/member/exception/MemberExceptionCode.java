@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum MemberExceptionCode implements ExceptionCode {
 
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "Member Not Found"),
-  MEMBER_EXIST(HttpStatus.CONFLICT,"Member is already Exist!"),
-  MEMBER_JWT_EXIST(HttpStatus.CONFLICT,"JWT Registry Member is Exist")
+  MEMBER_EXIST(HttpStatus.CONFLICT, "Member is already Exist!"),
+  MEMBER_JWT_EXIST(HttpStatus.CONFLICT, "JWT Registry Member is Exist")
   // TODO 추가
   ;
 

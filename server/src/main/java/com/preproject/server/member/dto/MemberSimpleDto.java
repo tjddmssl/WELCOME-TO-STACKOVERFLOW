@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberSimpleDto {
-    private Long id;
-    private String displayName;
-    private String profileImage;
+
+  private Long id;
+  private String displayName;
+  private String profileImage;
 
 }

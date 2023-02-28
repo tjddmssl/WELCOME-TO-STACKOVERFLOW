@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class ResponseDto<T> {
-    private T response;
 
-    public ResponseDto(T response) {
-        this.response = response;
-    }
+  private T response;
+
+  public ResponseDto(T response) {
+    this.response = response;
+  }
 }

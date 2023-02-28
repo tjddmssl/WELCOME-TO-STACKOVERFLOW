@@ -1,7 +1,11 @@
 package com.preproject.server.member.mapper;
 
 
-import com.preproject.server.member.dto.*;
+import com.preproject.server.member.dto.MemberListDto;
+import com.preproject.server.member.dto.MemberPatchDto;
+import com.preproject.server.member.dto.MemberPostDto;
+import com.preproject.server.member.dto.MemberResponseDto;
+import com.preproject.server.member.dto.MemberSimpleDto;
 import com.preproject.server.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,8 +14,6 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberMapper {
   Member postDtoToMember(MemberPostDto memberPostDto);
-
-//    MemberPostResponseDto memberToMemberDto(Member member);
 
   @Mapping(source = "profile", target = "profileImage")
   MemberSimpleDto memberToSimpleDto(Member member);

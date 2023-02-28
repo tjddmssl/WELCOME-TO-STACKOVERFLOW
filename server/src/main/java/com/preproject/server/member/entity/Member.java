@@ -1,6 +1,10 @@
 package com.preproject.server.member.entity;
 
 
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static lombok.AccessLevel.PROTECTED;
+
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.comment.entity.Comment;
@@ -9,19 +13,27 @@ import com.preproject.server.member.data.MemberType;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.vote.entity.Vote;
-import lombok.*;
-import lombok.Builder.Default;
-import lombok.ToString.Exclude;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.EAGER;
-import static lombok.AccessLevel.PROTECTED;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Builder.Default;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.ToString.Exclude;
 
 
 @Entity
@@ -31,88 +43,90 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @ToString
 public class Member extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column(name = "Member_Id")
-    private Long id;
-    private String email;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Setter
-    private String displayName;
-    @Setter
-    private String password;
-    @Setter
-    private String profile;
-    @Setter
-    private String location;
-    @Setter
-    private String aboutMe;
-    @Enumerated(STRING)
-    @Default
-    @Setter
-    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+  @Column(name = "Member_Id")
+  private Long id;
+  private String email;
 
-    @ElementCollection(fetch = EAGER)
-    @Setter
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+  @Setter
+  private String displayName;
+  @Setter
+  private String password;
+  @Setter
+  private String profile;
+  @Setter
+  private String location;
+  @Setter
+  private String aboutMe;
+  @Enumerated(STRING)
+  @Default
+  @Setter
+  private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-    @Setter
-    @Builder.Default
-    private String provider = "JWT";    //어떤 OAuth 사용했는지 체크
-    @Setter
-    private String provideId ;   //해당 OAuth 의 key(id)
+  @ElementCollection(fetch = EAGER)
+  @Setter
+  @Builder.Default
+  private List<String> roles = new ArrayList<>();
 
-    public Member(Member member) {
-        this.id = member.getId();
-        this.email = member.getEmail();
-        this.displayName = member.getDisplayName();
-        this.password = member.getPassword();
-    }
+  @Setter
+  @Builder.Default
+  private String provider = "JWT";    //어떤 OAuth 사용했는지 체크
+  @Setter
+  private String provideId;   //해당 OAuth 의 key(id)
 
-    @Enumerated(STRING)
-    private MemberType memberType;
+  public Member(Member member) {
+    this.id = member.getId();
+    this.email = member.getEmail();
+    this.displayName = member.getDisplayName();
+    this.password = member.getPassword();
+    this.roles = member.getRoles();
+  }
 
-    //연관관계
-    @OneToMany(mappedBy = "member")
-    @Default
-    @Exclude
-    private List<Answer> answers = new ArrayList<>();
-    @OneToMany(mappedBy = "member")
-    @Default
-    @Exclude
-    private List<Comment> comments = new ArrayList<>();
-    @OneToMany(mappedBy = "member")
-    @Default
-    @Exclude
-    private List<Vote> votes = new ArrayList<>();
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)
-    @Default
-    @Setter
-    @Exclude
-    private Set<TagMember> tagMembers = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "member")
-    @Default
-    @Exclude
-    private List<Question> questions = new ArrayList<>();
+  @Enumerated(STRING)
+  private MemberType memberType;
 
-    //회원이 이메일 인증되었는지 여부를 체크하는 코드
-    @Default
-    private boolean emailAuth = false;
+  //연관관계
+  @OneToMany(mappedBy = "member")
+  @Default
+  @Exclude
+  private List<Answer> answers = new ArrayList<>();
+  @OneToMany(mappedBy = "member")
+  @Default
+  @Exclude
+  private List<Comment> comments = new ArrayList<>();
+  @OneToMany(mappedBy = "member")
+  @Default
+  @Exclude
+  private List<Vote> votes = new ArrayList<>();
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Default
+  @Setter
+  @Exclude
+  private Set<TagMember> tagMembers = new LinkedHashSet<>();
+  @OneToMany(mappedBy = "member")
+  @Default
+  @Exclude
+  private List<Question> questions = new ArrayList<>();
+
+  //회원이 이메일 인증되었는지 여부를 체크하는 코드
+  @Default
+  private boolean emailAuth = false;
 
 
-    //#### 연관관계 편의 메서드 #### //
-    public void addTagMember(TagMember tagMember) {
-        this.tagMembers.add(tagMember);
-    }
+  //#### 연관관계 편의 메서드 #### //
+  public void addTagMember(TagMember tagMember) {
+    this.tagMembers.add(tagMember);
+  }
 
-    public void clearTagMember() {
-        this.tagMembers.clear();
-    }
+  public void clearTagMember() {
+    this.tagMembers.clear();
+  }
 
-    //email 인증 전용
-    public void emailVerifiedSuccess() {
-        this.emailAuth = true;
-    }
+  //email 인증 전용
+  public void emailVerifiedSuccess() {
+    this.emailAuth = true;
+  }
 }
