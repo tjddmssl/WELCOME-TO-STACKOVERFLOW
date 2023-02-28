@@ -6,7 +6,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import ViewEditEditor from '../components/ViewEditEditor';
 import ViewEditRender from '../components/ViewEditRender';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import getQuestionSlice from '../redux/slice/getQuestionSlice';
 import axios from 'axios';
 
@@ -93,10 +93,22 @@ const EditForm = styled.div`
     border-radius: 5px;
     color: #39739d;
     font-size: 12px;
+    white-space: nowrap;
     :hover {
       background-color: #d0e3f1;
       color: #2c5877;
     }
+  }
+  .edit-tagdel__button {
+    background-color: transparent;
+    border: none;
+    color: #39739d;
+  }
+  .edit-tag__input {
+    position: relative;
+    border: none;
+    width: 100%;
+    outline: none;
   }
   .edit-buttons__div {
     margin-top: 15px;
@@ -188,6 +200,7 @@ function ViewEdit() {
       try {
         const response = await axios.get('http://localhost:3001/response');
         dispatch(getQuestionSlice.actions.get(response.data));
+        setTags([...response.data.tag]);
       } catch (error) {
         console.log(error);
       }
@@ -195,10 +208,24 @@ function ViewEdit() {
     getData();
   }, []);
 
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState('');
+
   const titleChangeHandler = (e) => {
     dispatch(
       getQuestionSlice.actions.get({ ...question, title: e.target.value })
     );
+  };
+  const handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      setTags([...tags, tagInput]);
+      e.target.value = '';
+    }
+  };
+  const tagDeleteHandler = (idx) => {
+    const newArr = [...tags];
+    newArr.splice(idx, 1);
+    setTags([...newArr]);
   };
   const saveClickHandler = () => {
     if (window.confirm('수정하시겠습니까?')) {
@@ -210,6 +237,8 @@ function ViewEdit() {
             data: {
               title: question.title,
               content: question.content,
+              lastModifiedDate: new Date(),
+              tag: tags,
             },
           });
         } catch (error) {
@@ -263,16 +292,28 @@ function ViewEdit() {
                   <div className="edit-tags__div">
                     <label htmlFor="tags">Tags</label>
                     <div className="edit-tag__div">
-                      {question.tag &&
-                        question.tag.map((el, idx) => {
+                      {tags &&
+                        tags.map((el, idx) => {
                           return (
                             <span key={idx} className="edit-tag__span">
                               {el}
+                              <button
+                                className="edit-tagdel__button"
+                                onClick={() => tagDeleteHandler(idx)}
+                              >
+                                X
+                              </button>
                             </span>
                           );
                         })}
-                      <input hidden="hidden" />
-                      <input type="text"></input>
+                      <input
+                        className="edit-tag__input"
+                        type="text"
+                        onChange={(e) => {
+                          setTagInput(e.target.value);
+                        }}
+                        onKeyDown={(e) => handleOnKeyPress(e)}
+                      ></input>
                     </div>
                   </div>
                   <div className="edit-buttons__div">
