@@ -8,15 +8,30 @@ import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   border-top: 1px solid #e3e6e8;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  margin-right: 20px;
+  div {
+    display: flex;
+    border-bottom: 1px solid #e3e6e8;
+  }
+  p {
+    margin: 15px;
+  }
+  a {
+    margin: 15px;
+  }
 `;
+
 function QComment() {
   const [comments, setComments] = useState([]);
+
   useEffect(() => {
     const getQuestion = async () => {
       try {
         const response = await axios.get('http://localhost:3002/question');
         setComments(response.data.comment);
-        console.log(comments);
       } catch (error) {
         console.log(error);
       }
@@ -25,15 +40,16 @@ function QComment() {
   }, []);
   return (
     <Container>
-      {comments.map((el, idx) => (
-        <>
-          <p key={idx}>
-            {el.content} {'-'}
-          </p>
-          <a href="/">{el.member.displayName}</a>
-          <p>{el.createdDate}</p>
-        </>
-      ))}
+      {comments &&
+        comments.map((el, idx) => (
+          <div key={idx}>
+            <p>
+              {el.content} {'-'}
+            </p>
+            <a href="/">{el.member.displayName}</a>
+            <p>{el.createdDate}</p>
+          </div>
+        ))}
     </Container>
   );
 }
