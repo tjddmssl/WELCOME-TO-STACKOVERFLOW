@@ -84,6 +84,7 @@ const ButtonContainer = styled.div`
   .usercard {
     width: 200px;
     margin-left: 300px;
+    margin-bottom: 50px;
     margin-top: 100px;
     padding: 5px 10px;
     border: 1px solid black;
@@ -137,7 +138,7 @@ function QViewDetail({ question }) {
       }
     };
     deleteQuestion();
-  });
+  }, []);
 
   // TODO Delete 버튼에 로그인 상태 확인 로직 추가
 
