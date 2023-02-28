@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class MemberTransService {
     private final static String MEMBER_DEFAULT_URL = "/users";
     private final MemberMapper memberMapper;
