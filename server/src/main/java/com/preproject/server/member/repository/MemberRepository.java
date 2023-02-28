@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    @Query("select m from Member m where m.email = :email and m.memberStatus = 'MEMBER_ACTIVE'")
-    Optional<Member> findByEmailMemberActive(String email);
+    @Query("select m from Member m where m.email = :email and m.memberStatus = 'MEMBER_ACTIVE' or m.memberStatus = 'MEMBER_TMP'")
+    Optional<Member> findByEmailMemberActiveTmp(String email);
 
     Optional<Member> findByEmail(String email);
     Page<Member> findAll(Pageable pageable);

@@ -55,6 +55,7 @@ public class Member extends BaseEntity {
 
     @ElementCollection(fetch = EAGER)
     @Setter
+    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
     @Setter
@@ -96,6 +97,10 @@ public class Member extends BaseEntity {
     @Exclude
     private List<Question> questions = new ArrayList<>();
 
+    //회원이 이메일 인증되었는지 여부를 체크하는 코드
+    @Default
+    private boolean emailAuth = false;
+
 
     //#### 연관관계 편의 메서드 #### //
     public void addTagMember(TagMember tagMember) {
@@ -104,5 +109,10 @@ public class Member extends BaseEntity {
 
     public void clearTagMember() {
         this.tagMembers.clear();
+    }
+
+    //email 인증 전용
+    public void emailVerifiedSuccess() {
+        this.emailAuth = true;
     }
 }

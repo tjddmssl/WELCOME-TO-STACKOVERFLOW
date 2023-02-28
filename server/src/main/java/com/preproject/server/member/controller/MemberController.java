@@ -69,7 +69,7 @@ public class MemberController {
      * */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteMember(@PathVariable Long id, @RequestBody String password) {
-        memberService.deleteMember(id, password);
+        memberService.deleteMember(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
