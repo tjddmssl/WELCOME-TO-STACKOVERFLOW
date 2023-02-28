@@ -89,6 +89,23 @@
         "displayName": "user1",
         "profileImage": ""
       }
+    },
+    {
+      "id": "039b72c1-b56e-4391-8580-2c9c17f2cfeb",
+      "title": "hello",
+      "content": "질문 테스트! ",
+      "tag": [
+        "javascript"
+      ],
+      "voteCount": 4,
+      "viewCount": 12,
+      "createdDate": "2023-02-21T05:42:50.855Z",
+      "lastModifiedDate": "2023-02-21T05:42:50.855Z",
+      "member": {
+        "id": 1,
+        "displayName": "user1",
+        "profileImage": ""
+      }
     }
   ]
 }

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import QButton from './QButton';
 import Vote from './Vote';
 import { MdWavingHand } from 'react-icons/md';
+import { useState } from 'react';
+import ViewComment from './ViewComment';
+import QComment from './QComment';
 
 const TitleContainer = styled.div`
   display: flex;
@@ -115,6 +118,13 @@ function QViewDetail({ question }) {
   const navigateToEdit = () => {
     navigate('./edit');
   };
+
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClicked = () => {
+    setIsClicked(!isClicked);
+  };
+
   return (
     <>
       <TitleContainer>
@@ -152,9 +162,16 @@ function QViewDetail({ question }) {
                 <MdWavingHand />
                 {' New contributor'}
               </div>
-            </div>{' '}
+            </div>
           </ButtonContainer>
-          <button className="comment">Add a comment</button>
+          <QComment />
+          {isClicked ? (
+            <ViewComment isClicked={isClicked} setIsClicked={setIsClicked} />
+          ) : (
+            <button className="comment" onClick={handleClicked}>
+              Add a comment
+            </button>
+          )}
         </Content>
       </ContentContainer>
     </>
