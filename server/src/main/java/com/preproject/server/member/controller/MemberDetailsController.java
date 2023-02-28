@@ -1,10 +1,8 @@
 package com.preproject.server.member.controller;
 
-import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.Service.MemberService;
-import com.preproject.server.member.dto.MemberDetailAnswerDto;
 import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
@@ -13,9 +11,6 @@ import com.preproject.server.vote.service.VoteService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,24 +43,4 @@ public class MemberDetailsController {
     return new ResponseEntity(new ResponseDto(memberResponseDto), HttpStatus.OK);
   }
 
-  @GetMapping("/{id}/answers")
-  public ResponseEntity getMemberDetailAnswer(@PathVariable Long id,
-      @PageableDefault(sort = "createdDate") Pageable pageable) {
-
-    Page<Answer> answerPage = answerService.getVotedAnswers(pageable, id);
-    Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
-    return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
-
-  }
-
-  @GetMapping("/{id}/voted-answers")
-  public ResponseEntity getMemberVotedAnswer(@PathVariable Long id,
-      @PageableDefault(sort = "createdDate") Pageable pageable) {
-
-    //TODO 서비스단 타고 가서 값 만들고
-    Page<Answer> answerPage = voteService.createAnswerSimplePage(pageable, id);
-    Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
-    return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
-
-  }
 }
