@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import QButton from './QButton';
 import Vote from './Vote';
 import { MdWavingHand } from 'react-icons/md';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ViewComment from './ViewComment';
 import QComment from './QComment';
+import axios from 'axios';
 
 const TitleContainer = styled.div`
   display: flex;
@@ -125,6 +126,21 @@ function QViewDetail({ question }) {
     setIsClicked(!isClicked);
   };
 
+  //* 질문 삭제 요청
+  // TODO handleDelete 주소 수정
+  const handleDelete = useEffect(() => {
+    const deleteQuestion = async () => {
+      try {
+        await axios.delete('http://localhost:3002/content/question');
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    deleteQuestion();
+  });
+
+  // TODO Delete 버튼에 로그인 상태 확인 로직 추가
+
   return (
     <>
       <TitleContainer>
@@ -150,6 +166,7 @@ function QViewDetail({ question }) {
             <button>Share</button>
             <button onClick={navigateToEdit}>Edit</button>
             <button>Follow</button>
+            <button onClick={handleDelete}>Delete</button>
             {/* // TODO user card 클릭 시 유저 상세조회 페이지로 이동 */}
             <div className="usercard">
               asked {question.createdDate}

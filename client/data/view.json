@@ -37,34 +37,14 @@
     ]
   },
   "answer": {
-    "id": 1,
-    "content": "answer content",
-    "voteCount": "11",
+    "id": "0d0bcc2f-e2df-4c00-abf6-b8431e23d9a3",
+    "content": "",
+    "voteCount": "0",
     "createdDate": "2023-02-21T05:42:15.661Z",
     "member": {
       "id": 13,
       "displayName": "qwe",
       "profileImage": ""
-    },
-    "comment": [
-      {
-        "content": "comment11",
-        "createdDate": "2023-02-21T05:42:15.661Z",
-        "member": {
-          "id": 13,
-          "displayName": "user13",
-          "profileImage": ""
-        }
-      },
-      {
-        "content": "comment22",
-        "createdDate": "2023-02-21T05:42:15.661Z",
-        "member": {
-          "id": 15,
-          "displayName": "user15",
-          "profileImage": ""
-        }
-      }
-    ]
+    }
   }
 }
