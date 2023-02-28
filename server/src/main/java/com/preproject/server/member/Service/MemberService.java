@@ -11,9 +11,6 @@ import com.preproject.server.tag.entity.Tag;
 import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.tag.exception.TagExceptionCode;
 import com.preproject.server.tag.service.TagService;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,6 +19,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -102,7 +103,7 @@ public class MemberService {
 
     public Page<Member> getPageMember(Pageable pageable) {
         Page<Member> all = memberRepository.findAll(pageable);
-        return !all.isEmpty() ? all : null;
+        return all.isEmpty() ? null : all;
     }
 
 
