@@ -1,8 +1,10 @@
 spring:
+  config:
+    import: 'aws-parameterstore:'
   datasource:
-    url:
-    password:
-    username: root
+    url: ${spring.datasource.url}
+    password: ${spring.datasource.password}
+    username: ${spring.datasource.username}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
@@ -21,8 +23,8 @@ spring:
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: ${spring.security.oauth2.client.registration.google.client-id}
+            client-secret: ${spring.security.oauth2.client.registration.google.client-secret}
             scope:
               - email
               - profile
@@ -30,13 +32,33 @@ logging:
   level:
     org.hibernate.sql: info
   #    org.hibernate.type: trace
-
 jwt:
   key:
-    secret: ufkufisgf8wgfudsfbwe82e23eqewd11edqf123ewqd1ed1
+    secret: ${jwt.key.secret}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
 
 mail:
   address:
     admin: admin@gmail.com
+  smtp:
+    host: smtp.gmail.com
+    port: 587
+    username: awsstudymail001@gmail.com
+    password: dvsuhpduqiwzlxnb
+    auth: true
+    starttls:
+      enable: true
+  subject:
+    member:
+      registration: 가입 환영한다 얼간이들아
+  template:
+    name:
+      member:
+        join: email-registration-member
+aws:
+  paramstore:
+    prefix: /preproject
+    enabled: true
+    profile-separator:
+    name: stackoverflow
