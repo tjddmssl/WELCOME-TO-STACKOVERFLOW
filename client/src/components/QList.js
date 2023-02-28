@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { detailDate } from './detailDate';
 
 const Container = styled.div`
   display: flex;
@@ -106,17 +107,15 @@ const UserInfoWrap = styled.div`
   }
 `;
 
-function QList() {
-  const titleUrl = '/';
+function QList({ question }) {
+  const titleUrl = `/view/${question.id}`;
   const tagLinkUrl = '/';
   const userProfileUrl = '/';
-  const content =
-    "I'm making program to autodetect my Arduino using C# windows form application. For this I'm browsing through port names, assign them to serial port, write letter to port and wait if some portI'm making program to autodetect my Arduino using C# windows form application. For this I'm browsing through port names, assign them to serial port, write letter to port and wait if some portI'm making program to autodetect my Arduino using C# windows form application. For this I'm browsing through port names, assign them to serial port, write letter to port and wait if some portI'm making program to autodetect my Arduino using C# windows form application. For this I'm browsing through port names, assign them to serial port, write letter to port and wait if some port";
   return (
     <Container>
       <QStatus>
         <div>
-          <span className="allques-votecount__span">0</span>
+          <span className="allques-votecount__span">{question.voteCount}</span>
           <span className="allques-vote__span">votes</span>
         </div>
         <div>
@@ -124,25 +123,28 @@ function QList() {
           <span className="allques-qstatus__span">answers</span>
         </div>
         <div>
-          <span className="allques-qstatuscount__span">0</span>
+          <span className="allques-qstatuscount__span">
+            {question.viewCount}
+          </span>
           <span className="allques-qstatus__span">views</span>
         </div>
       </QStatus>
       <QContent>
         <h3 className="allques-title__h3">
-          <a href={titleUrl}>
-            title title title title title title title title title title title
-            title
-          </a>
+          <a href={titleUrl}>{question.title}</a>
         </h3>
-        <div className="allques-content__div">{content}</div>
+        <div className="allques-content__div">{question.content}</div>
         <QInfo>
           <div>
             <ul className="allques-taglist__ul">
-              <li>
-                {/* tag 링크 */}
-                <a href={tagLinkUrl}>태그명</a>
-              </li>
+              {question.tag &&
+                question.tag.map((el, idx) => {
+                  return (
+                    <li key={idx}>
+                      <a href={tagLinkUrl}>{el}</a>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
           <UserInfoWrap>
@@ -159,11 +161,11 @@ function QList() {
             <div>
               {/* 유저프로필 링크 */}
               <a className="allques-username__a" href={userProfileUrl}>
-                username
+                {question.member.displayName}
               </a>{' '}
             </div>
             <div className="allques-reputation__div">1</div>
-            <div>asked 00 ago</div>
+            <div>asked {detailDate(new Date(question.createdDate))}</div>
           </UserInfoWrap>
         </QInfo>
       </QContent>

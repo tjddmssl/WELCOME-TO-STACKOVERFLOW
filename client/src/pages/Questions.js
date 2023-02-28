@@ -4,8 +4,10 @@ import QLists from '../components/QLists';
 import NavBar from '../components/NavBar';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
+import QPageNation from '../components/QPageNation';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -68,13 +70,7 @@ const ListHeader = styled.div`
       border-right: 0.1px solid hsl(210, 8%, 55%);
       border-radius: 0px 5px 5px 0px;
     }
-    button {
-      .allques-selectedtab__button {
-        background-color: #e3e6e8 !important;
-      }
-      .allques-selectedtab__button {
-        background-color: #e3e6e8 !important;
-      }
+    .allques-sorttab__button {
       background-color: white;
       border: none;
       border-top: 0.1px solid hsl(210, 8%, 55%);
@@ -86,12 +82,22 @@ const ListHeader = styled.div`
         background-color: hsl(210, 8%, 97.5%);
       }
     }
+    .allques-selectedtab__button {
+      background-color: #e3e6e8 !important;
+    }
+  }
+  .allques-count__span {
+    margin-right: 5px;
+    font-size: 15px;
   }
 `;
 
 //* HOME_002
 function Questions() {
   const [selectedTab, setSelectedTab] = useState('Newest');
+  const count = useSelector((state) => {
+    return state.getAllQuestion.response.content;
+  });
 
   return (
     <div>
@@ -107,15 +113,17 @@ function Questions() {
               </MainTop>
               <ListHeader>
                 <div>
-                  <span>100</span>
+                  {count && (
+                    <span className="allques-count__span">{count.length}</span>
+                  )}
                   <span>questions</span>
                 </div>
                 <div className="allques-sorttab__div">
                   <button
                     className={
                       selectedTab === 'Newest'
-                        ? '.allques-selectedtab__button'
-                        : ''
+                        ? 'allques-selectedtab__button allques-sorttab__button'
+                        : 'allques-sorttab__button'
                     }
                     onClick={(e) => {
                       setSelectedTab(e.target.textContent);
@@ -128,8 +136,8 @@ function Questions() {
                   <button
                     className={
                       selectedTab === 'Active'
-                        ? '.allques-selectedtab__button'
-                        : ''
+                        ? 'allques-selectedtab__button allques-sorttab__button'
+                        : 'allques-sorttab__button'
                     }
                     onClick={(e) => {
                       setSelectedTab(e.target.textContent);
@@ -141,8 +149,8 @@ function Questions() {
                   <button
                     className={
                       selectedTab === 'Unanswered'
-                        ? '.allques-selectedtab__button'
-                        : ''
+                        ? 'allques-selectedtab__button allques-sorttab__button'
+                        : 'allques-sorttab__button'
                     }
                     onClick={(e) => {
                       setSelectedTab(e.target.textContent);
@@ -157,6 +165,7 @@ function Questions() {
                 </div>
               </ListHeader>
               <QLists />
+              <QPageNation />
             </ContentContainer>
             <Sidebar />
           </div>

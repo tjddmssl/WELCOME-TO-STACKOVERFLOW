@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import ViewComment from './ViewComment';
 import QComment from './QComment';
 import axios from 'axios';
+import { detailDate } from './detailDate';
 
 const TitleContainer = styled.div`
   display: flex;
@@ -151,7 +152,8 @@ function QViewDetail({ question }) {
         </div>
         <TitleDate>
           <p>
-            Asked {question.createdDate} Modified {question.lastModifiedDate}
+            {`Asked `} {detailDate(new Date(question.createdDate))} {` `}
+            {`Modified `} {detailDate(new Date(question.lastModifiedDate))}
           </p>
         </TitleDate>
       </TitleContainer>
@@ -170,7 +172,7 @@ function QViewDetail({ question }) {
             <button onClick={handleDelete}>Delete</button>
             {/* // TODO user card 클릭 시 유저 상세조회 페이지로 이동 */}
             <div className="usercard">
-              asked {question.createdDate}
+              {`Asked `} {detailDate(new Date(question.createdDate))}
               <div className="userinfo">
                 {/* // TODO user image 파일 경로 수정 */}
                 <img src="/img/user image.png" alt="user avatar" />
