@@ -9,6 +9,7 @@ import { faStackExchange } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { FaStackOverflow } from 'react-icons/fa';
+import { BsSearch } from 'react-icons/bs';
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -73,6 +74,12 @@ const SearchContainer = styled.form`
   position: relative;
   flex-grow: 1;
   min-width: 184px;
+  .searchIcon {
+    position: absolute;
+    left: 0px;
+    opacity: 0.5;
+    margin: 0.5rem;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -196,6 +203,7 @@ export default function HeaderAfterLogin() {
           <li>Products</li>
         </ul>
         <SearchContainer className="form__searchinput">
+          <BsSearch className="searchIcon" />
           <SearchInput className="input__search" placeholder="Search..." />
         </SearchContainer>
       </div>
