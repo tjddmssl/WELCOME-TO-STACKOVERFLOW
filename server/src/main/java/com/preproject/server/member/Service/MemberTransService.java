@@ -30,13 +30,13 @@ public class MemberTransService {
         return memberPage.map(this::getMemberListDto);
 
     }
-
+    @Transactional
     public URI updateMember(Member member, Set<String> tags) {
         Member updatedMember = memberService.updatedMember(member, tags);
 
         return responseUrl(updatedMember);
     }
-
+    @Transactional
     public URI createMember(Member member) {
         memberService.createMember(member);
         return responseUrl(member);
