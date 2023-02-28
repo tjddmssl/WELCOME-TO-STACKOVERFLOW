@@ -2,7 +2,7 @@ import QList from './QList';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import getAllQuesionSlice from '../redux/slice/getAllQuestionSlice';
+import getAllQuestionSlice from '../redux/slice/getAllQuestionSlice';
 
 //* 질문 리스트 조건부 렌더링하기
 function QLists() {
@@ -15,7 +15,7 @@ function QLists() {
       try {
         const response = await axios.get('http://localhost:3005/response');
         console.log(response.data);
-        dispatch(getAllQuesionSlice.actions.get(response.data));
+        dispatch(getAllQuestionSlice.actions.get(response.data));
       } catch (error) {
         console.log(error);
       }

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const getAllQuesionSlice = createSlice({
+const getAllQuestionSlice = createSlice({
   name: 'getAllQuestion',
   initialState: { response: {} },
   reducers: {
@@ -10,4 +10,4 @@ const getAllQuesionSlice = createSlice({
   },
 });
 
-export default getAllQuesionSlice;
+export default getAllQuestionSlice;
