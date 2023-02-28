@@ -3,12 +3,12 @@ package com.preproject.server.question.controller;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.dto.MemberQuestionDto;
-import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionListGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.dto.QuestionResponseDto;
+import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.mapper.QuestionMapper;
 import com.preproject.server.question.service.QuestionService;
@@ -85,7 +85,7 @@ public class QuestionController {
   }
 
   @GetMapping("/questions/{id}/related-questions")
-  public ResponseEntity getRelatedQuestions(@PathVariable("id") long questionId) {
+  public ResponseEntity getRelatedQuestions(@PathVariable("id") @Positive long questionId) {
     List<RelatedQuestionDao> questionDaoList = questionService.findRelatedQuestions(questionId);
     return ResponseEntity.ok().body(new ResponseDto<>(questionDaoList));
   }
@@ -100,7 +100,7 @@ public class QuestionController {
   }
 
   @GetMapping("/users/{id}/voted-questions")
-  public ResponseEntity getVotedQuestions(@PathVariable("id") long memberId,
+  public ResponseEntity getVotedQuestions(@PathVariable("id") @Positive long memberId,
       @PageableDefault(sort = "createdDate") Pageable pageable) {
     Page<Question> questionPage = questionService.findVotedQuestions(pageable, memberId);
     Page<VotedQuestionDto> votedQuestionDtoPage = questionTransService.questionPageToVotedQuestionDto(
@@ -109,7 +109,7 @@ public class QuestionController {
   }
 
   @GetMapping("/users/{id}/questions")
-  public ResponseEntity getQuestionsByUserId(@PathVariable("id") long memberId,
+  public ResponseEntity getQuestionsByUserId(@PathVariable("id") @Positive long memberId,
       @PageableDefault(sort = "createdDate") Pageable pageable) {
     Page<Question> questionPage = questionService.findQuestionsByUser(pageable, memberId);
     Page<MemberQuestionDto> memberQuestionDtoPage = questionTransService.questionPageToMemberQuestionDto(

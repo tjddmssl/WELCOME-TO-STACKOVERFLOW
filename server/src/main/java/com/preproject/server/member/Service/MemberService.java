@@ -9,7 +9,11 @@ import com.preproject.server.member.exception.MemberExceptionCode;
 import com.preproject.server.member.repository.MemberRepository;
 import com.preproject.server.tag.entity.Tag;
 import com.preproject.server.tag.entity.TagMember;
+import com.preproject.server.tag.exception.TagExceptionCode;
 import com.preproject.server.tag.service.TagService;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -18,10 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -85,17 +85,19 @@ public class MemberService {
 
     @Transactional
     public Member updatedMember(Member member, Set<String> tagMember) {
-        Member savedMember = checkMemberExist(member.getId());
+        Member findMember = checkMemberExist(member.getId());
         //검증 성공
-        Optional.ofNullable(member.getPassword()).ifPresent(savedMember::setPassword);
-        Optional.ofNullable(member.getDisplayName()).ifPresent(savedMember::setDisplayName);
-        Optional.ofNullable(member.getProfile()).ifPresent(savedMember::setProfile);
-        Optional.ofNullable(member.getAboutMe()).ifPresent(savedMember::setAboutMe);
+        Optional.ofNullable(member.getPassword()).ifPresent(findMember::setPassword);
+        Optional.ofNullable(member.getDisplayName()).ifPresent(findMember::setDisplayName);
+        Optional.ofNullable(member.getProfile()).ifPresent(findMember::setProfile);
+        Optional.ofNullable(member.getAboutMe()).ifPresent(findMember::setAboutMe);
 
         if (!tagMember.isEmpty()) {
-            addTagMember(tagMember, savedMember);
+            addTagMember(tagMember, findMember);
         }
-        return savedMember;
+
+        memberRepository.save(findMember);
+        return findMember;
     }
 
     public Page<Member> getPageMember(Pageable pageable) {
@@ -118,20 +120,32 @@ public class MemberService {
      * 회원이 없으명 예외 발생
      * */
     // 내부 동작 메서드 //
-    private Member checkMemberExist(Long memberId) {
+    public Member checkMemberExist(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(MemberExceptionCode.MEMBER_NOT_FOUND));
     }
 
     private Member addTagMember(Set<String> tagMember, Member member) {
         List<Tag> tagList = tagService.findTagList();
+        member.clearTagMember();
 
         tagMember.iterator().forEachRemaining(name -> {
-            Tag tag = tagList.get(tagList.indexOf(name));
-            TagMember findTagMember = TagMember.builder().build();
-            findTagMember.addMember(member);
+            Tag tag = findTagFromTags(tagList, name);
+            TagMember tmp = TagMember.builder().tag(tag).member(member).build();
+            member.addTagMember(tmp);
         });
+
         return member;
     }
+
+    private Tag findTagFromTags(List<Tag> tagList, String tagName) {
+        for (Tag tag : tagList) {
+            if (tag.getName().equals(tagName)) {
+                return tag;
+            }
+        }
+        throw new BusinessLogicException(TagExceptionCode.TAG_NOT_FOUND);
+    }
+
     private void setDefaultMemberInfo(Member member) {
         String encryptedPassword = Optional.ofNullable(passwordEncoder.encode(member.getPassword())).get();
         member.setPassword(encryptedPassword);

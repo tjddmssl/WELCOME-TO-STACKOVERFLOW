@@ -1,6 +1,7 @@
 package com.preproject.server.question.service;
 
 import com.preproject.server.exception.BusinessLogicException;
+import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.dao.RelatedQuestionDao;
 import com.preproject.server.question.entity.Question;
@@ -26,19 +27,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class QuestionService {
 
   private final QuestionRepository questionRepository;
+  private final MemberService memberService;
 
+  @Transactional
   public Question createQuestion(Question question) {
     // TODO verify if member is present
     log.info("## POST QUESTION ##");
-    log.info("## requested question: {}", question.toString());
     return questionRepository.save(question);
   }
 
+  @Transactional
   public Question updateQuestion(Question question) {
     log.info("## PATCH QUESTION ##");
     Question findQuestion = findQuestion(question.getId());
@@ -68,11 +71,12 @@ public class QuestionService {
   }
 
   public Page<Question> findVotedQuestions(Pageable pageable, long memberId) {
-    // TODO verify if member is available
+    memberService.checkMemberExist(memberId);
     return questionRepository.findVotedQuestions(pageable, memberId);
   }
 
   public Page<Question> findQuestionsByUser(Pageable pageable, long memberId) {
+    memberService.checkMemberExist(memberId);
     return questionRepository.findQuestionsByMemberId(pageable, memberId);
   }
 
@@ -97,11 +101,13 @@ public class QuestionService {
     return t -> seen.add(keyExtractor.apply(t));
   }
 
+  @Transactional
   public void removeQuestion(Long questionId) {
     Question findQuestion = findQuestion(questionId);
     questionRepository.delete(findQuestion);
   }
 
+  @Transactional
   public long addQuestionVoteCount(Question question, int status) {
     question.setVoteCount(question.getVoteCount() + status);
     questionRepository.save(question);
@@ -111,10 +117,6 @@ public class QuestionService {
   private Question addQuestionViewCount(Question question) {
     question.setViewCount(question.getViewCount() + 1);
     return questionRepository.save(question);
-  }
-
-  public Page<Question> createPageSimplePage(Pageable pageable, Long id) {
-    return questionRepository.findSimpleQuestion(pageable, id);
   }
 
   // SEARCH - member displayName / question title, content

@@ -24,17 +24,10 @@ public class CommentTransService {
     comment.setMember(commentPostDto.getMemberId());
     return comment;
   }
+
   public Comment answerCommentPostDtoToComment(CommentPostDto commentPostDto,
-                                                 Long answerId) {
+      Long answerId, Long questionId) {
     Comment comment = commentMapper.answerCommentPostDtoToComment(commentPostDto);
-    comment.setAnswer(answerService.findAnswer(answerId));
-    comment.setMember(commentPostDto.getMemberId());
-    return comment;
-  }
-  public Comment answerCommentPostDtoToComment(CommentPostDto commentPostDto,
-                                                 Long answerId,Long questionId) {
-    Comment comment = commentMapper.answerCommentPostDtoToComment(commentPostDto);
-    comment.setQuestion(questionService.findQuestion(questionId));
     comment.setAnswer(answerService.findAnswer(answerId));
     comment.setMember(commentPostDto.getMemberId());
     return comment;

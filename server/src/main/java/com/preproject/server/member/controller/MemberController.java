@@ -11,6 +11,11 @@ import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.utils.UriCreator;
+import java.net.URI;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,19 +23,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -81,7 +82,6 @@ public class MemberController {
         patchDto.setId(id);
         Member member = memberMapper.patchDtoToMember(patchDto);
 
-        //TODO 리펙토링 patchDto.getTag() -> List<TagMember> 변환 과정 만들기, 이미지 파일 또한 판단할 필요 있음
         Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
 
 
@@ -115,27 +115,6 @@ public class MemberController {
         });
 
         return new ResponseEntity(pageDto, HttpStatus.OK);
-    }
-
-    //시큐리티 컨텍스트 테스트용
-    @GetMapping("/security-test")
-    public String securityTest(@AuthenticationPrincipal LinkedHashMap authentication) {
-        LinkedHashMap principal1 = (LinkedHashMap) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.info("#### principal = {}", principal1.getClass());
-        return "시큐리티 테스트입니다. 갑사합니다 ";
-    }
-
-    //OAuth2 테스트
-    @GetMapping("/hello-oauth2")
-    public String home(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient authorizedClient) {
-        OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
-        System.out.println("Access Token Value: " + accessToken.getTokenValue());
-        System.out.println("Access Token Type: " + accessToken.getTokenType().getValue());
-        System.out.println("Access Token Scopes: " + accessToken.getScopes());
-        System.out.println("Access Token Issued At: " + accessToken.getIssuedAt());
-        System.out.println("Access Token Expires At: " + accessToken.getExpiresAt());
-
-        return "hello-oauth2";
     }
 
 }

@@ -4,11 +4,11 @@ import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.mapper.MemberMapper;
 import com.preproject.server.question.dto.MemberQuestionDto;
-import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.dto.QuestionGetDto;
 import com.preproject.server.question.dto.QuestionListGetDto;
 import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
+import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.mapper.QuestionMapper;
 import com.preproject.server.tag.entity.Tag;
@@ -26,10 +26,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class QuestionTransService {
 
   private final QuestionMapper questionMapper;
@@ -84,10 +86,8 @@ public class QuestionTransService {
       questionGetDto.setIsVoted(IS_VOTED.NOT_SIGNED_IN);
     } else {
       LinkedHashMap principal = (LinkedHashMap) authentication.getPrincipal();
-      log.info("## member id signed in: {}", principal.get("id"));
       IS_VOTED voted = voteService.getVoteStatus(((Integer) principal.get("id")).longValue(),
           question.getId());
-      log.info(voted.getStatus());
       questionGetDto.setIsVoted(voted);
     }
     return questionGetDto;

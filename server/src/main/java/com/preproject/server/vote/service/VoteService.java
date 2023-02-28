@@ -1,11 +1,10 @@
 package com.preproject.server.vote.service;
 
 import com.preproject.server.answer.entity.Answer;
-import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.answer.service.AnswerService;
+import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.entity.Member;
-import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.service.QuestionService;
 import com.preproject.server.vote.IS_VOTED;
 import com.preproject.server.vote.entity.Vote;
@@ -34,10 +33,6 @@ public class VoteService {
   private final QuestionService questionService;
   private final AnswerService answerService;
 
-  public Page<Question> createQuestionSimplePage(Pageable pageable, Long id) {
-    return voteRepository.findSimpleQuestion(pageable, id);
-  }
-
   public Page<Answer> createAnswerSimplePage(Pageable pageable, Long id) {
     return voteRepository.findSimpleAnswer(pageable, id);
   }
@@ -57,7 +52,6 @@ public class VoteService {
     Member member = memberService.getMember(memberId);
     verifyMemberCanVote(member);
     Optional<Vote> prev = voteRepository.findVoteByMemberAndQuestion(memberId, questionId);
-    log.info("## is found: {}", prev);
     if (prev.isEmpty()) {
       Vote vote = Vote.builder().member(member)
           .question(questionService.findQuestion(questionId)).status(
