@@ -28,7 +28,7 @@ const MainContainer = styled.div`
   .mainside-wrap__div {
     max-width: 1100px;
     width: calc(100% - 164px);
-    /* display: flex; */
+    display: flex;
   }
 `;
 
@@ -83,7 +83,6 @@ function View() {
             <AnswerForm question={question} />
           </div>
         </MainContainer>
-
         <Footer />
       </Container>
     </div>
