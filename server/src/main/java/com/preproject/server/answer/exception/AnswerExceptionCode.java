@@ -9,9 +9,10 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum AnswerExceptionCode implements ExceptionCode {
 
-    ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "Answer Not Found");
+  ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "Answer Not Found"),
+  NOT_SIGNED_IN(HttpStatus.UNAUTHORIZED, "you must sign in to write answer.");
 
-    private final HttpStatus status;
-    private final String message;
+  private final HttpStatus status;
+  private final String message;
 
 }
