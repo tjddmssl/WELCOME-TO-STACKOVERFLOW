@@ -8,6 +8,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useState } from 'react';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -177,6 +179,7 @@ function SignUpForm() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [isError, setIsError] = useState(false);
+  const [navigate, setNavigate] = useState(false);
 
   const emailCheck = (email) => {
     let regex =
@@ -184,7 +187,7 @@ function SignUpForm() {
     return email != '' && email != 'undefined' && regex.test(email);
   };
 
-  const signUpButtonHandler = () => {
+  const signUpButtonHandler = async (e) => {
     if (
       inputName.length < 4 ||
       !emailCheck(inputEmail) ||
@@ -192,7 +195,19 @@ function SignUpForm() {
     ) {
       return setIsError(true);
     }
+    e.preventDefault();
+    await axios.post('/signup', {
+      name: inputName,
+      email: inputEmail,
+      password: inputPassword,
+    });
+    setNavigate(true);
   };
+
+  if (navigate) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <Container>
       <SignUpContents>

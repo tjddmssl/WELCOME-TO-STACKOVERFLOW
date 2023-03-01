@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { BsSearch } from 'react-icons/bs';
 
 //* 상단 바 (아이콘, 서치바, 유저 아바타, 로그아웃 버튼)
 //로그인한 상태랑 안한 상태랑 헤더 다름
@@ -62,10 +63,15 @@ const SearchContainer = styled.form`
   position: relative;
   flex-grow: 1;
   min-width: 184px;
+  .searchIcon {
+    position: absolute;
+    left: 0px;
+    opacity: 0.5;
+    margin: 0.5rem;
+  }
 `;
 
 const SearchInput = styled.input`
-  display: block;
   padding: 1rem 1rem 1rem 2rem;
   width: 100%;
   height: 2rem;
@@ -151,6 +157,7 @@ function Header() {
           <li>For Teams</li>
         </ul>
         <SearchContainer className="form__searchinput">
+          <BsSearch className="searchIcon" />
           <SearchInput className="input__search" placeholder="Search..." />
         </SearchContainer>
       </div>
