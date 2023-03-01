@@ -1,12 +1,13 @@
 package com.preproject.server.question.dto;
 
-import java.util.List;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +20,6 @@ public class QuestionPostDto {
   @NotBlank
   private String content;
   @NotNull
-  private List<String> tags;
+  private List<String> tag;
 
 }
