@@ -1,7 +1,7 @@
 import TopQList from './TopQList';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import getTopQListSlice from '../redux/slice/getTopQListSlice';
+import getTopQListSlice from '../../redux/slice/getTopQListSlice';
 import axios from 'axios';
 
 //* 질문 리스트 조건부 렌더링하기

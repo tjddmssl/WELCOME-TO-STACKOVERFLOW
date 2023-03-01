@@ -107,35 +107,45 @@ const LoginButton = styled.button`
   }
 `;
 
-function LoginForm() {
+function LoginForm({ setUserInfo, setIsLogin }) {
   //* 입력받은 email, password + navigate 상태 관리
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [navigate, setNavigate] = useState(false);
 
   //* 입력받은 email, password 백엔드로 전송 + navigate 처리
   const submit = async (e) => {
     e.preventDefault();
+    //* 이메일, 비밀번호 입력하지 않은 경우
+    if (!email || !password) {
+      setErrorMessage('이메일과 비밀번호를 입력하세요');
+      return;
+    } else {
+      setErrorMessage('');
+    }
 
-    //   //! 응답으로 받은 access token을 data 에 담자
+    // 응답으로 받은 access token을 data 에 담음
     // refresh token 을 쿠키로 받으려면 withCredentials: true가 필요함
     // 개발자도구의 application -> cookie에 refresh token이 담김
-    const { data } = await axios.post(
-      url,
-      {
-        email,
-        password,
-      },
-      { withCredentials: true }
-    );
+    await axios.post('/login', { email, password }, { withCredentials: true });
+
     // every request after we log in, we will heave A header with Bearer token
-    axios.defaults.headers.common['Authorization'] = 'Bearer ${data['token']}'
-    
-    // /user에서 내 정보 조회해서 가져오기
-    axios.get('/user/me')
-    .then(res => {
-      console.log(res);
-    })
+    // axios.defaults.headers.common['Authorization'] = 'Bearer ${data['token']}'
+
+    //* '/user'에서 내 정보 조회해서 가져오기
+    axios
+      .get('/user/me')
+      .then((res) => {
+        setUserInfo(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setErrorMessage('로그인에 실패했습니다');
+        }
+      });
+
+    setIsLogin(true);
     setNavigate(true);
   };
 
@@ -176,6 +186,7 @@ function LoginForm() {
             ></LoginInput>
           </div>
           <LoginButton className="a__lofin-submit"> Log in</LoginButton>{' '}
+          {errorMessage ? { errorMessage } : ''}
         </LoginForms>
         <div className="div__account-links">
           <div>

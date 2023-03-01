@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Vote from '../components/Vote';
-import { detailDate } from './detailDate';
+import Vote from '../Question/Vote';
+import { detailDate } from '../../detailDate';
 
 const Container = styled.div`
   display: flex;

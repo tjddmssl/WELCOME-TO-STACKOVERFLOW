@@ -1,14 +1,15 @@
-import Header from '../components/Header';
-import QButton from '../components/QButton';
-import QLists from '../components/QLists';
-import NavBar from '../components/NavBar';
-import Sidebar from '../components/Sidebar';
-import Footer from '../components/Footer';
-import QPageNation from '../components/QPageNation';
+import Header from '../components/Layout/Header';
+import QButton from '../components/Layout/QButton';
+import QLists from '../components/AllQuestions/QLists';
+import NavBar from '../components/Layout/NavBar';
+import Sidebar from '../components/Layout/Sidebar';
+import Footer from '../components/Layout/Footer';
+import QPageNation from '../components/AllQuestions/QPageNation';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+//! All Questions
 const Container = styled.div`
   display: flex;
   flex-direction: column;

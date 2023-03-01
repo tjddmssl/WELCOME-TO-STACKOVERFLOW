@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Header from '../components/Layout/Header';
+import NavBar from '../components/Layout/NavBar';
+import Footer from '../components/Layout/Footer';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import ViewEditEditor from '../components/ViewEditEditor';
-import ViewEditRender from '../components/ViewEditRender';
+import ViewEditEditor from '../components/QuestionEdit/ViewEditEditor';
+import ViewEditRender from '../components/QuestionEdit/ViewEditRender';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import getQuestionSlice from '../redux/slice/getQuestionSlice';

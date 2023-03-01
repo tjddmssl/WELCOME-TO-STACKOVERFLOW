@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import QButton from './QButton';
+import QButton from '../../Layout/QButton';
 import Vote from './Vote';
 import { MdWavingHand } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import ViewComment from './ViewComment';
 import QComment from './QComment';
 import axios from 'axios';
-import { detailDate } from './detailDate';
+import { detailDate } from '../../detailDate';
 
 const TitleContainer = styled.div`
   display: flex;

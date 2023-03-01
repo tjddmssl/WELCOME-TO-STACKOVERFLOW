@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import getQuestionSlice from '../redux/slice/getQuestionSlice';
+import getQuestionSlice from '../../redux/slice/getQuestionSlice';
 import Loading from './Loading';
 
 function ViewEditEditor({ question }) {

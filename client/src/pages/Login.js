@@ -1,5 +1,5 @@
-import Header from '../components/Header';
-import LoginForm from '../components/LoginForm';
+import Header from '../components/Layout/Header';
+import LoginForm from '../components/Login/LoginForm';
 
 //* LOGIN_001
 // TODO  로그아웃 시, alert 창 + 홈으로 돌아가기

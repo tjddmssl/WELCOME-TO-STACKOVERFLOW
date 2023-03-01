@@ -1,9 +1,9 @@
-import Header from '../components/Header';
-import QButton from '../components/QButton';
-import TopQLists from '../components/TopQLists';
-import NavBar from '../components/NavBar';
-import Sidebar from '../components/Sidebar';
-import Footer from '../components/Footer';
+import Header from '../components/Layout/Header';
+import QButton from '../components/Layout/QButton';
+import TopQLists from '../components/TopQuestions/TopQLists';
+import NavBar from '../components/Layout/NavBar';
+import Sidebar from '../components/Layout/Sidebar';
+import Footer from '../components/Layout/Footer';
 import styled from 'styled-components';
 
 const Container = styled.div`

@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Header from '../components/Layout/Header';
+import NavBar from '../components/Layout/NavBar';
+import Footer from '../components/Layout/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useEffect } from 'react';
 import getTagsSLice from '../redux/slice/getTags';
-import TagCard from '../components/TagCard';
-import TagHeader from '../components/TagHeader';
+import TagCard from '../components/Tags/TagCard';
+import TagHeader from '../components/Tags/TagHeader';
 
 const Wrapper = styled.div`
   display: flex;
