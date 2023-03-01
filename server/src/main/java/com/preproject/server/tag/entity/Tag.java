@@ -23,6 +23,7 @@ public class Tag extends BaseEntity {
     @Column(name = "Tag_Name")
     private String name;
     @NotNull
+    @Lob
     @Column(name = "Tag_Description")
     private String description;
 
