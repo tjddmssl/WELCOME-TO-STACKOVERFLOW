@@ -5,7 +5,8 @@ import Footer from '../components/Layout/Footer';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 //* HOME_004
 
 const Container = styled.div`
@@ -27,7 +28,7 @@ const MainContainer = styled.div`
 const UserContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1088px;
+  /* width: 1088px; */
   margin-left: 24px;
 `;
 
@@ -73,6 +74,7 @@ const UsersHeader = styled.div`
     width: auto;
     border: 1px solid #9fa6ad;
     border-radius: 3px;
+    white-space: nowrap;
   }
   button {
     border: 1px solid #9fa6ad;
@@ -92,7 +94,43 @@ const UsersHeader = styled.div`
   }
 `;
 
+// const UserCardList = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+// `;
+
+const UserCardList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-gap: 20px;
+  width: 100%;
+  margin-bottom: 50px;
+  @media screen and (max-width: 1345px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media screen and (max-width: 1028px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media screen and (max-width: 711px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+`;
+
 function Users() {
+  const [userLists, setUserLists] = useState([]);
+  const getUserLists = async () => {
+    try {
+      const response = await axios.get(
+        'http://13.125.211.79:8080/users?page=0&size=28'
+      );
+      setUserLists([...response.data.content]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUserLists();
+  }, []);
   return (
     <div>
       <Container>
@@ -117,7 +155,11 @@ function Users() {
                   </div>
                 </div>
               </UsersHeader>
-              <UserCard />
+              <UserCardList>
+                {userLists.map((el) => {
+                  return <UserCard user={el} key={el.id} />;
+                })}
+              </UserCardList>
             </UserContainer>
           </div>
         </MainContainer>
