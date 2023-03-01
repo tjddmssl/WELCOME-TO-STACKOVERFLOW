@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import QButton from './QButton';
+import QButton from '../../Layout/QButton';
 import Vote from './Vote';
 import { MdWavingHand } from 'react-icons/md';
 import { useEffect, useState } from 'react';

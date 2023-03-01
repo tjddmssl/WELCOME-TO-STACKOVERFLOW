@@ -1,16 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
-import QViewDetail from '../components/QViewDetail';
-import QView from '../components/QView';
+import Header from '../components/Layout/Header';
+import NavBar from '../components/Layout/NavBar';
+import Footer from '../components/Layout/Footer';
+import Sidebar from '../components/Layout/Sidebar';
+import QViewDetail from '../components/QuestionDetail/Question/QViewDetail';
+import QView from '../components/QuestionDetail/Question/QView';
 import styled from 'styled-components';
-import AnswerForm from '../components/AnswerForm';
-import AnswerView from '../components/AnswerView';
-import NoAnswerView from '../components/NoAnswerView';
+import AnswerForm from '../components/QuestionDetail/Answeer/AnswerForm';
+import AnswerView from '../components/QuestionDetail/Answeer/AnswerView';
+import NoAnswerView from '../components/QuestionDetail/Answeer/NoAnswerView';
 import getAnswerSlice from '../redux/slice/getAnswer';
 
 //* VIEW_01

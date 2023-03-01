@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Vote from '../components/Vote';
+import Vote from '../Question/Vote';
 
 const Container = styled.div`
   display: flex;

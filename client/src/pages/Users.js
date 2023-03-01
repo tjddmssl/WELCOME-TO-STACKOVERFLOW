@@ -1,7 +1,7 @@
-import UserCard from '../components/UserCard';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import UserCard from '../components/Users/UserCard';
+import Header from '../components/Layout/Header';
+import NavBar from '../components/Layout/NavBar';
+import Footer from '../components/Layout/Footer';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';

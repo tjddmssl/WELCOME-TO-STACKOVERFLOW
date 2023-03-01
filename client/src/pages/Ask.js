@@ -1,12 +1,12 @@
 // import { Button } from '@mui/material';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Footer from '../components/Layout/Footer';
+import Header from '../components/Layout/Header';
 import styled from 'styled-components';
 import './Ask.css';
 import { useRef, useState } from 'react';
-import TagAdd from '../components/TagAdd';
+import TagAdd from '../components/AskQuestion/TagAdd';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 

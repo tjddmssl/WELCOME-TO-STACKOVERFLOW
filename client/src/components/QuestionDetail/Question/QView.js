@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
 import QViewDetail from './QViewDetail';
-import getQViewSlice from '../redux/slice/getQView';
+import getQViewSlice from '../../../redux/slice/getQView';
 
 function QView() {
   const dispatch = useDispatch();
