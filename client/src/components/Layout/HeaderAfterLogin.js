@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { FaStackOverflow } from 'react-icons/fa';
 import { BsSearch } from 'react-icons/bs';
+import axios from 'axios';
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -180,12 +181,26 @@ const ModalContent = styled.div`
     }
   }
 `;
-export default function HeaderAfterLogin() {
+export default function HeaderAfterLogin({ setUserInfo, setIsLogin }) {
+  //* 모달 상태관리
   const [modal, setModal] = useState(null);
 
   const handleClickMenu = (menu) => {
     if (menu === modal) setModal(null);
     else setModal(menu);
+  };
+
+  //* 로그아웃 핸들러
+  const logoutHandler = () => {
+    return axios
+      .post('/logout')
+      .then((res) => {
+        setUserInfo(null);
+        setIsLogin(false);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
   return (
     <HeaderContainer className="header__header">
@@ -237,7 +252,12 @@ export default function HeaderAfterLogin() {
                   Stack Overflow
                 </span>
                 <Link to="/">
-                  <span className="span__content logout">Logout</span>
+                  <button
+                    className="span__content logout"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </button>
                 </Link>
               </ModalContent>
 
