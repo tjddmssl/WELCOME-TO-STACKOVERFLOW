@@ -233,7 +233,7 @@ function Ask() {
     const postData = async () => {
       try {
         await axios({
-          url: ' http://localhost:3001/content',
+          url: 'http://localhost:3001/content',
           method: 'post',
           data: newData,
         });

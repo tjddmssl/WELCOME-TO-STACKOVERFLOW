@@ -2,10 +2,10 @@ import { GoTriangleUp, GoTriangleDown } from 'react-icons/go';
 import { FiBookmark } from 'react-icons/fi';
 import { RxCountdownTimer } from 'react-icons/rx';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import axios from 'axios';
-import getTopQListSlice from '../redux/slice/getTopQListSlice';
+import { useSelector } from 'react-redux';
+// import { useEffect } from 'react';
+// import axios from 'axios';
+// import getTopQListSlice from '../redux/slice/getTopQListSlice';
 
 const Container = styled.div`
   display: flex;
@@ -45,21 +45,21 @@ const IconContainer = styled.div`
 function Vote() {
   //* voteCount 받아와서 보여주기
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const data = useSelector((state) => {
     return state.getTopQList.content;
   });
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/content');
-        dispatch(getTopQListSlice.actions.get(response.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:3001/content');
+  //       dispatch(getTopQListSlice.actions.get(response.data));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getData();
+  // }, []);
 
   // TODO 위, 아래 버튼 클릭 시 voteCount 수 기능 구현
   return (
@@ -68,7 +68,7 @@ function Vote() {
         <button>
           <GoTriangleUp />
         </button>
-        <div>{data && data.voteCount}</div>
+        <div>{data.voteCount ? data.voteCount : `0`}</div>
         <button>
           <GoTriangleDown />
         </button>
