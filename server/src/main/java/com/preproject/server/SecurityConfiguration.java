@@ -70,8 +70,7 @@ public class SecurityConfiguration {
         //세션에서 일어나는 일들을 처리한다. -> 로그아웃을 토큰으로 처리한다.
 
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .authorizeHttpRequests(authorize -> authorize.antMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().permitAll()
                 );
         http
