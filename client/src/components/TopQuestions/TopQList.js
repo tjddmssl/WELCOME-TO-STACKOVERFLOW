@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { detailDate } from '../detailDate';
 
 const Container = styled.div`
   display: flex;
@@ -155,7 +156,7 @@ const TopQList = ({ content }) => {
               </a>
             </div>
             <div className="topques-reputation__div">1</div>
-            <div>asked at {content.createdDate}</div>
+            <div>asked at {detailDate(new Date(content.createdDate))}</div>
           </UserInfoWrap>
         </QInfo>
       </QContent>
