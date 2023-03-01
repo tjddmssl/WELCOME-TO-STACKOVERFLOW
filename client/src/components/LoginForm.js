@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginSocialButtons from './LoginSocialButtons';
-// import { useState } from 'react';
-// import axios from 'axios';
+import { useState, Navigate } from 'react';
+import axios from 'axios';
 
 const LoginContainer = styled.div`
   height: 100vh;
@@ -109,31 +109,40 @@ const LoginButton = styled.button`
 
 function LoginForm() {
   //* 입력받은 email, password + navigate 상태 관리
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [navigate, setNavigate] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [navigate, setNavigate] = useState(false);
 
   //* 입력받은 email, password 백엔드로 전송 + navigate 처리
-  // const submit = async (e) => {
-  //   e.preventDefault();
+  const submit = async (e) => {
+    e.preventDefault();
 
-  //   //! 응답으로 받은 access token을 response에 담자
-  //   const response = await axios.post(
-  //     url,
-  //     {
-  //       email,
-  //       password,
-  //     },
-  //     { withCredentials: true }
-  //   );
-
-  //   setNavigate(true);
-  // };
+    //   //! 응답으로 받은 access token을 data 에 담자
+    // refresh token 을 쿠키로 받으려면 withCredentials: true가 필요함
+    // 개발자도구의 application -> cookie에 refresh token이 담김
+    const { data } = await axios.post(
+      url,
+      {
+        email,
+        password,
+      },
+      { withCredentials: true }
+    );
+    // every request after we log in, we will heave A header with Bearer token
+    axios.defaults.headers.common['Authorization'] = 'Bearer ${data['token']}'
+    
+    // /user에서 내 정보 조회해서 가져오기
+    axios.get('/user/me')
+    .then(res => {
+      console.log(res);
+    })
+    setNavigate(true);
+  };
 
   // //* 로그인 성공 시, Home 으로 이동
-  // if (navigate) {
-  //   return <Navigate to="/" />;
-  // }
+  if (navigate) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <LoginContainer className="div__login-container">
@@ -146,13 +155,13 @@ function LoginForm() {
 
         <LoginSocialButtons />
 
-        <LoginForms className="form__loginform">
+        <LoginForms className="form__loginform" onSubmit={submit}>
           <div className="div__inputforms">
             <span className="label">Email</span>
             <LoginInput
               className="input__email"
               type="text"
-              // onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             ></LoginInput>
             <div className="label">
               Password
@@ -163,7 +172,7 @@ function LoginForm() {
             <LoginInput
               className="input__password"
               type="password"
-              // onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             ></LoginInput>
           </div>
           <LoginButton className="a__lofin-submit"> Log in</LoginButton>{' '}
