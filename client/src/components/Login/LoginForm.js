@@ -107,7 +107,7 @@ const LoginButton = styled.button`
   }
 `;
 
-function LoginForm({ setUserInfo, setIsLogin }) {
+function LoginForm() {
   //* 입력받은 email, password + navigate 상태 관리
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -131,21 +131,21 @@ function LoginForm({ setUserInfo, setIsLogin }) {
     await axios.post('/login', { email, password }, { withCredentials: true });
 
     // every request after we log in, we will heave A header with Bearer token
-    // axios.defaults.headers.common['Authorization'] = 'Bearer ${data['token']}'
+    axios.defaults.headers.common['Authorization'] = 'Bearer ${data.token]}';
 
     //* '/user'에서 내 정보 조회해서 가져오기
-    axios
-      .get('/user/me')
-      .then((res) => {
-        setUserInfo(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          setErrorMessage('로그인에 실패했습니다');
-        }
-      });
+    // axios
+    //   .get('/user/me')
+    //   .then((res) => {
+    //     setIsLogin(true);
+    //     setUserInfo(res.data);
+    //   })
+    //   .catch((err) => {
+    //     if (err.response.status === 401) {
+    //       setErrorMessage('로그인에 실패했습니다');
+    //     }
+    //   });
 
-    setIsLogin(true);
     setNavigate(true);
   };
 

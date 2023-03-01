@@ -11,22 +11,30 @@ import Users from './pages/Users';
 // import QButton from './components/QButton';
 import Ask from './pages/Ask';
 import ViewEdit from './pages/ViewEdit';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import userSlice from './redux/slice/userSlice';
 
 function App() {
+  const dispatch = useDispatch();
+  // const user = useSelector((state) => state.user.value);
   //* 로그인 상태, 유저 정보 상태 관리
-  // TODO 리덕스로 리팩터링 할 것
-  const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  // TODO 리덕스로 리팩터링 할 것 (isLogin, userId 만!)
+  // const [isLogin, setIsLogin] = useState(false);
+  // const [userInfo, setUserInfo] = useState(null);
 
   //* 로그인 후 유저 정보를 받아와 상태 변경
   const authHandler = () => {
     axios
       .get('/userinfo')
       .then((res) => {
-        setIsLogin(true);
-        setUserInfo(res.data);
+        dispatch(
+          userSlice.actions.login({
+            ...res.data,
+            isLogin: true,
+          })
+        );
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -53,22 +61,9 @@ function App() {
         <Link to="/ask">{<QButton />}</Link>
       </div> */}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              isLogin={isLogin}
-              setIsLogin={setIsLogin}
-              setUserInfo={setUserInfo}
-              userInfo={userInfo}
-            />
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
-        <Route
-          path="/login"
-          element={<Login setIsLogin={setIsLogin} setUserInfo={setUserInfo} />}
-        />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/questions" element={<Questions />} />
         <Route path="/view" element={<View />} />

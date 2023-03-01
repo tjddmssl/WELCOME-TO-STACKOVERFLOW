@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { FaStackOverflow } from 'react-icons/fa';
 import { BsSearch } from 'react-icons/bs';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { userSlice } from '../../redux/slice/userSlice';
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -181,7 +183,8 @@ const ModalContent = styled.div`
     }
   }
 `;
-export default function HeaderAfterLogin({ setUserInfo, setIsLogin }) {
+export default function HeaderAfterLogin() {
+  const dispatch = useDispatch();
   //* 모달 상태관리
   const [modal, setModal] = useState(null);
 
@@ -191,12 +194,19 @@ export default function HeaderAfterLogin({ setUserInfo, setIsLogin }) {
   };
 
   //* 로그아웃 핸들러
+  // TODO 로그아웃 시, 프론트엔드에서 헤더의 토큰 지우기...???? 수동 삭제 불가?
   const logoutHandler = () => {
     return axios
       .post('/logout')
       .then((res) => {
-        setUserInfo(null);
-        setIsLogin(false);
+        dispatch(
+          userSlice.actions.login({
+            isLogin: false,
+            displayName: '',
+            email: '',
+          })
+        );
+        axios.defaults.headers.common['Authorization'] = null;
       })
       .catch((err) => {
         alert(err);
