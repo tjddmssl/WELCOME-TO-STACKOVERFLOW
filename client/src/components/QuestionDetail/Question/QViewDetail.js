@@ -132,7 +132,7 @@ function QViewDetail({ question }) {
   };
 
   const navigateToEdit = () => {
-    navigate('./edit');
+    navigate(`./edit`);
   };
 
   const [isClicked, setIsClicked] = useState(false);
