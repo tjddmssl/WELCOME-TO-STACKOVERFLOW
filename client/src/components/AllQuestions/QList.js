@@ -137,8 +137,8 @@ function QList({ question }) {
         <QInfo>
           <div>
             <ul className="allques-taglist__ul">
-              {question.tag &&
-                question.tag.map((el, idx) => {
+              {question.tags &&
+                question.tags.map((el, idx) => {
                   return (
                     <li key={idx}>
                       <a href={tagLinkUrl}>{el}</a>

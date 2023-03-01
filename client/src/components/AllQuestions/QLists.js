@@ -13,9 +13,11 @@ function QLists() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('http://localhost:3005/response');
+        const response = await axios.get('http://13.125.211.79:8080/questions');
         console.log(response.data);
-        dispatch(getAllQuestionSlice.actions.get(response.data));
+        dispatch(
+          getAllQuestionSlice.actions.get(response.data.response.content)
+        );
       } catch (error) {
         console.log(error);
       }

@@ -58,8 +58,9 @@ function Tags() {
   useEffect(() => {
     const getTagsData = async () => {
       try {
-        const response = await axios.get('http://localhost:3003/tags');
-        dispatch(getTagsSLice.actions.get(response.data));
+        const response = await axios.get('http://13.125.211.79:8080/tags');
+        console.log(response.data);
+        dispatch(getTagsSLice.actions.get(response.data.response.content));
       } catch (error) {
         console.log(error);
       }

@@ -25,27 +25,28 @@ function App() {
   // const [userInfo, setUserInfo] = useState(null);
 
   //* 로그인 후 유저 정보를 받아와 상태 변경
-  const authHandler = () => {
-    axios
-      .get('/userinfo')
-      .then((res) => {
-        dispatch(
-          userSlice.actions.login({
-            ...res.data,
-            isLogin: true,
-          })
-        );
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          console.log(err.response.data);
-        }
-      });
-  };
 
-  useEffect(() => {
-    authHandler();
-  }, []);
+  // const authHandler = () => {
+  //   axios
+  //     .get('http://13.125.211.79:8080/users/53')
+  //     .then((res) => {
+  //       dispatch(
+  //         userSlice.actions.login({
+  //           ...res.data,
+  //           isLogin: true,
+  //         })
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 401) {
+  //         console.log(err.response.data);
+  //       }
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   authHandler();
+  // }, []);
 
   return (
     <div className="App">

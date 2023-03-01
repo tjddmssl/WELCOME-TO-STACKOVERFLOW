@@ -59,12 +59,12 @@ const Number = styled.div`
 export default function TagCard({ data }) {
   return (
     <TagContents>
-      <Tagtitle>{data.title}</Tagtitle>
+      <Tagtitle>{data.name}</Tagtitle>
       <TagtextContainer>
-        <Tagtext>{data.text}</Tagtext>
+        <Tagtext>{data.description}</Tagtext>
       </TagtextContainer>
       <TagCounter>
-        <Number>{data.counter} quewstions</Number>
+        <Number>{data.questionCount} quewstions</Number>
       </TagCounter>
     </TagContents>
   );

@@ -128,7 +128,7 @@ const TopQList = ({ content }) => {
         <QInfo>
           <div>
             <ul className="topques-taglist__ul">
-              {content.tag.map((el, idx) => {
+              {content.tags.map((el, idx) => {
                 return (
                   <li key={idx}>
                     <a href={tagLinkUrl}>{el}</a>

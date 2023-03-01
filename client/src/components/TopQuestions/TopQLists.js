@@ -13,8 +13,9 @@ function TopQLists() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/content');
-        dispatch(getTopQListSlice.actions.get(response.data));
+        const response = await axios.get('http://13.125.211.79:8080/questions');
+        console.log(response.data.response.content);
+        dispatch(getTopQListSlice.actions.get(response.data.response.content));
       } catch (error) {
         console.log(error);
       }

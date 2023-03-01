@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import './Ask.css';
 import { useRef, useState } from 'react';
 import TagAdd from '../components/AskQuestion/TagAdd';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 const AllContainer = styled.div`
@@ -214,26 +213,20 @@ function Ask() {
   //   window.location.href = 'http://localhost:3000/';
   // };
 
+  // TODO id 없이 보내기
+  // TODO 에러 data에서 문구로 뜨는 코드로 변경 (alert)
   const submitClickHandler = () => {
     let newData = {
-      id: uuidv4(),
       title,
       content: problemBody + tryBody,
       tag: tags,
-      voteCount: 4,
-      viewCount: 12,
-      createdDate: '2023-02-21T05:42:50.855Z',
-      lastModifiedDate: '2023-02-21T05:42:50.855Z',
-      member: {
-        id: 1,
-        displayName: 'user1',
-        profileImage: '',
-      },
+      id: 53,
     };
     const postData = async () => {
       try {
         await axios({
-          url: 'http://localhost:3001/content',
+
+          url: 'http://13.125.211.79:8080/questions',
           method: 'post',
           data: newData,
         });
@@ -242,7 +235,7 @@ function Ask() {
       }
     };
     postData();
-    window.location.href = 'http://localhost:3000/';
+    // window.location.href = 'http://localhost:3000/';
   };
 
   const onChangeProblem = () => {

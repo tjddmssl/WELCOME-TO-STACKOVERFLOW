@@ -196,8 +196,8 @@ function SignUpForm() {
       return setIsError(true);
     }
     e.preventDefault();
-    await axios.post('/signup', {
-      name: inputName,
+    await axios.post('http://13.125.211.79:8080/users', {
+      displayName: inputName,
       email: inputEmail,
       password: inputPassword,
     });
