@@ -1,12 +1,11 @@
 package com.preproject.server;
 
 import com.preproject.server.tag.entity.Tag;
+import com.preproject.server.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class initDB {
     private final InitTag tag;
-    @PostConstruct
+
+//    @PostConstruct
     public void init() {
         tag.TagInit();
     }
@@ -23,7 +23,7 @@ public class initDB {
 @Component
 @RequiredArgsConstructor
 class InitTag {
-    private final EntityManager em;
+    private final TagRepository tagRepository;
 
     @Transactional
     public void TagInit() {
@@ -67,8 +67,15 @@ class InitTag {
         tag.add(Tag.builder().name("xml").description("XML (Extensible Markup Language) is a structured document format defining text encoding rules. When using this tag include additional tags such as programming language, tool sets, XML technologies being used, and other tags describing the environment of the problem posted. XML flexibility lends to a wide variety of uses for human and machine data transfer so be specific as to tools and libraries.").build());
         tag.add(Tag.builder().name("typescript").description("TypeScript is a typed superset of JavaScript that transpiles to plain JavaScript. It adds optional types, classes, interfaces, and modules to JavaScript. This tag is for questions specific to TypeScript. It is not used for general JavaScript questions.").build());
 
+        System.out.println("##### tag size" + tag.size());
+
+
+
         for (Tag tag1 : tag) {
-            em.persist(tag1);
+            tagRepository.save(tag1);
+
+            System.out.println(tag1.getName());
+
         }
 
     }

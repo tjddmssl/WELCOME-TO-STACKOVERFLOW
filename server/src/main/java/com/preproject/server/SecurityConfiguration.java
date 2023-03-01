@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -71,7 +72,7 @@ public class SecurityConfiguration {
 
         http
                 .authorizeRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.POST, "/users").permitAll()
+                        .antMatchers(HttpMethod.POST, "/users").permitAll()  //회원가입
                         .anyRequest().permitAll()
                 );
         http

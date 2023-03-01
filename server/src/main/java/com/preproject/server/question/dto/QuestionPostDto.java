@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class QuestionPostDto {
-  private String id;
+  private long id;
   @NotBlank
   private String title;
   @NotBlank
