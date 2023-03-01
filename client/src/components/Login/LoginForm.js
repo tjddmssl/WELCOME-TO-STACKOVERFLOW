@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginSocialButtons from './LoginSocialButtons';
-import { useState, Navigate } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+import { userSlice } from '../../redux/slice/userSlice';
+import { useDispatch } from 'react-redux';
 
 const LoginContainer = styled.div`
   height: 100vh;
@@ -112,8 +114,9 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [navigate, setNavigate] = useState(false);
-
+  // const [navigate, setNavigate] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   //* 입력받은 email, password 백엔드로 전송 + navigate 처리
   const submit = async (e) => {
     e.preventDefault();
@@ -124,35 +127,43 @@ function LoginForm() {
     } else {
       setErrorMessage('');
     }
-
     // 응답으로 받은 access token을 data 에 담음
     // refresh token 을 쿠키로 받으려면 withCredentials: true가 필요함
     // 개발자도구의 application -> cookie에 refresh token이 담김
-    await axios.post('/login', { email, password }, { withCredentials: true });
+    await axios
+      .post(
+        'http://13.125.211.79:8080/login',
+        { username: email, password },
+        { withCredentials: true }
+      )
+      .catch((err) => {
+        console.log(err);
+      });
 
     // every request after we log in, we will heave A header with Bearer token
-    axios.defaults.headers.common['Authorization'] = 'Bearer ${data.token]}';
+    axios.defaults.headers.common['Authorization'] = 'Bearer ${data[token]}';
 
     //* '/user'에서 내 정보 조회해서 가져오기
-    // axios
-    //   .get('/user/me')
-    //   .then((res) => {
-    //     setIsLogin(true);
-    //     setUserInfo(res.data);
-    //   })
-    //   .catch((err) => {
-    //     if (err.response.status === 401) {
-    //       setErrorMessage('로그인에 실패했습니다');
-    //     }
-    //   });
-
-    setNavigate(true);
+    axios
+      .get('http://13.125.211.79:8080/users/53')
+      .then((res) => {
+        console.log(res.data);
+        dispatch(
+          userSlice.actions.login({
+            ...res.data,
+            isLogin: true,
+          })
+        );
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setErrorMessage('로그인에 실패했습니다');
+        }
+      });
+    navigate('/');
   };
 
   // //* 로그인 성공 시, Home 으로 이동
-  if (navigate) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <LoginContainer className="div__login-container">

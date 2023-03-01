@@ -11,13 +11,14 @@ import Users from './pages/Users';
 // import QButton from './components/QButton';
 import Ask from './pages/Ask';
 import ViewEdit from './pages/ViewEdit';
-import { useEffect } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import userSlice from './redux/slice/userSlice';
+// import { useEffect } from 'react';
+// import axios from 'axios';
+// import { useDispatch } from 'react-redux';
+// // eslint-disable-next-line import/no-named-as-default
+// import userSlice from './redux/slice/userSlice';
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const user = useSelector((state) => state.user.value);
   //* 로그인 상태, 유저 정보 상태 관리
   // TODO 리덕스로 리팩터링 할 것 (isLogin, userId 만!)
@@ -25,27 +26,27 @@ function App() {
   // const [userInfo, setUserInfo] = useState(null);
 
   //* 로그인 후 유저 정보를 받아와 상태 변경
-  const authHandler = () => {
-    axios
-      .get('/userinfo')
-      .then((res) => {
-        dispatch(
-          userSlice.actions.login({
-            ...res.data,
-            isLogin: true,
-          })
-        );
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          console.log(err.response.data);
-        }
-      });
-  };
+  // const authHandler = () => {
+  //   axios
+  //     .get('http://13.125.211.79:8080/users/53')
+  //     .then((res) => {
+  //       dispatch(
+  //         userSlice.actions.login({
+  //           ...res.data,
+  //           isLogin: true,
+  //         })
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 401) {
+  //         console.log(err.response.data);
+  //       }
+  //     });
+  // };
 
-  useEffect(() => {
-    authHandler();
-  }, []);
+  // useEffect(() => {
+  //   authHandler();
+  // }, []);
 
   return (
     <div className="App">
