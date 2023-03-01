@@ -5,9 +5,11 @@ import { detailDate } from '../../detailDate';
 const Container = styled.div`
   display: flex;
   margin-top: 15px;
+  border-bottom: 1px solid #e3e6e8;
 `;
 
 const AnswersContainer = styled.div`
+  width: 100%;
   button {
     border: none;
     border-radius: 2px;
@@ -24,6 +26,7 @@ const AnswersContainer = styled.div`
 
   .footer {
     display: flex;
+    justify-content: space-between;
   }
 
   .comment {
@@ -41,16 +44,23 @@ const AnswersContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const UserContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
-  margin-left: 200px;
-  width: 320px;
+  /* width: 320px; */
   font-size: small;
   color: #6b737c;
+  width: 200px;
+  padding: 5px 10px;
+  border: 1px solid black;
+  font-size: small;
+  color: #6b737c;
+  border: none;
+  border-radius: 3px;
+  background-color: #d9eaf7;
   img {
     width: 40px;
     margin-top: 5px;
@@ -68,7 +78,6 @@ const Comment = styled.div``;
 function AnswerView({ answer }) {
   return (
     <>
-      <h3>N Answers</h3>
       <Container>
         <Vote voteCount={answer.voteCount} />
         <AnswersContainer>

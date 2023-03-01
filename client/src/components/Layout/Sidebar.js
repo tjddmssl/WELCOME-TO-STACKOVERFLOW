@@ -8,6 +8,7 @@ import { BsStackOverflow } from 'react-icons/bs';
 //* 오른쪽 사이드바
 
 const Container = styled.div`
+  margin-top: 25px;
   float: right;
   @media screen and (max-width: 980px) {
     display: none;

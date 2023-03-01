@@ -18,7 +18,7 @@ const Header = styled.div`
 const Container = styled.div`
   margin-left: 25px;
   margin-right: 25px;
-  width: 800px;
+  /* width: 800px; */
 `;
 
 const Footer = styled.div`
@@ -28,8 +28,7 @@ const Footer = styled.div`
     border-radius: 2px;
     background-color: #e1ecf4;
     color: #39739d;
-    width: 55px;
-    padding: 5px 2px;
+    padding: 5px 10px;
     margin: 5px;
     margin-top: 30px;
   }

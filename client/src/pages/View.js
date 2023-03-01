@@ -12,6 +12,8 @@ import AnswerForm from '../components/QuestionDetail/Answeer/AnswerForm';
 import AnswerView from '../components/QuestionDetail/Answeer/AnswerView';
 import NoAnswerView from '../components/QuestionDetail/Answeer/NoAnswerView';
 import getAnswerSlice from '../redux/slice/getAnswer';
+import { useParams } from 'react-router-dom';
+import getQViewSlice from '../redux/slice/getQView';
 
 //* VIEW_01
 
@@ -44,6 +46,7 @@ const ContentContainer = styled.div`
 
 //* View 001
 function View() {
+  const params = useParams();
   const dispatch = useDispatch();
 
   const question = useSelector((state) => {
@@ -55,14 +58,27 @@ function View() {
   });
 
   useEffect(() => {
-    const getAnswerDetail = async () => {
+    const getQuestionDetail = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/answer');
-        dispatch(getAnswerSlice.actions.get(response.data));
+        const response = await axios.get(
+          `http://13.125.211.79:8080/questions/${params.id}`
+        );
+        dispatch(getQViewSlice.actions.get(response.data.response));
       } catch (error) {
         console.log(error);
       }
     };
+    const getAnswerDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://13.125.211.79:8080/questions/${params.id}/answers`
+        );
+        dispatch(getAnswerSlice.actions.get(response.data.response));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getQuestionDetail();
     getAnswerDetail();
   }, []);
 
@@ -77,10 +93,17 @@ function View() {
               <QView>
                 <QViewDetail />
               </QView>
-              {answer ? <AnswerView answer={answer} /> : <NoAnswerView />}
+              <h3>{`${answer.length} Answers`}</h3>
+              {answer ? (
+                answer.map((el) => {
+                  return <AnswerView answer={el} key={el.id} />;
+                })
+              ) : (
+                <NoAnswerView />
+              )}
+              <AnswerForm question={question} />
             </ContentContainer>
             <Sidebar />
-            <AnswerForm question={question} />
           </div>
         </MainContainer>
         <Footer />

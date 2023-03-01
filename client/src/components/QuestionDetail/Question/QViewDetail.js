@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import QButton from '../../Layout/QButton';
 import Vote from './Vote';
 import { MdWavingHand } from 'react-icons/md';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ViewComment from './ViewComment';
 import QComment from './QComment';
 import axios from 'axios';
@@ -16,19 +16,29 @@ const TitleContainer = styled.div`
   .title {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
   }
   h2 {
     margin-top: 10px;
     max-width: 500px;
+    white-space: nowrap;
   }
   button {
-    margin-left: 600px;
     width: 100px;
   }
 `;
 
 const TitleDate = styled.div`
   border-bottom: 1px solid #f2f3f4;
+  .qview-date__span {
+    color: hsl(210, 8%, 45%);
+    font-size: 13px;
+    margin-right: 5px;
+  }
+  .qview-dateinfo__span {
+    font-size: 13px;
+    margin-right: 10px;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -39,6 +49,7 @@ const ContentContainer = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   .tag {
     display: flex;
   }
@@ -47,8 +58,8 @@ const Content = styled.div`
     border-radius: 2px;
     background-color: #e1ecf4;
     color: #39739d;
-    width: 55px;
-    padding: 5px 2px;
+    /* width: 55px; */
+    padding: 5px 10px;
     margin-right: 8px;
     margin-top: 30px;
   }
@@ -60,6 +71,7 @@ const Content = styled.div`
     width: 100px !important;
     margin-top: 40px;
     background-color: transparent;
+    white-space: nowrap;
   }
 
   .comment:hover {
@@ -70,11 +82,11 @@ const Content = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-
+  align-items: center;
+  justify-content: space-between;
   button {
     background-color: transparent;
     color: #6b737c;
-    width: auto;
   }
 
   button:hover {
@@ -84,9 +96,6 @@ const ButtonContainer = styled.div`
 
   .usercard {
     width: 200px;
-    margin-left: 300px;
-    margin-bottom: 50px;
-    margin-top: 100px;
     padding: 5px 10px;
     border: 1px solid black;
     font-size: small;
@@ -110,9 +119,13 @@ const ButtonContainer = styled.div`
     height: 25px;
     color: #3b4045;
   }
+  .qview-modify__button {
+    margin-top: 0;
+  }
 `;
 
 function QViewDetail({ question }) {
+  const params = useParams();
   const navigate = useNavigate();
   const navigateToAsk = () => {
     navigate('./view/ask');
@@ -130,16 +143,16 @@ function QViewDetail({ question }) {
 
   //* 질문 삭제 요청
   // TODO handleDelete 주소 수정
-  const handleDelete = useEffect(() => {
+  const handleDelete = () => {
     const deleteQuestion = async () => {
       try {
-        await axios.delete('http://localhost:3002/content/question');
+        await axios.delete(`http://13.125.211.79:8080/questions/${params.id}`);
       } catch (error) {
         console.log(error);
       }
     };
     deleteQuestion();
-  }, []);
+  };
 
   // TODO Delete 버튼에 로그인 상태 확인 로직 추가
 
@@ -152,8 +165,14 @@ function QViewDetail({ question }) {
         </div>
         <TitleDate>
           <p>
-            {`Asked `} {detailDate(new Date(question.createdDate))} {` `}
-            {`Modified `} {detailDate(new Date(question.lastModifiedDate))}
+            <span className="qview-date__span">Asked</span>
+            <sapn className="qview-dateinfo__span">
+              {detailDate(new Date(question.createdDate))} {` `}
+            </sapn>
+            <span className="qview-date__span">Modified</span>
+            <span className="qview-dateinfo__span">
+              {detailDate(new Date(question.lastModifiedDate))}
+            </span>
           </p>
         </TitleDate>
       </TitleContainer>
@@ -166,10 +185,16 @@ function QViewDetail({ question }) {
               question.tag.map((el, idx) => <button key={idx}>{el}</button>)}
           </div>
           <ButtonContainer>
-            <button>Share</button>
-            <button onClick={navigateToEdit}>Edit</button>
-            <button>Follow</button>
-            <button onClick={handleDelete}>Delete</button>
+            <div>
+              <button className="qview-modify__button">Share</button>
+              <button className="qview-modify__button" onClick={navigateToEdit}>
+                Edit
+              </button>
+              <button className="qview-modify__button">Follow</button>
+              <button className="qview-modify__button" onClick={handleDelete}>
+                Delete
+              </button>
+            </div>
             {/* // TODO user card 클릭 시 유저 상세조회 페이지로 이동 */}
             <div className="usercard">
               {`Asked `} {detailDate(new Date(question.createdDate))}
