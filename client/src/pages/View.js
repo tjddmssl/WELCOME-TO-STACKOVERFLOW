@@ -14,7 +14,7 @@ import NoAnswerView from '../components/QuestionDetail/Answeer/NoAnswerView';
 import getAnswerSlice from '../redux/slice/getAnswer';
 
 //* VIEW_01
-// TODO 코멘트 map해서 보여주기
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@ const MainContainer = styled.div`
   .mainside-wrap__div {
     max-width: 1100px;
     width: calc(100% - 164px);
-    /* display: flex; */
+    display: flex;
   }
 `;
 
@@ -83,7 +83,6 @@ function View() {
             <AnswerForm question={question} />
           </div>
         </MainContainer>
-
         <Footer />
       </Container>
     </div>

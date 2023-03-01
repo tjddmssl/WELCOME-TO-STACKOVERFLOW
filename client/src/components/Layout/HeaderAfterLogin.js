@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { FaStackOverflow } from 'react-icons/fa';
 import { BsSearch } from 'react-icons/bs';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { userSlice } from '../../redux/slice/userSlice';
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -181,11 +184,33 @@ const ModalContent = styled.div`
   }
 `;
 export default function HeaderAfterLogin() {
+  const dispatch = useDispatch();
+  //* 모달 상태관리
   const [modal, setModal] = useState(null);
 
   const handleClickMenu = (menu) => {
     if (menu === modal) setModal(null);
     else setModal(menu);
+  };
+
+  //* 로그아웃 핸들러
+  // TODO 로그아웃 시, 프론트엔드에서 헤더의 토큰 지우기...???? 수동 삭제 불가?
+  const logoutHandler = () => {
+    return axios
+      .post('/logout')
+      .then((res) => {
+        dispatch(
+          userSlice.actions.login({
+            isLogin: false,
+            displayName: '',
+            email: '',
+          })
+        );
+        axios.defaults.headers.common['Authorization'] = null;
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
   return (
     <HeaderContainer className="header__header">
@@ -237,7 +262,12 @@ export default function HeaderAfterLogin() {
                   Stack Overflow
                 </span>
                 <Link to="/">
-                  <span className="span__content logout">Logout</span>
+                  <button
+                    className="span__content logout"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </button>
                 </Link>
               </ModalContent>
 

@@ -6,6 +6,7 @@ import getTagsSLice from '../slice/getTags';
 import getQuestionSlice from '../slice/getQuestionSlice';
 import viewEditSlice from '../slice/viewEditSlice';
 import getAllQuestionSlice from '../slice/getAllQuestionSlice';
+import { userSlice } from '../slice/userSlice';
 const store = configureStore({
   reducer: {
     getTopQList: getTopQListSlice.reducer,
@@ -15,6 +16,7 @@ const store = configureStore({
     getQuestion: getQuestionSlice.reducer,
     viewEdit: viewEditSlice.reducer,
     getAllQuestion: getAllQuestionSlice.reducer,
+    user: userSlice.reducer,
   },
 });
 
