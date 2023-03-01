@@ -8,13 +8,13 @@ import getAllQuestionSlice from '../../redux/slice/getAllQuestionSlice';
 function QLists() {
   const dispatch = useDispatch();
   const questions = useSelector((state) => {
-    return state.getAllQuestion.response.content;
+    return state.getAllQuestion.response;
   });
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get('http://13.125.211.79:8080/questions');
-        console.log(response.data);
+        console.log(response.data.response.content);
         dispatch(
           getAllQuestionSlice.actions.get(response.data.response.content)
         );
