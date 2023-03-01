@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: ${spring.datasource.url}
-    password: ${spring.datasource.password}
-    username: ${spring.datasource.username}
+    url: ${dburl}
+    password: ${dbpassword}
+    username: ${dbusername}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
@@ -56,4 +56,4 @@ mail:
       member:
         join: email-registration-member
 
-config.domain:
+
