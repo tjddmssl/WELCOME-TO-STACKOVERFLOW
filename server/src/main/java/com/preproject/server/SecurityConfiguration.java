@@ -54,6 +54,7 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .cors(withDefaults())
+//                .cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //세션 생성X
         http
                 .oauth2Login(oauth2 -> oauth2.successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer,authorityUtils,memberService,clientRegistration())));
@@ -70,8 +71,8 @@ public class SecurityConfiguration {
         //세션에서 일어나는 일들을 처리한다. -> 로그아웃을 토큰으로 처리한다.
 
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .authorizeRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/users").permitAll()  //회원가입
                         .anyRequest().permitAll()
                 );
         http
@@ -87,6 +88,7 @@ public class SecurityConfiguration {
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
@@ -105,6 +107,7 @@ public class SecurityConfiguration {
             //기본 requset URL  jwt/login 으로 변경
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
+
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
             builder.addFilter(jwtAuthenticationFilter)

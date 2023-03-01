@@ -3,12 +3,7 @@ package com.preproject.server.question.service;
 import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.mapper.MemberMapper;
-import com.preproject.server.question.dto.MemberQuestionDto;
-import com.preproject.server.question.dto.QuestionGetDto;
-import com.preproject.server.question.dto.QuestionListGetDto;
-import com.preproject.server.question.dto.QuestionPatchDto;
-import com.preproject.server.question.dto.QuestionPostDto;
-import com.preproject.server.question.dto.VotedQuestionDto;
+import com.preproject.server.question.dto.*;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.mapper.QuestionMapper;
@@ -18,9 +13,6 @@ import com.preproject.server.tag.exception.TagExceptionCode;
 import com.preproject.server.tag.service.TagService;
 import com.preproject.server.vote.IS_VOTED;
 import com.preproject.server.vote.service.VoteService;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +20,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +49,7 @@ public class QuestionTransService {
     LinkedHashMap principal = checkAuthenticated();
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
     question.setMember(memberService.getMember(Long.valueOf((Integer) principal.get("id"))));
-    return getTagQuestion(question, questionPostDto.getTags());
+    return getTagQuestion(question, questionPostDto.getTag());
   }
 
   public Question questionPatchDtoToQuestion(Long id, QuestionPatchDto questionPatchDto) {

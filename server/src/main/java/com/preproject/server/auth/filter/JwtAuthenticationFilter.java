@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        log.info("#### 검증 시작 ####");
         ObjectMapper objectMapper = new ObjectMapper();
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
@@ -45,12 +46,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        log.info("##### 인증 성공 #####");
         Member member = (Member) authResult.getPrincipal();
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
         response.setHeader("Authorization","Bearer "+ accessToken);
         response.setHeader("Refresh",refreshToken);
-
+        log.info("#### 토큰 준비 #####");
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
@@ -66,7 +68,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);

@@ -18,7 +18,7 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
 //  오쓰
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ErrorResponder.sendErrorResponse(response, HttpStatus.FORBIDDEN);
         log.warn("Forbidden error : {}", accessDeniedException.getMessage());
+        ErrorResponder.sendErrorResponse(response, HttpStatus.FORBIDDEN);
     }
 }
