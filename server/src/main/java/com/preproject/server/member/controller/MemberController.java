@@ -1,21 +1,12 @@
 package com.preproject.server.member.controller;
 
-import com.preproject.server.answer.entity.Answer;
-import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.Service.MemberService;
+import com.preproject.server.member.Service.MemberTransService;
 import com.preproject.server.member.dto.MemberListDto;
 import com.preproject.server.member.dto.MemberPatchDto;
 import com.preproject.server.member.dto.MemberPostDto;
-import com.preproject.server.member.dto.MemberResponseDto;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.member.mapper.MemberMapper;
-import com.preproject.server.question.entity.Question;
-import com.preproject.server.utils.UriCreator;
-import java.net.URI;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,15 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @CrossOrigin("*")
 public class MemberController {
-    private final static String MEMBER_DEFAULT_URL = "/users";
     private final MemberService memberService;
     private final MemberMapper memberMapper;
+    private final MemberTransService memberTransService;
 
 
     /*
@@ -49,15 +36,13 @@ public class MemberController {
      * */
     @PostMapping
     public ResponseEntity createMember(@RequestBody MemberPostDto post, HttpServletRequest request) {
+        log.info("#####POST MEMBER #####");
         Locale locale = request.getLocale();
-        log.info("locale = {} ", locale);
-
         Member member = memberMapper.postDtoToMember(post);
         member.setLocation(locale.getCountry());
-        log.info("member = {}", member.getId());
-        Member ceatedMember = memberService.createMember(member);
 
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, ceatedMember.getId());
+        URI location = memberTransService.createMember(member);
+
 
         return ResponseEntity.created(location).build();
 
@@ -69,7 +54,9 @@ public class MemberController {
      * 회원 삭제 기능 but 비밀 번호 암호화 시 추가 변경 필요
      * */
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteMember(@PathVariable Long id, @RequestBody String password) {
+    public ResponseEntity deleteMember(@PathVariable Long id) {
+        log.info("##### DELETE MEMBER #####");
+        log.trace("### MEMBER ID = {}",id);
         memberService.deleteMember(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -79,40 +66,23 @@ public class MemberController {
      * */
     @PatchMapping("/{id}")
     public ResponseEntity updateMember(@PathVariable Long id, @RequestBody MemberPatchDto patchDto) {
+        log.info("##### UPDATE MEMBER #####");
         patchDto.setId(id);
-        Member member = memberMapper.patchDtoToMember(patchDto);
+        Member member = memberMapper.patchDtoToMember(patchDto);    //상태 변환
+        log.info("#### member = {}",member);
 
-        Member updatedMember = memberService.updatedMember(member, patchDto.getTag());
-
-
-        MemberResponseDto responseDto = memberMapper.memberResponseDtoToMember(updatedMember);
-
-        //TODO 리펙토링
-        List<String> collect = updatedMember.getTagMembers().stream()
-                .map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-        responseDto.setTags(collect);
-
-        return new ResponseEntity(new ResponseDto<MemberResponseDto>(responseDto), HttpStatus.OK);
+        URI location = memberTransService.updateMember(member, patchDto.getTag());
+        log.info("###URI = {}", location);
+        return ResponseEntity.ok(location);
     }
 
     /*
      * 회원들 정보 조회 수정 필요
      * */
     @GetMapping
-    public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdAt") Pageable pageable) {
-        Page<Member> memberPage = memberService.getPageMember(pageable);
-
-        Page<MemberListDto> pageDto = memberPage.map(member -> {
-            MemberListDto responseDto = memberMapper.memberToMemberListDto(member);
-            List<String> collect = member.getTagMembers().stream().map(tag -> tag.getTag().getName()).collect(Collectors.toList());
-            responseDto.setTags(collect);
-
-            long sum = member.getQuestions().stream().mapToLong(Question::getVoteCount).sum();
-            sum += member.getAnswers().stream().mapToLong(Answer::getVoteCount).sum();
-
-            responseDto.setVoteCount(sum);
-            return responseDto;
-        });
+    public ResponseEntity getMemberList(@PageableDefault(size = 28, sort = "createdDate") Pageable pageable) {
+        log.info("##### GET MEMBER PAGE #####");
+        Page<MemberListDto> pageDto = memberTransService.getMemberPageDto(pageable);
 
         return new ResponseEntity(pageDto, HttpStatus.OK);
     }

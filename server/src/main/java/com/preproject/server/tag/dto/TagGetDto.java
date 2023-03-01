@@ -17,5 +17,5 @@ public class TagGetDto {
   @Setter
   private long questionCount;
   @Setter
-  private LocalDateTime lastCreatedDate;
+  private LocalDateTime createdDate;
 }

@@ -10,6 +10,7 @@ import com.preproject.server.question.dto.QuestionPatchDto;
 import com.preproject.server.question.dto.QuestionPostDto;
 import com.preproject.server.question.dto.VotedQuestionDto;
 import com.preproject.server.question.entity.Question;
+import com.preproject.server.question.exception.QuestionExceptionCode;
 import com.preproject.server.question.mapper.QuestionMapper;
 import com.preproject.server.tag.entity.Tag;
 import com.preproject.server.tag.entity.TagQuestion;
@@ -40,10 +41,18 @@ public class QuestionTransService {
   private final TagService tagService;
   private final VoteService voteService;
 
+  public LinkedHashMap checkAuthenticated() {
+    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.getPrincipal().equals("anonymousUser")) {
+      throw new BusinessLogicException(QuestionExceptionCode.NOT_SIGNED_IN);
+    }
+    return (LinkedHashMap) authentication.getPrincipal();
+  }
 
   public Question questionPostDtoToQuestion(QuestionPostDto questionPostDto) {
+    LinkedHashMap principal = checkAuthenticated();
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
-    question.setMember(memberService.getMember(questionPostDto.getMemberId()));
+    question.setMember(memberService.getMember(Long.valueOf((Integer) principal.get("id"))));
     return getTagQuestion(question, questionPostDto.getTags());
   }
 

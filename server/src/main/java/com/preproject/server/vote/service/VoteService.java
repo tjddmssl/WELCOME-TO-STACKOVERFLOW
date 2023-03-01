@@ -1,12 +1,12 @@
 package com.preproject.server.vote.service;
 
-import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.member.entity.Member;
 import com.preproject.server.question.service.QuestionService;
 import com.preproject.server.vote.IS_VOTED;
+import com.preproject.server.vote.dto.VoteResponseDto;
 import com.preproject.server.vote.entity.Vote;
 import com.preproject.server.vote.entity.Vote.status;
 import com.preproject.server.vote.exception.VoteExceptionCode;
@@ -17,8 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -33,10 +31,6 @@ public class VoteService {
   private final QuestionService questionService;
   private final AnswerService answerService;
 
-  public Page<Answer> createAnswerSimplePage(Pageable pageable, Long id) {
-    return voteRepository.findSimpleAnswer(pageable, id);
-  }
-
   private Long getAuthenticatedMemberId() {
     final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication.getPrincipal().equals("anonymousUser")) {
@@ -47,7 +41,7 @@ public class VoteService {
     }
   }
 
-  public long questionVoteUp(long questionId) {
+  public VoteResponseDto questionVoteUp(long questionId) {
     long memberId = getAuthenticatedMemberId();
     Member member = memberService.getMember(memberId);
     verifyMemberCanVote(member);
@@ -57,24 +51,28 @@ public class VoteService {
           .question(questionService.findQuestion(questionId)).status(
               status.PLUS).build();
       voteRepository.save(vote);
-      return questionService.addQuestionVoteCount(vote.getQuestion(), vote.getStatus().getNum());
+      long count = questionService.addQuestionVoteCount(vote.getQuestion(),
+          vote.getStatus().getNum());
+      return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.VOTE_PLUS).build();
     } else {
       voteRepository.delete(prev.get());
       if (prev.get().getStatus().getNum() == 1) {
-        return questionService.addQuestionVoteCount(prev.get().getQuestion(),
+        long count = questionService.addQuestionVoteCount(prev.get().getQuestion(),
             status.MINUS.getNum());
+        return VoteResponseDto.builder().isVoted(IS_VOTED.NOT_VOTED).voteCount(count).build();
       } else {
         Vote vote = Vote.builder().member(member)
             .question(questionService.findQuestion(questionId)).status(
                 status.PLUS).build();
         voteRepository.save(vote);
-        return questionService.addQuestionVoteCount(vote.getQuestion(),
+        long count = questionService.addQuestionVoteCount(vote.getQuestion(),
             vote.getStatus().getNum() * 2);
+        return VoteResponseDto.builder().isVoted(IS_VOTED.VOTE_PLUS).voteCount(count).build();
       }
     }
   }
 
-  public long questionVoteDown(long questionId) {
+  public VoteResponseDto questionVoteDown(long questionId) {
     long memberId = getAuthenticatedMemberId();
     Member member = memberService.getMember(memberId);
     verifyMemberCanVote(member);
@@ -84,18 +82,23 @@ public class VoteService {
           .question(questionService.findQuestion(questionId)).status(
               status.MINUS).build();
       voteRepository.save(vote);
-      return questionService.addQuestionVoteCount(vote.getQuestion(), vote.getStatus().getNum());
+      long count = questionService.addQuestionVoteCount(vote.getQuestion(),
+          vote.getStatus().getNum());
+      return VoteResponseDto.builder().isVoted(IS_VOTED.VOTE_MINUS).voteCount(count).build();
     } else {
       Vote prevVote = prev.get();
       voteRepository.delete(prevVote);
       if (prevVote.getStatus().getNum() == -1) {
-        return questionService.addQuestionVoteCount(prevVote.getQuestion(), status.PLUS.getNum());
+        long count = questionService.addQuestionVoteCount(prev.get().getQuestion(),
+            status.PLUS.getNum());
+        return VoteResponseDto.builder().isVoted(IS_VOTED.NOT_VOTED).voteCount(count).build();
       } else {
         Vote vote = Vote.builder().member(member)
             .question(questionService.findQuestion(questionId)).status(status.MINUS).build();
         voteRepository.save(vote);
-        return questionService.addQuestionVoteCount(vote.getQuestion(),
+        long count = questionService.addQuestionVoteCount(vote.getQuestion(),
             vote.getStatus().getNum() * 2);
+        return VoteResponseDto.builder().isVoted(IS_VOTED.VOTE_MINUS).voteCount(count).build();
       }
     }
   }
@@ -114,7 +117,7 @@ public class VoteService {
     }
   }
 
-  public long answerVoteUp(long questionId, long answerId) {
+  public VoteResponseDto answerVoteUp(long questionId, long answerId) {
     long memberId = getAuthenticatedMemberId();
     Member member = memberService.getMember(memberId);
     verifyMemberCanVote(member);
@@ -123,23 +126,26 @@ public class VoteService {
       Vote vote = Vote.builder().member(member)
           .answer(answerService.findAnswer(answerId)).status(status.PLUS).build();
       voteRepository.save(vote);
-      return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus().getNum());
+      long count = answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus().getNum());
+      return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.VOTE_PLUS).build();
     } else {
       Vote prevVote = prev.get();
       voteRepository.delete(prevVote);
       if (prevVote.getStatus().getNum() == 1) {
-        return answerService.addAnswerVoteCount(prevVote.getAnswer(), status.MINUS.getNum());
+        long count = answerService.addAnswerVoteCount(prevVote.getAnswer(), status.MINUS.getNum());
+        return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.NOT_VOTED).build();
       } else {
         Vote vote = Vote.builder().member(member)
             .answer(answerService.findAnswer(answerId)).status(status.PLUS).build();
         voteRepository.save(vote);
-        return answerService.addAnswerVoteCount(vote.getAnswer(),
+        long count = answerService.addAnswerVoteCount(vote.getAnswer(),
             vote.getStatus().getNum() * 2);
+        return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.VOTE_PLUS).build();
       }
     }
   }
 
-  public long answerVoteDown(long questionId, long answerId) {
+  public VoteResponseDto answerVoteDown(long questionId, long answerId) {
     long memberId = getAuthenticatedMemberId();
     Member member = memberService.getMember(memberId);
     verifyMemberCanVote(member);
@@ -148,18 +154,21 @@ public class VoteService {
       Vote vote = Vote.builder().member(member)
           .answer(answerService.findAnswer(answerId)).status(status.MINUS).build();
       voteRepository.save(vote);
-      return answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus().getNum());
+      long count = answerService.addAnswerVoteCount(vote.getAnswer(), vote.getStatus().getNum());
+      return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.VOTE_MINUS).build();
     } else {
       Vote prevVote = prev.get();
       voteRepository.delete(prevVote);
       if (prevVote.getStatus().getNum() == -1) {
-        return answerService.addAnswerVoteCount(prevVote.getAnswer(), status.PLUS.getNum());
+        long count = answerService.addAnswerVoteCount(prevVote.getAnswer(), status.PLUS.getNum());
+        return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.NOT_VOTED).build();
       } else {
         Vote vote = Vote.builder().member(member)
             .answer(answerService.findAnswer(answerId)).status(status.MINUS).build();
         voteRepository.save(vote);
-        return answerService.addAnswerVoteCount(vote.getAnswer(),
+        long count = answerService.addAnswerVoteCount(vote.getAnswer(),
             vote.getStatus().getNum() * 2);
+        return VoteResponseDto.builder().voteCount(count).isVoted(IS_VOTED.VOTE_MINUS).build();
       }
     }
   }
