@@ -33,5 +33,5 @@
 ### [User flow](https://www.figma.com/file/Gv5OG5iGtt0npsVdKgnYxG/seb42-pre04-UserFlow?node-id=0%3A1&t=n9EsQEPgJqNJ4PhD-0)
 ### [API](https://documenter.getpostman.com/view/15179624/2s93CRLCHq#75ae105c-9bcf-40e6-9e7a-44518c93dda0)
 
-## ![github](https://user-images.githubusercontent.com/111730140/222345550-828d3345-2924-49f6-bf0b-dd41cc59e05c.svg)
+## ![github](https://user-images.githubusercontent.com/111730140/222345550-828d3345-2924-49f6-bf0b-dd41cc59e05c.svg){: width="10" height="10"}
  Github
