@@ -168,7 +168,7 @@ function LoginForm() {
 
     //* '/user'에서 내 정보 조회해서 가져오기
     axios
-      .get(`http://13.125.211.79:8080/users/${memberId}`)
+      .get(`https://siglee.site/users/${memberId}`)
       .then((res) => {
         console.log(res.data);
         dispatch(
