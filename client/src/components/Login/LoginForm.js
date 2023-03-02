@@ -1,11 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginSocialButtons from './LoginSocialButtons';
 import { useState } from 'react';
 import axios from 'axios';
 import { userSlice } from '../../redux/slice/userSlice';
 import { useDispatch } from 'react-redux';
-
 
 const LoginContainer = styled.div`
   height: 100vh;
@@ -115,9 +114,9 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  // const [navigate, setNavigate] = useState(false);
+  const [memberId, setmemberId] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   //* 입력받은 email, password 백엔드로 전송 + navigate 처리
   const submit = async (e) => {
@@ -140,10 +139,27 @@ function LoginForm() {
         { withCredentials: true }
       )
       .then((res) => {
-        axios.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${res.payload.accessToken}`;
+        //! accessToken어떤 키로 주는지 보고 수정
+        console.log(res);
+        if (!res) {
+          console.log(res);
+          if (res.status === 401) alert('이메일 또는 비밀번호가 틀렸습니다.');
+        }
+        if (res.status === 200) {
+          alert('로그인 되었습니다.');
+          const accessToken = res.headers.get('Authorization');
+          //!응답보기
+          const refreshToken = res.headers.get('refresh');
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+
+          axios.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${accessToken}`;
+          setmemberId(res.memberId);
+        }
       })
+
       .catch((err) => {
         console.log(err);
       });
@@ -152,7 +168,7 @@ function LoginForm() {
 
     //* '/user'에서 내 정보 조회해서 가져오기
     axios
-      .get('http://13.125.211.79:8080/users/53')
+      .get(`http://13.125.211.79:8080/users/${memberId}`)
       .then((res) => {
         console.log(res.data);
         dispatch(
@@ -163,11 +179,9 @@ function LoginForm() {
         );
       })
       .catch((err) => {
-        if (err.response.status === 401) {
-          setErrorMessage('로그인에 실패했습니다');
-        }
+        console.log(err);
       });
-    navigate('/');
+    // navigate('/');
   };
 
   // //* 로그인 성공 시, Home 으로 이동
