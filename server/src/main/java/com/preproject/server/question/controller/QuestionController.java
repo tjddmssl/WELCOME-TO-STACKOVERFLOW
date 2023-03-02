@@ -36,6 +36,7 @@ public class QuestionController {
 
   @PostMapping("/questions")
   public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto requestBody) {
+    log.info("## POST QUESTION ##");
     log.info("## request body: {}", requestBody);
     Question question = questionService.createQuestion(
         questionTransService.questionPostDtoToQuestion(requestBody));

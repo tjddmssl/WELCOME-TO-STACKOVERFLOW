@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,14 +49,17 @@ public class QuestionTransService {
   public Question questionPostDtoToQuestion(QuestionPostDto questionPostDto) {
     LinkedHashMap principal = checkAuthenticated();
     Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);
-    question.setMember(memberService.getMember(Long.valueOf((Integer) principal.get("id"))));
+    question.setMember(memberService.getMember((Long.valueOf((Integer) principal.get("id")))));
     return getTagQuestion(question, questionPostDto.getTag());
   }
 
   public Question questionPatchDtoToQuestion(Long id, QuestionPatchDto questionPatchDto) {
     questionPatchDto.setId(id);
     Question question = questionMapper.questionPatchDtoToQuestion(questionPatchDto);
-    return getTagQuestion(question, questionPatchDto.getTags());
+    Optional.ofNullable(questionPatchDto.getTags()).ifPresent((tags)->
+            getTagQuestion(question, tags)
+    );
+    return question;
   }
 
   private Question getTagQuestion(Question question, List<String> tags) {

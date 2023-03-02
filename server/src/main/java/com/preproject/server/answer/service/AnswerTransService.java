@@ -43,9 +43,11 @@ public class AnswerTransService {
 
   @Transactional
   public Answer answerPostDtoToAnswer(AnswerPostDto answerPostDto) {
+    log.info("#### POST ANSWER ####");
     LinkedHashMap principal = checkAuthenticated();
     Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
     answer.setMember(memberService.getMember(Long.valueOf((Integer) principal.get("id"))));
+//    answer.setMember(memberService.getMember(1L));
     answer.setQuestion(questionService.findQuestion(answerPostDto.getQuestionId()));
     return answer;
   }

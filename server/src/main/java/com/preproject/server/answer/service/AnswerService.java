@@ -29,11 +29,13 @@ public class AnswerService {
 
   @Transactional
   public Answer creatAnswer(Answer answer) {
+    log.info("## CREATE ANSWER : {} ", answer.toString());
     return answerRepository.save(answer);
   }
 
   @Transactional
   public Answer updateAnswer(Answer answer) {
+    log.info("## UPDATE ANSWER : {} ", answer.toString());
     Answer findAnswer = findAnswer(answer.getId());
     Optional.ofNullable(answer.getContent()).ifPresent(findAnswer::setContent);
 
