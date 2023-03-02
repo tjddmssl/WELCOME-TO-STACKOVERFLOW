@@ -65,7 +65,8 @@ function AnswerForm({ question }) {
       }
     };
     postAnswer();
-    // window.location.href = 'http://localhost:3000/view';
+
+    window.location.replace(`/view/${params.id}`);
   };
 
   return (

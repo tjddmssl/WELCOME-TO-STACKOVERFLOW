@@ -158,6 +158,7 @@ function QViewDetail({ question }) {
       }
     };
     deleteQuestion();
+    navigate(`/`);
   };
 
   // TODO Delete 버튼에 로그인 상태 확인 로직 추가

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Vote from '../Question/Vote';
 import { detailDate } from '../../detailDate';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -74,8 +76,22 @@ const UserContainer = styled.div`
 
 const Comment = styled.div``;
 
-// TODO map으로 여러개 뿌려줘야 함
 function AnswerView({ answer }) {
+  const params = useParams();
+  const handleDelete = () => {
+    const deleteAnswer = async () => {
+      try {
+        await axios.delete(
+          `https://siglee.site/questions/${params.id}/answers/${answer.id}`
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    deleteAnswer();
+    window.location.replace(`/view/${params.id}`);
+  };
+
   return (
     <>
       <Container>
@@ -87,6 +103,7 @@ function AnswerView({ answer }) {
               <button>Share</button>
               <button>Edit</button>
               <button>Follow</button>
+              <button onClick={handleDelete}>Delete</button>
             </ButtonContainer>
             <UserContainer>
               Answered {detailDate(new Date(answer.createdDate))}
