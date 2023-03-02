@@ -50,7 +50,17 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+
+    implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws-parameter-store-config'
+
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "io.awspring.cloud:spring-cloud-aws-dependencies:2.3.3"
+    }
+}
+
 
 tasks.named('test') {
     outputs.dir snippetsDir

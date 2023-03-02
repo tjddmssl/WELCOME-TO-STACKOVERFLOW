@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DATABASEURL}
-    password: ${DATABASE_PASSWORD}
-    username: ${DATABASE_ID}
+    url: ${spring.datasource.url}
+    password: ${spring.datasource.password}
+    username: ${spring.datasource.username}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
@@ -22,8 +22,8 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_ID}
-            client-secret: ${GOOGLE_SECRET}
+            client-id: ${spring.security.oauth2.client.registration.google.client-id}
+            client-secret: ${spring.security.oauth2.client.registration.google.client-secret}
             scope:
               - email
               - profile
@@ -34,18 +34,18 @@ logging:
 
 jwt:
   key:
-    secret: ${JWT_KEY}
+    secret: ${jwt.key.secret}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
 
 mail:
   address:
-    admin: ${AMDIN}
+    admin: admin@gmail.com
   smtp:
     host: smtp.gmail.com
     port: 587
-    username: ${MALL_ID}
-    password: ${MALL_PASSWORD}
+    username: awsstudymail001@gmail.com
+    password: dvsuhpduqiwzlxnb
     auth: true
     starttls:
       enable: true
@@ -56,3 +56,10 @@ mail:
     name:
       member:
         join: email-registration-member
+
+aws:
+  paramstore:
+    prefix: /preproject
+    enabled: true
+    profile-separator:
+    name: stackoverflow
