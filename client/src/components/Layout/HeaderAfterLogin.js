@@ -198,7 +198,7 @@ export default function HeaderAfterLogin() {
   const logoutHandler = () => {
     return axios
       .post('/logout')
-      .then((res) => {
+      .then(() => {
         dispatch(
           userSlice.actions.login({
             isLogin: false,

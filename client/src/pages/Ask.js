@@ -1,4 +1,3 @@
-// import { Button } from '@mui/material';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Footer from '../components/Layout/Footer';
@@ -8,7 +7,8 @@ import './Ask.css';
 import { useRef, useState } from 'react';
 import TagAdd from '../components/AskQuestion/TagAdd';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
+import HeaderAfterLogin from '../components/Layout/HeaderAfterLogin';
 const AllContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,6 +17,7 @@ const AllContainer = styled.div`
 const AskHeader = styled.div`
   display: flex !important;
   justify-content: space-between;
+
   text-align: left;
   height: 150px;
   width: 1400px;
@@ -139,7 +140,6 @@ const TagForm = styled.div`
   @media screen and (max-width: 1369px) {
     width: 100%;
   }
-
   h4 {
     margin-bottom: 10px;
   }
@@ -190,6 +190,11 @@ function Ask() {
   const problemRef = useRef();
   const tryRef = useRef();
 
+  const isLogin = useSelector((state) => {
+    console.log(state.user.value.isLogin);
+    return state.user.value.isLogin;
+  });
+
   // const submitClickHandler = () => {
   //   let newData = {
   //     id: uuidv4(),
@@ -220,12 +225,10 @@ function Ask() {
       title,
       content: problemBody + tryBody,
       tag: tags,
-      id: 53,
     };
     const postData = async () => {
       try {
         await axios({
-
           url: 'http://13.125.211.79:8080/questions',
           method: 'post',
           data: newData,
@@ -235,7 +238,7 @@ function Ask() {
       }
     };
     postData();
-    // window.location.href = 'http://localhost:3000/';
+    window.location.href = 'http://localhost:3000/';
   };
 
   const onChangeProblem = () => {
@@ -250,7 +253,7 @@ function Ask() {
 
   return (
     <>
-      <Header />
+      {isLogin ? <HeaderAfterLogin /> : <Header />}
       <Sidebar>
         <ul>Writing a good title</ul>
         <img src="/img/Ask-sidebar.png" alt="ask sidebar"></img>

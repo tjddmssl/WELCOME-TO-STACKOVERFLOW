@@ -22,23 +22,19 @@ const Memo = styled.ul`
   outline: 2px solid beige;
   box-shadow: 2px 1px 1px 1px lightgrey;
   margin-bottom: 20px;
-
   li {
     height: auto;
     background-color: #fef7e2;
     padding: 14px;
   }
-
   .title {
     color: #525960;
     font-weight: bold;
     background-color: #fbf3d5;
   }
-
   li:hover {
     cursor: pointer;
   }
-
   .title:hover {
     cursor: default;
   }
@@ -54,7 +50,6 @@ const CustomF = styled.ul`
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
   margin-bottom: 20px;
-
   li {
     padding: 14px;
     background-color: #f8f9f9;
@@ -73,7 +68,6 @@ const WatchedT = styled.ul`
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
   margin-bottom: 20px;
-
   li {
     padding: 14px;
     background-color: #f8f9f9;
@@ -86,14 +80,12 @@ const WatchedT = styled.ul`
     margin-top: 15px;
     width: 120px;
   }
-
   button {
     width: 160px;
     margin: 20px;
     background-color: #e1ecf4;
     color: #39739d;
   }
-
   button:hover {
     background-color: #b4d3ea;
   }
@@ -108,7 +100,6 @@ const IgnoredT = styled.ul`
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
   margin-bottom: 20px;
-
   li {
     padding: 14px;
     background-color: #f8f9f9;
@@ -135,7 +126,6 @@ const Collectives = styled.ul`
   border-radius: 1.5px;
   box-shadow: 1px 1px 1px 1px lightgrey;
   margin-bottom: 20px;
-
   li {
     padding: 14px;
   }

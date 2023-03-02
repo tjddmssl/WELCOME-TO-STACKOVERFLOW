@@ -6,7 +6,6 @@ import axios from 'axios';
 import { userSlice } from '../../redux/slice/userSlice';
 import { useDispatch } from 'react-redux';
 
-
 const LoginContainer = styled.div`
   height: 100vh;
   background-color: #f2f2f3;
@@ -144,6 +143,8 @@ function LoginForm() {
           'Authorization'
         ] = `Bearer ${res.payload.accessToken}`;
       })
+      //! 백엔드 분들께 post할때 userid달라고 하기!!!!!
+
       .catch((err) => {
         console.log(err);
       });
@@ -153,6 +154,7 @@ function LoginForm() {
     //* '/user'에서 내 정보 조회해서 가져오기
     axios
       .get('http://13.125.211.79:8080/users/53')
+      //! userid 준거 넣으면 isLogin: true로 바껴!!
       .then((res) => {
         console.log(res.data);
         dispatch(
