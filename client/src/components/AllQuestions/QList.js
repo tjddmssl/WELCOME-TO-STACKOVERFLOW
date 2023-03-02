@@ -134,7 +134,7 @@ function QList({ question }) {
       </QStatus>
       <QContent>
         <h3 className="allques-title__h3">
-          <Link href={titleUrl}>{question.title}</Link>
+          <Link to={titleUrl}>{question.title}</Link>
         </h3>
         <div className="allques-content__div">{question.content}</div>
         <QInfo>

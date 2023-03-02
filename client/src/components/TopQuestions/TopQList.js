@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { detailDate } from '../detailDate';
-
+import { Link } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -124,7 +124,7 @@ const TopQList = ({ content }) => {
       </QStatus>
       <QContent>
         <h3 className="topques-title__h3">
-          <a href={`/view/${content.id}`}>{content.title}</a>
+          <Link to={`/view/${content.id}`}>{content.title}</Link>
         </h3>
         <QInfo>
           <div>
