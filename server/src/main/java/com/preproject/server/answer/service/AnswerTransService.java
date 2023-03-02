@@ -11,15 +11,16 @@ import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.service.QuestionService;
 import com.preproject.server.vote.IS_VOTED;
 import com.preproject.server.vote.service.VoteService;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,11 +53,13 @@ public class AnswerTransService {
   @Transactional
   public Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto, long questionId,
       long answerId) {
+    log.info("#### PATCH ANSWER #####");
     answerPatchDto.setId(answerId);
     return answerMapper.answerPatchDtoToAnswer(answerPatchDto);
   }
 
   public List<AnswerGetResponseDto> answerListToAnswerGetResponseDtoList(List<Answer> answerList) {
+    log.info("#### ANSWER LIST ####");
     final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     return answerList.stream().map(answer -> {
       AnswerGetResponseDto answerGetResponseDto = answerMapper.answerToAnswerGetResponseDto(answer);

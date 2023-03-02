@@ -42,6 +42,8 @@ public class CommentController {
           @Valid @RequestBody CommentPostDto commentPostDto,
           @PathVariable("answer-id") @Positive long answerId,
           @PathVariable("question-id") @Positive long questionId) {
+    log.info("#### POASTANSWERCOMMENT####");
+    log.info("#### commentPostDto = {}", commentPostDto);
     Comment comment = commentService.createComment(
             commentTransService.answerCommentPostDtoToComment(commentPostDto, answerId, questionId));
     URI uri = UriComponentsBuilder.newInstance()

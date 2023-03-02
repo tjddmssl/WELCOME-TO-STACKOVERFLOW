@@ -14,8 +14,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @EnableAsync
 @Configuration
 @Component
@@ -37,7 +35,7 @@ public class MemberRegistrationEventListener {
     public void listen(MemberRegistrationApplicationEvent event) {
         try {
             String[] to = new String[]{event.getMember().getEmail()};
-            String message = event.getMember().getEmail() + "님, 인증코드 발생합니다. 이거 성공하면 개쩔듯" + "\n" + "http://127.0.0.1:8080/user-mail-auth?token="+ UUID.randomUUID().toString();
+            String message = event.getMember().getEmail() + "님, 똥빵구나먹어라! ";
             emailSender.sendEmail(to, subject, message, templateName);
         } catch (MailSendException e) {
             log.error("MailSendException L rollback for Member Registration :");

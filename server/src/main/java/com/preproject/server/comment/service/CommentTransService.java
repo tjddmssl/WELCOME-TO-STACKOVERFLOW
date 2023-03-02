@@ -8,11 +8,12 @@ import com.preproject.server.comment.exception.CommentExceptionCode;
 import com.preproject.server.comment.mapper.CommentMapper;
 import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.question.service.QuestionService;
-import java.util.LinkedHashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -41,10 +42,11 @@ public class CommentTransService {
 
   public Comment answerCommentPostDtoToComment(CommentPostDto commentPostDto,
       Long answerId, Long questionId) {
-    LinkedHashMap principal = checkAuthenticated();
+//    LinkedHashMap principal = checkAuthenticated();
     Comment comment = commentMapper.answerCommentPostDtoToComment(commentPostDto);
     comment.setAnswer(answerService.findAnswer(answerId));
-    comment.setMember(Long.valueOf((Integer) principal.get("id")));
+//    comment.setMember(Long.valueOf((Integer) principal.get("id")));
+    comment.setMember(1L);
     return comment;
   }
 

@@ -1,39 +1,26 @@
 package com.preproject.server.member.entity;
 
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.EAGER;
-import static lombok.AccessLevel.PROTECTED;
-
 import com.preproject.server.answer.entity.Answer;
 import com.preproject.server.baseEntity.BaseEntity;
 import com.preproject.server.comment.entity.Comment;
 import com.preproject.server.member.data.MemberStatus;
-import com.preproject.server.member.data.MemberType;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.tag.entity.TagMember;
 import com.preproject.server.vote.entity.Vote;
+import lombok.*;
+import lombok.Builder.Default;
+import lombok.ToString.Exclude;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Builder.Default;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.ToString.Exclude;
+
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static lombok.AccessLevel.PROTECTED;
 
 
 @Entity
@@ -85,8 +72,8 @@ public class Member extends BaseEntity {
     this.roles = member.getRoles();
   }
 
-  @Enumerated(STRING)
-  private MemberType memberType;
+//  @Enumerated(STRING)
+//  private MemberType memberType;
 
   //연관관계
   @OneToMany(mappedBy = "member")

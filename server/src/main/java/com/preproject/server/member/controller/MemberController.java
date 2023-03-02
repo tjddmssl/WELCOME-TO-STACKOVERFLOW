@@ -37,6 +37,7 @@ public class MemberController {
     @PostMapping
     public ResponseEntity createMember(@RequestBody MemberPostDto post, HttpServletRequest request) {
         log.info("#####POST MEMBER #####");
+        log.info("####post = {}", post);
         Locale locale = request.getLocale();
         Member member = memberMapper.postDtoToMember(post);
         member.setLocation(locale.getCountry());

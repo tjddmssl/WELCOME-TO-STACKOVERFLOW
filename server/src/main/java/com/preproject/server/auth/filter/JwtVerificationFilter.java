@@ -40,7 +40,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             request.setAttribute("exception",e);
         }
 
-        response.getHeaderNames().iterator().forEachRemaining(s-> System.out.println("#####" + response.getHeaders(s)));
+        response.getHeaderNames().iterator().forEachRemaining(s-> log.info("#####" + response.getHeaders(s)));
 
         filterChain.doFilter(request,response);
     }

@@ -3,7 +3,9 @@ package com.preproject.server.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.preproject.server.auth.JwtTokenizer;
 import com.preproject.server.auth.dto.LoginDto;
+import com.preproject.server.auth.dto.LoginResponseDto;
 import com.preproject.server.auth.dto.PrincipalDto;
+import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -53,6 +55,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization","Bearer "+ accessToken);
         response.setHeader("Refresh",refreshToken);
         log.info("#### 토큰 준비 #####");
+
+
+        LoginResponseDto build = LoginResponseDto.builder().memberId(member.getId()).displayName(member.getDisplayName()).build();
+        ResponseDto responseDto = new ResponseDto<>(build);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String str = objectMapper.writeValueAsString(responseDto);
+
+
+
+        log.info("#### 응답을 위한 response 의 Member 목록 = {}",str);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().write(str);
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 

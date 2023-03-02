@@ -35,7 +35,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -64,16 +64,13 @@ public class SecurityConfiguration {
                 .exceptionHandling()
                 .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
                 .accessDeniedHandler(new MemberAccessDeniedHandler());
-//        http
-//                .logout()
-//                        .logoutUrl("/logout")
-//                                .logoutSuccessUrl("/login");
-        //세션에서 일어나는 일들을 처리한다. -> 로그아웃을 토큰으로 처리한다.
 
         http
                 .authorizeRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/users").permitAll()  //회원가입
-                        .anyRequest().permitAll()
+                        .antMatchers(HttpMethod.GET, "/users/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/questions/**").permitAll()
+                        .anyRequest().authenticated()
                 );
         http
                 .apply(new CustomFilterConfigurer());
@@ -89,6 +86,7 @@ public class SecurityConfiguration {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Location", "Refresh"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
@@ -102,8 +100,6 @@ public class SecurityConfiguration {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-//            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-
             //기본 requset URL  jwt/login 으로 변경
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
@@ -133,7 +129,7 @@ public class SecurityConfiguration {
                 .clientId(clientId)
                 .clientSecret(clientSecret)
                 .build();
-    }//어떤 벤더인가를 알려주는 역할 수 행 및 Provider 역할 수행
+    }
 
 }
 

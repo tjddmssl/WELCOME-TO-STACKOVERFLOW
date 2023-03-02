@@ -1,18 +1,19 @@
 spring:
   datasource:
-    url:
-    password:
-    username: root
+    url: ${DATABASEURL}
+    password: ${DATABASE_PASSWORD}
+    username: ${DATABASE_ID}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       #      ddl-auto: none
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
+        highlight_sql: true
         show_sql: true
-        format_sql: true
+#        format_sql: true
         default_batch_fetch_size: 100
     database: mysql
   #      open-in-view: false
@@ -21,8 +22,8 @@ spring:
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_SECRET}
             scope:
               - email
               - profile
@@ -33,10 +34,25 @@ logging:
 
 jwt:
   key:
-    secret: ufkufisgf8wgfudsfbwe82e23eqewd11edqf123ewqd1ed1
+    secret: ${JWT_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
 
 mail:
   address:
-    admin: admin@gmail.com
+    admin: ${AMDIN}
+  smtp:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MALL_ID}
+    password: ${MALL_PASSWORD}
+    auth: true
+    starttls:
+      enable: true
+  subject:
+    member:
+      registration: 가입 환영한다 얼간이들아
+  template:
+    name:
+      member:
+        join: email-registration-member
