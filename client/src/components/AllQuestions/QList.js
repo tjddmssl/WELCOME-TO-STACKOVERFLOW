@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { detailDate } from '../detailDate';
 
@@ -133,7 +134,7 @@ function QList({ question }) {
       </QStatus>
       <QContent>
         <h3 className="allques-title__h3">
-          <a href={titleUrl}>{question.title}</a>
+          <Link href={titleUrl}>{question.title}</Link>
         </h3>
         <div className="allques-content__div">{question.content}</div>
         <QInfo>
