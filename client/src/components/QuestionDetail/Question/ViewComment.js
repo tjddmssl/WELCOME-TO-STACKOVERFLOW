@@ -38,7 +38,7 @@ function ViewComment({ isClicked, setIsClicked }) {
     const postComment = async () => {
       try {
         await axios({
-          url: `http://13.125.211.79:8080/questions/${params.id}/comments`,
+          url: `https://siglee.site/questions/${params.id}/comments`,
           method: 'post',
           data: {
             content: comment,

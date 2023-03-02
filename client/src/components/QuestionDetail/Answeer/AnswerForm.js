@@ -56,7 +56,7 @@ function AnswerForm({ question }) {
     const postAnswer = async () => {
       try {
         await axios({
-          url: `http://13.125.211.79:8080/questions/${params.id}/answers`,
+          url: `https://siglee.site/questions/${params.id}/answers`,
           method: 'post',
           data: { newanswer },
         });

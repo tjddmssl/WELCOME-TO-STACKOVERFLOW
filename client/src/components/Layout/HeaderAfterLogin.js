@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { FaStackOverflow } from 'react-icons/fa';
 import { BsSearch } from 'react-icons/bs';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { userSlice } from '../../redux/slice/userSlice';
 
@@ -194,23 +193,18 @@ export default function HeaderAfterLogin() {
   };
 
   //* 로그아웃 핸들러
-  // TODO 로그아웃 시, 프론트엔드에서 헤더의 토큰 지우기...???? 수동 삭제 불가?
+
   const logoutHandler = () => {
-    return axios
-      .post('/logout')
-      .then((res) => {
-        dispatch(
-          userSlice.actions.login({
-            isLogin: false,
-            displayName: '',
-            email: '',
-          })
-        );
-        axios.defaults.headers.common['Authorization'] = null;
+    // TODO 포스트 요청 없이 localStorage 토큰 지우기
+    dispatch(
+      userSlice.actions.login({
+        isLogin: false,
+        displayName: '',
+        email: '',
       })
-      .catch((err) => {
-        alert(err);
-      });
+    );
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   };
   return (
     <HeaderContainer className="header__header">

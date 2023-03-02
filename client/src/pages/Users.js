@@ -121,7 +121,7 @@ function Users() {
   const getUserLists = async () => {
     try {
       const response = await axios.get(
-        'http://13.125.211.79:8080/users?page=0&size=28'
+        'https://siglee.site/users?page=0&size=28'
       );
       setUserLists([...response.data.content]);
     } catch (error) {

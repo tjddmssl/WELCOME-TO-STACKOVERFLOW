@@ -134,7 +134,7 @@ function LoginForm() {
     // 개발자도구의 application -> cookie에 refresh token이 담김
     await axios
       .post(
-        'http://13.125.211.79:8080/login',
+        'https://siglee.site/login',
         { username: email, password },
         { withCredentials: true }
       )

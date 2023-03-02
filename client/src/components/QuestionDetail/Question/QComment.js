@@ -33,7 +33,7 @@ function QComment() {
     const getQuestion = async () => {
       try {
         const response = await axios.get(
-          `http://13.125.211.79:8080/questions/${params.id}/comments`
+          `https://siglee.site/questions/${params.id}/comments`
         );
         setComments(response.data.comment);
       } catch (error) {

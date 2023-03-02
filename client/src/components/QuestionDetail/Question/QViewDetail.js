@@ -152,7 +152,7 @@ function QViewDetail({ question }) {
   const handleDelete = () => {
     const deleteQuestion = async () => {
       try {
-        await axios.delete(`http://13.125.211.79:8080/questions/${params.id}`);
+        await axios.delete(`https://siglee.site/questions/${params.id}`);
       } catch (error) {
         console.log(error);
       }

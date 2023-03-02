@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import { useNavigate } from 'react-router-dom';
 
@@ -20,9 +21,9 @@ function QButton() {
   // };
   return (
     <Container>
-      <a href="/ask">
+      <Link to="/ask">
         <Button>Ask Question</Button>
-      </a>
+      </Link>
     </Container>
   );
 }

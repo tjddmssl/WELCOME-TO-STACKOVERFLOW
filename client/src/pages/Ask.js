@@ -225,7 +225,7 @@ function Ask() {
     const postData = async () => {
       try {
         await axios({
-          url: 'http://13.125.211.79:8080/questions',
+          url: 'https://siglee.site/questions',
           method: 'post',
           data: newData,
         });
@@ -234,7 +234,7 @@ function Ask() {
       }
     };
     postData();
-    // window.location.href = 'http://localhost:3000/';
+    window.location.href = 'https://urban-adventure-ovr7jln.pages.github.io/';
   };
 
   const onChangeProblem = () => {

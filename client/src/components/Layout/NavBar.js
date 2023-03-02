@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import SvgIcon from '@mui/material/SvgIcon';
 import PublicIcon from '@mui/icons-material/Public';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const Container = styled.div`
@@ -71,12 +71,12 @@ function NavBar() {
         <nav>
           <ul>
             <li className={selectedPath === '' ? 'nav-selected__li' : ''}>
-              <a
+              <Link
                 className={selectedPath === '' ? 'nav-selected__a' : ''}
-                href="/"
+                to="/"
               >
                 <span>Home</span>
-              </a>
+              </Link>
             </li>
             <li>
               <ul>
@@ -86,43 +86,43 @@ function NavBar() {
                     selectedPath === 'questions' ? 'nav-selected__li' : ''
                   }
                 >
-                  <a
+                  <Link
                     className={
                       selectedPath === 'questions' ? 'nav-selected__a' : ''
                     }
-                    href="/questions"
+                    to="/questions"
                   >
                     <SvgIcon component={PublicIcon} inheritViewBox />
                     <span className="nav-questions__span">Questions</span>
-                  </a>
+                  </Link>
                 </li>
                 <li
                   className={selectedPath === 'tags' ? 'nav-selected__li' : ''}
                 >
-                  <a
+                  <Link
                     className={
                       selectedPath === 'tags'
                         ? 'nav-public__a nav-selected__a'
                         : 'nav-public__a'
                     }
-                    href="/tags"
+                    to="/tags"
                   >
                     <span>Tags</span>
-                  </a>
+                  </Link>
                 </li>
                 <li
                   className={selectedPath === 'users' ? 'nav-selected__li' : ''}
                 >
-                  <a
+                  <Link
                     className={
                       selectedPath === 'users'
                         ? 'nav-public__a nav-selected__a'
                         : 'nav-public__a'
                     }
-                    href="/users"
+                    to="/users"
                   >
                     <span>Users</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a className="nav-public__a" href="/">

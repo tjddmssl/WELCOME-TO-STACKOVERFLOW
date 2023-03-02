@@ -202,7 +202,7 @@ function ViewEdit() {
     const getData = async () => {
       try {
         const response = await axios.get(
-          `http://13.125.211.79:8080/questions/${params.id}`
+          `https://siglee.site/questions/${params.id}`
         );
         console.log(response.data);
         dispatch(getQuestionSlice.actions.get(response.data.response));
@@ -239,7 +239,7 @@ function ViewEdit() {
       const patchData = async () => {
         try {
           await axios({
-            url: `http://13.125.211.79:8080/questions/${params.id}`,
+            url: `https://siglee.site/questions/${params.id}`,
             method: 'patch',
             data: {
               title: question.title,

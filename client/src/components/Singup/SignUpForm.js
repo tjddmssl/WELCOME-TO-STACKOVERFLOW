@@ -196,7 +196,7 @@ function SignUpForm() {
       return setIsError(true);
     }
     e.preventDefault();
-    await axios.post('http://13.125.211.79:8080/users', {
+    await axios.post('https://siglee.site/users', {
       displayName: inputName,
       email: inputEmail,
       password: inputPassword,

@@ -13,7 +13,7 @@ function QLists() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('http://13.125.211.79:8080/questions');
+        const response = await axios.get('https://siglee.site/questions');
         dispatch(
           getAllQuestionSlice.actions.get(response.data.response.content)
         );

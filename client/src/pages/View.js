@@ -61,7 +61,7 @@ function View() {
     const getQuestionDetail = async () => {
       try {
         const response = await axios.get(
-          `http://13.125.211.79:8080/questions/${params.id}`
+          `https://siglee.site/questions/${params.id}`
         );
         dispatch(getQViewSlice.actions.get(response.data.response));
       } catch (error) {
@@ -71,7 +71,7 @@ function View() {
     const getAnswerDetail = async () => {
       try {
         const response = await axios.get(
-          `http://13.125.211.79:8080/questions/${params.id}/answers`
+          `https://siglee.site/questions/${params.id}/answers`
         );
         dispatch(getAnswerSlice.actions.get(response.data.response));
       } catch (error) {
