@@ -34,3 +34,9 @@
 ### [API](https://documenter.getpostman.com/view/15179624/2s93CRLCHq#75ae105c-9bcf-40e6-9e7a-44518c93dda0)
 
 ## Github
+### Branch
+- main
+- dev
+- [back] feat/ 기능명
+- [front] feat/ 기능명
+### Commit Messages
