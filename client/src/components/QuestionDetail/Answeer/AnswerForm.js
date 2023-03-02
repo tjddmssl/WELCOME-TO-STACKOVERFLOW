@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Button } from '@mui/material';
 import './AnswerForm.css';
 import { useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const Header = styled.div`
   border-top: 1px solid #e3e6e8;
@@ -38,6 +38,7 @@ const Footer = styled.div`
 `;
 
 function AnswerForm({ question }) {
+  const params = useParams();
   const [answerContent, setAnswerContent] = useState('');
   const questionRef = useRef();
 
@@ -49,30 +50,22 @@ function AnswerForm({ question }) {
   //todo 데이터 형식 바뀌면 그에 맞게 바꾸기
   const submitAnswerHander = () => {
     let newanswer = {
-      id: uuidv4(),
       content: answerContent,
-      voteCount: '0',
-      createdDate: '2023-02-21T05:42:15.661Z',
-      member: {
-        id: 13,
-        displayName: 'qwe',
-        profileImage: '',
-      },
     };
 
     const postAnswer = async () => {
       try {
         await axios({
-          url: 'http://localhost:3002/answer',
+          url: `http://13.125.211.79:8080/questions/${params.id}/answers`,
           method: 'post',
-          data: newanswer,
+          data: { newanswer },
         });
       } catch (error) {
         console.log(error);
       }
     };
     postAnswer();
-    window.location.href = 'http://localhost:3000/view';
+    // window.location.href = 'http://localhost:3000/view';
   };
 
   return (
