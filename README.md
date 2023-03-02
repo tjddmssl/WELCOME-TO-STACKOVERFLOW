@@ -10,7 +10,7 @@
 |BE 이기호 (부팀장)|BE 구민주|BE 위준성|FE 김규리 (팀장)|FE 고재필|FE 이성은|
 |------|---|---|------|---|---|
 |[@LEEGIHO94](https://github.com/LEEGIHO94)|[@mingdu9](https://github.com/mingdu9)|[@WiJunSeong](https://github.com/WiJunSeong)|[@ImGyuriKim](https://github.com/ImGyuriKim)|[@kohjp](https://github.com/kohjp)|[@tjddmssl](https://github.com/tjddmssl)|
-|- 로그인 기능 구현 (JWT, OAuth2) <br> - Member Controller, service, repository 작성|- Question CRUD 기능 <br> - Vote 기능 / Comment Create 기능 구현 <br> - 일반 예외처리 구현 <br> - Git bug fix |- Entity 연관 관계 구현 <br> - Answer Controller, Service, Repository 작성 <br> - AWS 배포 및 자동화 시도 <br> - DB 관리 | - User flow 생성 <br> - 디렉토리, 컴포넌트 구조화, 페이지 라우팅 <br> - 로그인 기능 구현 <br> - 질문 상세조회/Users 페이지 상단/Sidebar 구현 <br> - 질문하기 페이지 구현 <br> - Comment Create, 질문 Delete 구현 |- NavBar/Footer 구현 <br> - Home/Questions/Signup 페이지 구현 <br> - Edit 페이지 구현 및 기능 구현 <br> - Users 리스트 구현 <br> - 질문상세 페이지 기능 구현|- Header 구현 <br> - Tags/ Login 페이지 및 기능 구현 <br> - Login 토큰 구현 <br> - 회원가입 기능 구현 <br> - 질문 작성 페이지 POST 구현 <br> - Answer POST, DELETE 기능구현 |
+|- 로그인 기능 구현 (JWT, OAuth2) <br> - Member Controller, service, repository 작성|- Question CRUD 기능 <br> - Vote 기능 / Comment Create 기능 구현 <br> - 일반 예외처리 구현 <br> - Git bug fix |- Entity 연관 관계 구현 <br> - Answer Controller, Service, Repository 작성 <br> - AWS 배포 및 자동화 시도 <br> - DB 관리 | - User flow 생성 <br> - 디렉토리, 컴포넌트 구조화, 페이지 라우팅 <br> - 로그인 기능 구현 <br> - 질문 상세조회/Users 페이지 상단/Sidebar 구현 <br> - 질문하기 페이지 구현 <br> - Comment Create, 질문 Delete 구현 | - NavBar/Footer 구현 <br> - Home/Questions/Signup 페이지 구현 <br> - Edit 페이지 구현 및 기능 구현 <br> - Users 리스트 구현 <br> - 질문상세 페이지 기능 구현|- Header 구현 <br> - Tags/ Login 페이지 및 기능 구현 <br> - Login 토큰 구현 <br> - 회원가입 기능 구현 <br> - 질문 작성 페이지 POST 구현 <br> - Answer POST, DELETE 기능구현 |
 
 
 ## 📚 Stacks
