@@ -33,9 +33,9 @@ function QComment() {
     const getQuestion = async () => {
       try {
         const response = await axios.get(
-          `https://siglee.site/questions/${params.id}/comments`
+          `https://siglee.site/questions/${params.id}/`
         );
-        setComments(response.data.comment);
+        setComments(response.data.comments);
       } catch (error) {
         console.log(error);
       }
