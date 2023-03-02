@@ -158,7 +158,7 @@ function QViewDetail({ question }) {
       }
     };
     deleteQuestion();
-    navigate(`/`);
+    window.location.href = 'https://urban-adventure-ovr7jln.pages.github.io/';
   };
 
   // TODO Delete 버튼에 로그인 상태 확인 로직 추가
