@@ -27,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
-@CrossOrigin(originPatterns = "*",allowedHeaders = "*",exposedHeaders = "*")
 public class QuestionController {
 
   private final String DEFAULT_URI = "/questions";
@@ -37,6 +36,7 @@ public class QuestionController {
 
   @PostMapping("/questions")
   public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto requestBody) {
+    log.info("## POST QUESTION ##");
     log.info("## request body: {}", requestBody);
     Question question = questionService.createQuestion(
         questionTransService.questionPostDtoToQuestion(requestBody));
@@ -48,6 +48,8 @@ public class QuestionController {
   @PatchMapping("/questions/{id}")
   public ResponseEntity patchQuestion(@RequestBody QuestionPatchDto requestBody,
       @PathVariable("id") @Positive long id) {
+    log.info("#### PATCH QUESTION#### ");
+    log.info("#### requestBody = {}", requestBody.toString());
     Question question = questionService.updateQuestion(
         questionTransService.questionPatchDtoToQuestion(id, requestBody));
     URI uri = UriCreator.createUri(DEFAULT_URI, id);
@@ -58,6 +60,7 @@ public class QuestionController {
 
   @GetMapping("/questions/{id}")
   public ResponseEntity getQuestion(@PathVariable("id") @Positive long id) {
+    log.info("#### getQeustions#### ");
     Question question = questionService.findQuestion(id);
     QuestionGetDto questionGetDto = questionTransService.questionToQuestionGetDto(question);
     return ResponseEntity.ok().body(new ResponseDto<>(questionGetDto));
@@ -66,6 +69,7 @@ public class QuestionController {
   @GetMapping("/questions")
   public ResponseEntity getQuestions(
       @PageableDefault(sort = "createdDate") Pageable pageable) {
+    log.info("### GET PAGE ####");
     Page<Question> questionPage = questionService.findQuestions(pageable);
     Page<QuestionListGetDto> questionListGetDtoPage = questionTransService.questionToQuestionListGetDto(
         questionPage);

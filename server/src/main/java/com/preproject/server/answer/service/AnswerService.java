@@ -7,14 +7,15 @@ import com.preproject.server.exception.BusinessLogicException;
 import com.preproject.server.member.Service.MemberService;
 import com.preproject.server.question.entity.Question;
 import com.preproject.server.question.service.QuestionService;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -28,11 +29,13 @@ public class AnswerService {
 
   @Transactional
   public Answer creatAnswer(Answer answer) {
+    log.info("## CREATE ANSWER : {} ", answer.toString());
     return answerRepository.save(answer);
   }
 
   @Transactional
   public Answer updateAnswer(Answer answer) {
+    log.info("## UPDATE ANSWER : {} ", answer.toString());
     Answer findAnswer = findAnswer(answer.getId());
     Optional.ofNullable(answer.getContent()).ifPresent(findAnswer::setContent);
 

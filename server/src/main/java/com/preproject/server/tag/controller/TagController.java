@@ -10,6 +10,7 @@ import com.preproject.server.tag.repository.TagRepository;
 import com.preproject.server.tag.service.TagService;
 import com.preproject.server.tag.service.TagTransService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 public class TagController {
 
@@ -34,7 +36,8 @@ public class TagController {
 
   @GetMapping("/tags")
   public ResponseEntity getTags(
-      @PageableDefault(size = 28, sort = "id") Pageable pageable) {
+      @PageableDefault(size = 28, sort = "id") Pageable pageable){
+    log.info("## GET TAGS ##");
     Page<TagGetDto> page = tagTransService.tagPageToTagGetDtoPage(tagService.findTags(pageable));
     return ResponseEntity.ok().body(new ResponseDto<>(page));
   }

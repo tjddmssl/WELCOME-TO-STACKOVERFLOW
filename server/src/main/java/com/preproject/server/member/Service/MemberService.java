@@ -56,7 +56,6 @@ public class MemberService {
                 case MEMBER_ACTIVE:
                 case MEMBER_SLEEP:
                     if (isProvider(member, findMember)) {
-
                         return findMember;
                     } else {
                         throw new BusinessLogicException(MemberExceptionCode.MEMBER_JWT_EXIST);

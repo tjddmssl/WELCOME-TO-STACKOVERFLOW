@@ -10,10 +10,6 @@ import com.preproject.server.answer.service.AnswerService;
 import com.preproject.server.answer.service.AnswerTransService;
 import com.preproject.server.dto.ResponseDto;
 import com.preproject.server.member.dto.MemberDetailAnswerDto;
-import java.net.URI;
-import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,15 +18,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -47,7 +41,8 @@ public class AnswerController {
   public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
       @PathVariable("question-id") @Positive Long questionId) {
     answerPostDto.setQuestionId(questionId);
-    log.info("## request body: {}", answerPostDto);
+    log.info("## POST ANSWER ##");
+    log.info("## request body content: {}", answerPostDto.getContent());
     Answer answer = answerService.creatAnswer(
         answerTransService.answerPostDtoToAnswer(answerPostDto));
     URI uri = UriComponentsBuilder.newInstance()
@@ -62,6 +57,8 @@ public class AnswerController {
   public ResponseEntity patchAnswer(@Valid @RequestBody AnswerPatchDto answerPatchDto,
       @PathVariable("question-id") @Positive Long questionId,
       @PathVariable("answer-id") @Positive Long answerId) {
+    log.info("## PATCH ANSWER ##");
+    log.info("## request body content: {}", answerPatchDto);
 
     Answer answer = answerService.updateAnswer(
         answerTransService.answerPatchDtoToAnswer(answerPatchDto, questionId, answerId));
@@ -76,15 +73,18 @@ public class AnswerController {
 
   @GetMapping("/questions/{question-id}/answers")
   public ResponseEntity getAnswers(@PathVariable("question-id") @Positive Long questionId) {
+    log.info("## GET ANSWER ##");
     List<Answer> answerList = answerService.findAnswersByQuestionId(questionId);
     List<AnswerGetResponseDto> answerGetResponseDtoList
         = answerTransService.answerListToAnswerGetResponseDtoList(answerList);
+    log.info("## answer : {}", answerGetResponseDtoList.get(0));
     return ResponseEntity.ok().body(new ResponseDto<>(answerGetResponseDtoList));
   }
 
   @DeleteMapping("/questions/{question-id}/answers/{answer-id}")
   public ResponseEntity deleteAnswer(@PathVariable("question-id") @Positive Long questionId,
       @PathVariable("answer-id") @Positive Long answerId) {
+    log.info("## DELETE ANSWER ##");
     answerService.removeAnswer(answerId);
     return ResponseEntity.noContent().build();
 
@@ -93,9 +93,10 @@ public class AnswerController {
   @GetMapping("/users/{id}/answers")
   public ResponseEntity getMemberDetailAnswer(@PathVariable Long id,
       @PageableDefault(sort = "createdDate") Pageable pageable) {
-
+    log.info("## MEMBER DETAIL ANSWER ##");
     Page<Answer> answerPage = answerService.getAnswersByUser(pageable, id);
     Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
+    log.info("## result: {}", result.getContent().get(0).toString());
     return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
 
   }
@@ -104,8 +105,10 @@ public class AnswerController {
   public ResponseEntity getMemberVotedAnswer(@PathVariable Long id,
       @PageableDefault(sort = "createdDate") Pageable pageable) {
 
+    log.info("## get member voted answer ##");
     Page<Answer> answerPage = answerService.getVotedAnswers(pageable, id);
     Page<MemberDetailAnswerDto> result = answerPage.map(MemberDetailAnswerDto::new);
+    log.info("## result: {}",  result.getContent().get(0).toString());
     return new ResponseEntity(new ResponseDto<>(result), HttpStatus.OK);
 
   }
