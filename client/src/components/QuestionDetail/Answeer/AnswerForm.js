@@ -65,7 +65,6 @@ function AnswerForm({ question }) {
       }
     };
     postAnswer();
-
     window.location.replace(`/view/${params.id}`);
   };
 
