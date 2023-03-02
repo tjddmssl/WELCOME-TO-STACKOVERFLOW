@@ -124,7 +124,7 @@ const TopQList = ({ content }) => {
       </QStatus>
       <QContent>
         <h3 className="topques-title__h3">
-          <a href="/view">{content.title}</a>
+          <a href={`/view/${content.id}`}>{content.title}</a>
         </h3>
         <QInfo>
           <div>

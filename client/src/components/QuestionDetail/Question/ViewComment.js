@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   margin-top: 40px;
@@ -28,23 +29,28 @@ const Container = styled.div`
 //TODO 버튼 클릭 시 isClicked false로 변경하기
 //TODO 댓글 내용 입력 후 버튼 클릭 시 axios POST로 내용 보내주기
 
-function ViewComment() {
+function ViewComment({ isClicked, setIsClicked }) {
+  const params = useParams();
   const [comment, setComment] = useState({});
   console.log(comment);
 
-  // useEffect((comment) => {
-  //   const submitComment = async () => {
-  //     try {
-  //       await axios.post('http://localhost:3002/question', {
-  //         comment,
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   submitComment();
-  //   setIsClicked(!isClicked);
-  // }, []);
+  const addCommentClickHandler = () => {
+    const postComment = async () => {
+      try {
+        await axios({
+          url: `http://13.125.211.79:8080/questions/${params.id}/comments`,
+          method: 'post',
+          data: {
+            content: comment,
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    postComment();
+    setIsClicked(!isClicked);
+  };
 
   const handleChanged = (e) => {
     setComment(e.target.value);
@@ -53,7 +59,7 @@ function ViewComment() {
   return (
     <Container>
       <input onChange={handleChanged} type="text"></input>
-      <Button>Add Comment</Button>
+      <Button onClick={addCommentClickHandler}>Add Comment</Button>
     </Container>
   );
 }

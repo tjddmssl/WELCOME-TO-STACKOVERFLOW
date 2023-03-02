@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import getQuestionSlice from '../redux/slice/getQuestionSlice';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -191,6 +192,8 @@ const EditSideBar = styled.div`
 
 //* VIEW_03 질문 수정하기
 function ViewEdit() {
+  const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const question = useSelector((state) => {
     return state.getQuestion.response;
@@ -198,9 +201,12 @@ function ViewEdit() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/response');
-        dispatch(getQuestionSlice.actions.get(response.data));
-        setTags([...response.data.tag]);
+        const response = await axios.get(
+          `http://13.125.211.79:8080/questions/${params.id}`
+        );
+        console.log(response.data);
+        dispatch(getQuestionSlice.actions.get(response.data.response));
+        setTags([...response.data.response.tag]);
       } catch (error) {
         console.log(error);
       }
@@ -229,24 +235,28 @@ function ViewEdit() {
   };
   const saveClickHandler = () => {
     if (window.confirm('수정하시겠습니까?')) {
+      console.log(tags);
       const patchData = async () => {
         try {
           await axios({
-            url: 'http://localhost:3001/response',
+            url: `http://13.125.211.79:8080/questions/${params.id}`,
             method: 'patch',
             data: {
               title: question.title,
               content: question.content,
-              lastModifiedDate: new Date(),
-              tag: tags,
+              tags: tags,
             },
-          });
+          }).then((res) => console.log(res.data));
         } catch (error) {
           console.log(error);
         }
       };
       patchData();
+      navigate(`/view/${params.id}`);
     }
+  };
+  const cancelClickHandler = () => {
+    navigate(`/view/${params.id}`);
   };
   return (
     <div>
@@ -324,7 +334,11 @@ function ViewEdit() {
                     >
                       Save edits
                     </button>
-                    <button className="edit-cancel__button" type="button">
+                    <button
+                      className="edit-cancel__button"
+                      type="button"
+                      onClick={cancelClickHandler}
+                    >
                       Cancel
                     </button>
                   </div>

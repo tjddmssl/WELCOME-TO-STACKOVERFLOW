@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 // * 질문 댓글 get으로 받아오기
 // * 해당 데이터 state으로 관리하기
@@ -25,12 +26,15 @@ const Container = styled.div`
 `;
 
 function QComment() {
+  const params = useParams();
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const getQuestion = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/question');
+        const response = await axios.get(
+          `http://13.125.211.79:8080/questions/${params.id}/comments`
+        );
         setComments(response.data.comment);
       } catch (error) {
         console.log(error);

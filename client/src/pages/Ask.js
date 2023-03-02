@@ -225,7 +225,6 @@ function Ask() {
     const postData = async () => {
       try {
         await axios({
-
           url: 'http://13.125.211.79:8080/questions',
           method: 'post',
           data: newData,
