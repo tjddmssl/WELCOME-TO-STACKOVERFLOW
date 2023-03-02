@@ -49,16 +49,16 @@ function AnswerForm({ question }) {
 
   //todo 데이터 형식 바뀌면 그에 맞게 바꾸기
   const submitAnswerHander = () => {
-    let newanswer = {
-      content: answerContent,
-    };
+    // let newanswer = {
+    //   content: answerContent,
+    // };
 
     const postAnswer = async () => {
       try {
         await axios({
           url: `https://siglee.site/questions/${params.id}/answers`,
           method: 'post',
-          data: { newanswer },
+          data: { content: answerContent },
         });
       } catch (error) {
         console.log(error);
