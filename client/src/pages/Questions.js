@@ -97,7 +97,7 @@ const ListHeader = styled.div`
 function Questions() {
   const [selectedTab, setSelectedTab] = useState('Newest');
   const count = useSelector((state) => {
-    return state.getAllQuestion.content;
+    return state.getAllQuestion.response;
   });
 
   return (

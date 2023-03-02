@@ -55,6 +55,8 @@ const QContent = styled.div`
     font-size: 13px;
     overflow: hidden;
     display: -webkit-box;
+    width: 100%;
+    white-space: normal;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }

@@ -255,6 +255,9 @@ function ViewEdit() {
       navigate(`/view/${params.id}`);
     }
   };
+  const cancelClickHandler = () => {
+    navigate(`/view/${params.id}`);
+  };
   return (
     <div>
       <Container>
@@ -331,7 +334,11 @@ function ViewEdit() {
                     >
                       Save edits
                     </button>
-                    <button className="edit-cancel__button" type="button">
+                    <button
+                      className="edit-cancel__button"
+                      type="button"
+                      onClick={cancelClickHandler}
+                    >
                       Cancel
                     </button>
                   </div>

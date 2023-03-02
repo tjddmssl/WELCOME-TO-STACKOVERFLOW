@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 //* 질문하기 버튼 -> Ask 페이지로 이동
 const Container = styled.div`
@@ -14,13 +14,15 @@ const Container = styled.div`
 `;
 
 function QButton() {
-  const navigate = useNavigate();
-  const navigateToAsk = () => {
-    navigate('./ask');
-  };
+  // const navigate = useNavigate();
+  // const navigateToAsk = () => {
+  //   navigate('./ask');
+  // };
   return (
     <Container>
-      <Button onClick={navigateToAsk}>Ask Question</Button>
+      <a href="/ask">
+        <Button>Ask Question</Button>
+      </a>
     </Container>
   );
 }

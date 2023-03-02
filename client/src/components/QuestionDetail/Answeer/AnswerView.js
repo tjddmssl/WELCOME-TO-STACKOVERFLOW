@@ -92,8 +92,8 @@ function AnswerView({ answer }) {
               Answered {detailDate(new Date(answer.createdDate))}
               {/* //TODO 이미지 백엔드 통신으로 수정 */}
               <div className="usercard">
-                <img src="/img/user image.png" alt="useravatar" />
-                {/* {answer.member.displayName && answer.member.displayName} */}
+                <img src="/img/user.png" alt="useravatar" />
+                {answer.member.displayName && answer.member.displayName}
               </div>
             </UserContainer>
           </div>

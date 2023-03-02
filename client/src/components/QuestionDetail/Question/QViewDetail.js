@@ -8,6 +8,7 @@ import ViewComment from './ViewComment';
 import QComment from './QComment';
 import axios from 'axios';
 import { detailDate } from '../../detailDate';
+import ReactMarkdown from 'react-markdown';
 
 const TitleContainer = styled.div`
   display: flex;
@@ -44,14 +45,17 @@ const TitleDate = styled.div`
 const ContentContainer = styled.div`
   display: flex;
   margin-top: 20px;
+  width: 100%;
 `;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  width: 100%;
+  /* flex-grow: 1; */
   .tag {
     display: flex;
+    width: 100%;
   }
   button {
     border: none;
@@ -78,12 +82,16 @@ const Content = styled.div`
     color: #0174cc !important;
     background-color: transparent;
   }
+  .qview-content__reactmarkdown {
+    width: 300px;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   button {
     background-color: transparent;
     color: #6b737c;
@@ -121,15 +129,13 @@ const ButtonContainer = styled.div`
   }
   .qview-modify__button {
     margin-top: 0;
+    margin-right: 0;
   }
 `;
 
 function QViewDetail({ question }) {
   const params = useParams();
   const navigate = useNavigate();
-  const navigateToAsk = () => {
-    navigate('./view/ask');
-  };
 
   const navigateToEdit = () => {
     navigate(`./edit`);
@@ -161,7 +167,9 @@ function QViewDetail({ question }) {
       <TitleContainer>
         <div className="title">
           <h2>{question.title}</h2>
-          <QButton onClick={navigateToAsk} />
+          <a href="/ask">
+            <QButton />
+          </a>
         </div>
         <TitleDate>
           <p>
@@ -179,7 +187,17 @@ function QViewDetail({ question }) {
       <ContentContainer>
         <Vote />
         <Content>
-          {question.content}
+          <ReactMarkdown
+            className="qview-content__reactmarkdown"
+            style={{ maxWidth: '100%' }}
+            components={{
+              img: ({ ...props }) => (
+                <img style={{ maxWidth: '50%' }} {...props} alt="" />
+              ),
+            }}
+          >
+            {question.content}
+          </ReactMarkdown>
           <div className="tag">
             {question.tag &&
               question.tag.map((el, idx) => <button key={idx}>{el}</button>)}
@@ -200,7 +218,7 @@ function QViewDetail({ question }) {
               {`Asked `} {detailDate(new Date(question.createdDate))}
               <div className="userinfo">
                 {/* // TODO user image 파일 경로 수정 */}
-                <img src="/img/user image.png" alt="user avatar" />
+                <img src="/img/user.png" alt="user avatar" />
                 {question.member && question.member.displayName}
               </div>
               <div className="contributor">
