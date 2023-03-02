@@ -73,6 +73,7 @@ function View() {
         const response = await axios.get(
           `https://siglee.site/questions/${params.id}/answers`
         );
+        console.log(response);
         dispatch(getAnswerSlice.actions.get(response.data.response));
       } catch (error) {
         console.log(error);

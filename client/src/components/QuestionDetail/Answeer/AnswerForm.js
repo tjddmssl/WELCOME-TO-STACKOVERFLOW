@@ -65,8 +65,7 @@ function AnswerForm({ question }) {
       }
     };
     postAnswer();
-
-    window.location.href = `https://urban-adventure-ovr7jln.pages.github.io/view/${params.id}`;
+    window.location.replace(`/view/${params.id}`);
   };
 
   return (
