@@ -15,7 +15,7 @@
 |FE 김규리 (팀장)|FE 고재필|FE 이성은|
 |------|---|---|
 |[@ImGyuriKim](https://github.com/ImGyuriKim)|[@kohjp](https://github.com/kohjp)|[@tjddmssl](https://github.com/tjddmssl)|
-| - User flow 생성 <br> - 디렉토리, 컴포넌트 구조화, 페이지 라우팅 <br> - 로그인 기능 구현 <br> - 질문 상세조회/Users 페이지 상단/Sidebar 구현 <br> - 질문하기 페이지 구현 <br> - Comment Create, 질문 Delete 구현 | - NavBar/Footer 구현 <br> - Home/Questions/Signup 페이지 구현 <br> - Edit 페이지 구현 및 기능 구현 <br> - Users 리스트 구현 <br> - 질문상세 페이지 기능 구현|- Header 구현 <br> - Tags/ Login 페이지 및 기능 구현 <br> - Login 토큰 구현 <br> - 회원가입 기능 구현 <br> - 질문 작성 페이지 POST 구현 <br> - Answer POST, DELETE 기능구현 |
+| - User flow 생성 <br> - 디렉토리, 컴포넌트 구조화, 페이지 라우팅 <br> - 로그인 기능 구현 <br> - 질문 상세조회/Users 페이지 상단/Sidebar 구현 <br> - 질문 댓글 페이지 구현 <br> - Comment Create, 질문 Delete 구현 | - NavBar/Footer 구현 <br> - Home/Questions/Signup 페이지 구현 <br> - Edit 페이지 구현 및 기능 구현 <br> - Users 리스트 구현 <br> - 질문상세 페이지 기능 구현|- Header 구현 <br> - Tags/ Login 페이지 및 기능 구현 <br> - Login 토큰 구현 <br> - 회원가입 기능 구현 <br> - 질문 작성 페이지구현,  POST 구현 <br> - Answer POST, DELETE 기능구현 |
 
 
 
